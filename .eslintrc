@@ -1,3 +1,7 @@
 {
-  "extends": "@antfu"
+  "extends": "@antfu",
+  "rules": {
+    "vue/no-v-html": "off",
+    "vue/valid-attribute-name": "off"
+  }
 }

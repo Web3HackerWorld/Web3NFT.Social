@@ -1,23 +1,17 @@
 <script setup lang="ts">
-const online = useOnline()
+const {
+  modelValue,
+} = defineProps<Props>()
+const emit = defineEmits(['update:modelValue'])
+interface Props {
+  modelValue?: string
+}
 </script>
 
 <template>
   <div>
-    <Logos mb-6 />
-    <Suspense>
-      <ClientOnly>
-        <PageView v-if="online" />
-        <div v-else text-gray:80>
-          You're offline
-        </div>
-      </ClientOnly>
-      <template #fallback>
-        <div op50 italic>
-          <span animate-pulse>Loading...</span>
-        </div>
-      </template>
-    </Suspense>
-    <InputEntry />
+    <NuxtLink to="/news/1">
+      news/1
+    </NuxtLink>
   </div>
 </template>
