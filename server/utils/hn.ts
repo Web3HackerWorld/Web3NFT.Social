@@ -13,8 +13,23 @@ const topicUrlMap = {
 
 const cacheMap = {}
 
+const getUser = async (id) => {
+  const key = `user-${id}`
+  if (cacheMap[key])
+    return cacheMap[key]
+
+  const data = await $fetch(`${baseURL}/user/${id}.json`)
+  console.log('====> data :', data)
+  cacheMap[key] = {
+    ..._.pick(data, ['id', 'karma', 'about']),
+    createdAt: data.created,
+  }
+
+  return cacheMap[key]
+}
+
 const getItem = async (id, withComments = false) => {
-  const key = `${id}-${withComments}`
+  const key = `item-${id}-${withComments}`
   if (cacheMap[key])
     return cacheMap[key]
 
@@ -49,6 +64,7 @@ const getItems = async ({ page = '1', topic = 'news', limit = 10 }) => {
 }
 
 export const hn = {
+  getUser,
   getItem,
   getItems,
 }
