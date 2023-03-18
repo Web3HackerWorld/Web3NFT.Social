@@ -10,6 +10,10 @@ const maxPage = $computed(() => {
 })
 
 const { data: items, pending } = $(await useFetch(() => `/api/item/?topic=${topic}&page=${page}`))
+
+useHead({
+  title: topicMap[topic]?.title,
+})
 </script>
 
 <template>

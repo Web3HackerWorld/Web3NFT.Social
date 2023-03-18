@@ -33,20 +33,22 @@ const getItem = async (id, withComments = false) => {
   if (cacheMap[key])
     return cacheMap[key]
 
-  // console.log('====> doFetch for :', id)
   const item = await $fetch(`${baseURL}/item/${id}.json`)
+  if (!item)
+    return {}
+
   item.kids = item.kids || {}
   cacheMap[key] = {
     ..._.pick(item, ['id', 'score', 'time', 'url', 'type', 'title', 'by']),
     content: item.text,
     commentsCount: Object.values(item.kids).length,
-    // comments: withComments
-    //   ? await Promise.all(
-    //     Object.values(item.kids as string[]).map(id =>
-    //       fetchItem(id, withComments)
-    //     )
-    //   )
-    //   : []
+    comments: withComments
+      ? await Promise.all(
+        Object.values(item.kids as string[]).map(id =>
+          getItem(id, withComments),
+        ),
+      )
+      : [],
   }
 
   return cacheMap[key]

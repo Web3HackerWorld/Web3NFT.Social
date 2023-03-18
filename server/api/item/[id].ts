@@ -1,5 +1,3 @@
 export default defineEventHandler(async (event) => {
-  configureSWRHeaders(event)
-  const { id } = getQuery(event)
-  return hn.getItem(id, true)
+  return hn.getItem(event.context.params.id, true)
 })

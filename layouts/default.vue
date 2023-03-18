@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { topicMap } from '~/share/hn'
+
+const route = useRoute()
+const noBg = $computed(() => route.meta.noBg)
 </script>
 
 <template>
@@ -15,7 +18,7 @@ import { topicMap } from '~/share/hn'
         <BsLangSwitcher />
       </nav>
     </header>
-    <div max-w-2xl mx-auto bg-white>
+    <div max-w-2xl mx-auto :class="noBg ? '' : 'bg-white'">
       <div pt-14>
         <slot />
       </div>

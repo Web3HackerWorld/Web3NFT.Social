@@ -3,6 +3,14 @@ const route = useRoute()
 const id = $computed(() => route.params.id)
 
 const { data: user, pending } = $(await useFetch(() => `/api/user/${id}`))
+
+useHead({
+  title: pending
+    ? 'Loading'
+    : user
+      ? user.id
+      : 'User not found',
+})
 </script>
 
 <template>

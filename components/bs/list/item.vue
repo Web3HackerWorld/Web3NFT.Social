@@ -2,7 +2,6 @@
 defineProps<{
   item: any
 }>()
-
 const isLink = (item) => {
   return item.url?.startsWith('http')
 }
