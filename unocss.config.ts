@@ -14,7 +14,7 @@ export default defineConfig({
     ['flex-c', 'flex justify-center items-center'],
     ['flex-cx', 'flex justify-center'],
     ['flex-cy', 'flex items-center'],
-    ['btn', 'px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
+    ['btn', 'rounded-md font-semibold bg-zinc-900 shadow-sm text-sm text-white py-2.5 px-3.5 hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'],
     ['icon-btn', 'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600'],
   ],
   presets: [
