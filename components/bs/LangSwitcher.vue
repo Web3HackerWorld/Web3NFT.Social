@@ -1,15 +1,15 @@
 <script setup lang="ts">
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
-const availableLocales = computed(() => {
+const availableLocales = $computed(() => {
   return (locales.value).filter(i => i.code !== locale.value)
 })
 </script>
 
 <template>
-  <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)">
+  <NuxtLink v-for="item in availableLocales" :key="item.code" :to="switchLocalePath(item.code)">
     {{
-      locale.name
+      item.code
     }}
   </NuxtLink>
 </template>

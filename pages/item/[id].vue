@@ -6,7 +6,7 @@ definePageMeta({
 const route = useRoute()
 const id = $computed(() => route.params.id)
 
-const { data: item, pending } = $(await useFetch(() => `/api/item/${id}`))
+const { data: item, pending } = $(await useLazyFetch(() => `/api/item/${id}`))
 
 useHead({
   title: item?.title,
@@ -41,7 +41,7 @@ useHead({
           {{ item?.comments?.length ? `${item.comments.length} comments` : `No comments yet` }}
         </h2>
         <BsListChildren :items="item.comments" :is-child="false" />
-</div>
+      </div>
     </BsLoading>
   </div>
 </template>

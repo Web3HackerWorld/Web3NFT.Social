@@ -9,7 +9,7 @@ const maxPage = $computed(() => {
   return +(topicMap[topic]?.pages) || 0
 })
 
-const { data: items, pending } = $(await useFetch(() => `/api/item/?topic=${topic}&page=${page}`))
+const { data: items, pending } = $(await useLazyFetch(() => `/api/item/?topic=${topic}&page=${page}`))
 
 useHead({
   title: topicMap[topic]?.title,

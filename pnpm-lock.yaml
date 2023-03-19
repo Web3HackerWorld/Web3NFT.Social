@@ -14,6 +14,7 @@ specifiers:
   eslint: ^8.34.0
   lodash: ^4.17.21
   nuxt: ^3.2.2
+  nuxt-lodash: ^2.4.1
   pinia: ^2.0.30
   timeago.js: ^4.0.2
   typescript: ^4.9.5
@@ -35,6 +36,7 @@ devDependencies:
   '@vueuse/nuxt': 9.13.0_nuxt@3.2.2
   eslint: 8.34.0
   nuxt: 3.2.2_7kw3g6rralp5ps6mg3uyzz6azm
+  nuxt-lodash: 2.4.1
   pinia: 2.0.30_typescript@4.9.5
   typescript: 4.9.5
 
@@ -2752,6 +2754,12 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash-es/4.17.7:
+    resolution: {integrity: sha512-z0ptr6UI10VlU6l5MYhGwS4mC8DZyYer2mCoyysZtSF7p26zOX8UpbrV0YpNYLGS8K4PUFIyEr62IMFFjveSiQ==}
+    dependencies:
+      '@types/lodash': 4.14.191
     dev: true
 
   /@types/lodash/4.14.191:
@@ -6201,6 +6209,10 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: true
+
   /lodash._reinterpolate/3.0.0:
     resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}
 
@@ -6726,6 +6738,17 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /nuxt-lodash/2.4.1:
+    resolution: {integrity: sha512-Z1c2eBApJsP4m3RMnZWGDYQ7GiNCrWuLH1PGpLe/7OihjOOtWUN+0sf6NQ9STvUbL4TpXisJ/4hKVns7+wkh4Q==}
+    dependencies:
+      '@nuxt/kit': 3.2.2
+      '@types/lodash-es': 4.17.7
+      lodash-es: 4.17.21
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /nuxt/3.2.2_7kw3g6rralp5ps6mg3uyzz6azm:

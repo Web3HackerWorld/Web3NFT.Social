@@ -19,6 +19,7 @@ export const modules: NuxtConfig['modules'] = [
       defaultLocale: 'en',
     },
   ],
+  'nuxt-lodash',
   '@vueuse/nuxt',
   '@unocss/nuxt',
   '@pinia/nuxt',

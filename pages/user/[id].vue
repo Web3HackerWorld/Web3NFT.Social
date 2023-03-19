@@ -2,7 +2,7 @@
 const route = useRoute()
 const id = $computed(() => route.params.id)
 
-const { data: user, pending } = $(await useFetch(() => `/api/user/${id}`))
+const { data: user, pending } = $(await useLazyFetch(() => `/api/user/${id}`))
 
 useHead({
   title: pending
