@@ -9,8 +9,8 @@ const noBg = $computed(() => route.meta.noBg)
   <div bg-zinc-100 text-zinc-900 relative>
     <header bg-zinc-900 z-999 absolute top-0 left-0 w-full>
       <nav max-w-2xl mx-auto flex items-center h-14 px-3 py-2 lg:(px-0 py-4) sm:(p-4) role="navigation">
-        <NuxtLink to="/">
-          <img w-10 h-10 mr-3 inline-block src="/vite.png" alt="logo">
+        <NuxtLink to="/" text-white>
+          <img w-10 h-10 mr-3 rounded-xl inline-block src="/android-chrome-512x512.png" alt="logo">
         </NuxtLink>
         <NuxtLink v-for="(item, key) in topicMap" :key="key" class="nav-link" :to="`/${key}/1`" :class="$route.path.startsWith(`/${key}`) ? 'text-green-400' : 'text-white'">
           {{ item.title }}
