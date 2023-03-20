@@ -1,11 +1,33 @@
 <script setup lang="ts">
-
+const initial = $ref({
+  y: -400,
+  opacity: 0,
+  rotate: 90,
+})
+const enter = $ref({
+  y: 0,
+  opacity: 1,
+  rotate: 0,
+})
 </script>
 
 <template>
   <div h-full>
-    <div text-center mb-24>
-      <h1 class="font-bold mt-40 mb-20 tracking-tight text-4xl text-gray-900  sm:text-6xl">
+    <div
+      text-center mb-24
+    >
+      <h1
+        v-motion="{
+          initial: {
+            y: 200,
+            opacity: 0,
+          },
+          enter: {
+            y: 0,
+            opacity: 1,
+          },
+        }" font-bold mt-40 mb-20 tracking-tight text-4xl text-gray-900 sm:text-6xl
+      >
         Stay Hungry <br>Stay Foolish
       </h1>
       <p class="mt-6 text-lg text-gray-600 leading-8">
@@ -18,7 +40,7 @@
       </div>
     </div>
     <div text-center mb-24 border-t border-t-zinc-2>
-      <h1 class="font-bold mt-30 mb-20 tracking-tight text-4xl text-gray-900  sm:text-6xl">
+      <h1 v-motion-pop class="font-bold mt-30 mb-20 tracking-tight text-4xl text-gray-900  sm:text-6xl">
         Web3 <br> 万物皆可 <br>无限可能
       </h1>
       <p class="mt-6 text-lg text-gray-600 leading-8">

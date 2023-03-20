@@ -19,6 +19,7 @@ export const modules: NuxtConfig['modules'] = [
       defaultLocale: 'en',
     },
   ],
+  '@vueuse/motion/nuxt',
   'nuxt-lodash',
   '@vueuse/nuxt',
   [
