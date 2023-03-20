@@ -84,17 +84,15 @@
         </div>
       </div>
     </div>
-    <HnProgress />
-    <HnRoadmap />
-    <div flex justify-between py-10 border-t border-t-zinc-2 px-10 text-gray-500>
-      <div>
-        ©2023 <a href="https://Web3Hacker.World" hover:text-green-500 target="_blank">Web3Hacker.World</a>
-      </div>
-      <div flex space-x-2>
+    <div flex flex-col items-center lg="flex-row-reverse justify-between px-8" py-10 border-t border-t-zinc-2 px-2 text-gray-400>
+      <div flex space-x-4 mb-4 lg:mb-0>
         <a href="/img/WeChatOffice.jpg" hover:text-green-500 target="_blank">公众号</a>
         <a href="https://twitter.com/Web3HackerWorld" hover:text-green-500 target="_blank">Twitter</a>
         <a href="https://discord.gg/anZdGZ7dhN" hover:text-green-500 target="_blank">Discord</a>
         <a href="https://t.me/Web3HackerWorld" hover:text-green-500 target="_blank">Telegram</a>
+      </div>
+      <div>
+        ©2023 <a href="https://Web3Hacker.World" hover:text-green-500 target="_blank">Web3Hacker.World</a>
       </div>
     </div>
   </div>
