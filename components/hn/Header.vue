@@ -20,7 +20,7 @@ import { topicMap } from '~/share/hn'
 .nav-link{
   --at-apply: hover:(text-emerald)
   --at-apply: active:(text-emerald)
-  --at-apply: leading-6 inline-block mr-6 font-300 font-semibold
+  --at-apply: leading-6 inline-block mr-6 font-300
   --at-apply: transition-colors ease-in-out duration-250
 }
 </style>

@@ -5,11 +5,24 @@
 <template>
   <div>
     <div text-center mb-24>
+      <h1 class="font-bold mt-40 mb-20 tracking-tight text-4xl text-gray-900  sm:text-6xl">
+        Stay Hungry <br>Stay Foolish
+      </h1>
+      <p class="mt-6 text-lg text-gray-600 leading-8">
+        我们在寻找 <br>
+        <span>对世界充满好奇心的你，</span><br>
+        一起分享新奇的发现和有深度的思考
+      </p>
+      <div class="flex mt-10 gap-x-6 items-center justify-center">
+        <a href="https://zh-docs.web3hacker.world/web3hackernews" class="font-semibold text-sm  text-gray-900 leading-6" target="_blank">了解更多 <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div text-center mb-24 border-t border-t-zinc-2>
       <h1 class="font-bold mt-30 mb-20 tracking-tight text-4xl text-gray-900  sm:text-6xl">
         Web3 <br> 万物皆可 <br>无限可能
       </h1>
       <p class="mt-6 text-lg text-gray-600 leading-8">
-        这里我们将基于 YC 的 HackerNews 的数据源基础上，<br> 打造一个 Web3 版本的 HackerNews
+        有价值的信息不会被埋没<br> 铸造在 Web3 里成为永恒
       </p>
       <div class="flex mt-10 gap-x-6 items-center justify-center">
         <a href="https://zh-docs.web3hacker.world/web3hackernews" class="font-semibold text-sm  text-gray-900 leading-6" target="_blank">了解更多 <span aria-hidden="true">→</span></a>
@@ -39,13 +52,13 @@
       <div flex-c flex-col pt-20>
         <a href="https://zh-docs.web3hacker.world/web3hackernews/early-bird" target="_blank" class="text-lg py-3 px-8 btn">立即报名</a>
         <p text-gray-400 text-sm mt-10>
-          早期种子用户及 $BSTs 奖励投放数量有限，先到先得！
+          早期种子用户将进行有条件筛选，$BSTs 只会奖励给对平台有帮助的用户
         </p>
       </div>
     </div>
 
     <div class="bg-white border-t border-t-zinc-2 py-24 px-10 sm:py-32">
-      <h2 class=" text-center text-2xl text-gray-900 leading-8">
+      <h2 class="text-center mb-20 text-2xl text-gray-900 leading-8">
         采用最极致的技术打造
       </h2>
       <div class="flex-c font-semibold mt-10 text-center justify-around">
@@ -71,8 +84,18 @@
         </div>
       </div>
     </div>
-    <div text-center py-10 border-t border-t-zinc-2>
-      ©2023 <a href="https://Web3Hacker.World" hover:text-green-500 target="_blank">Web3Hacker.World</a>
+    <HnProgress />
+    <HnRoadmap />
+    <div flex justify-between py-10 border-t border-t-zinc-2 px-5 text-gray-500>
+      <div>
+        ©2023 <a href="https://Web3Hacker.World" hover:text-green-500 target="_blank">Web3Hacker.World</a>
+      </div>
+      <div flex space-x-2>
+        <a href="/img/WeChatOffice.jpg" hover:text-green-500 target="_blank">公众号</a>
+        <a href="https://twitter.com/Web3HackerWorld" hover:text-green-500 target="_blank">Twitter</a>
+        <a href="https://discord.gg/anZdGZ7dhN" hover:text-green-500 target="_blank">Discord</a>
+        <a href="https://t.me/Web3HackerWorld" hover:text-green-500 target="_blank">Telegram</a>
+      </div>
     </div>
   </div>
 </template>

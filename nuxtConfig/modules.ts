@@ -21,7 +21,19 @@ export const modules: NuxtConfig['modules'] = [
   ],
   'nuxt-lodash',
   '@vueuse/nuxt',
-  '@unocss/nuxt',
+  [
+    '@unocss/nuxt',
+    {
+    // presets
+      uno: true, // enabled `@unocss/preset-uno`
+      icons: true, // enabled `@unocss/preset-icons`
+      attributify: true, // enabled `@unocss/preset-attributify`,
+      // core options
+      shortcuts: [],
+      rules: [],
+    },
+
+  ],
   '@pinia/nuxt',
   '@nuxtjs/color-mode',
   '@vite-pwa/nuxt',
