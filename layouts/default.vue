@@ -8,7 +8,7 @@ const noBg = $computed(() => route.meta.noBg)
     <HnHeader />
     <div max-w-3xl mx-auto :class="noBg ? '' : 'bg-white'">
       <div min-h-screen>
-        <div pt-14 />
+        <div pt-1 class="-mt-1" />
         <slot />
       </div>
     </div>

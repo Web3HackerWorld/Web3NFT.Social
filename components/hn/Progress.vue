@@ -20,7 +20,7 @@ const faqs = [
 <template>
   <div class="bg-white border-t border-t-zinc-2  py-20 px-10 flow-root sm:py-26">
     <h2 class="text-center mb-20 text-2xl text-gray-900 leading-8">
-      项目里程碑
+      进度日志
     </h2>
     <dl class="divide-y space-y-6 divide-gray-900/10">
       <Disclosure v-for="faq in faqs" :key="faq.question" v-slot="{ open }" as="div" class="pt-6">

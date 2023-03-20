@@ -3,17 +3,17 @@
 </script>
 
 <template>
-  <div>
+  <div h-full>
     <div text-center mb-24>
       <h1 class="font-bold mt-40 mb-20 tracking-tight text-4xl text-gray-900  sm:text-6xl">
         Stay Hungry <br>Stay Foolish
       </h1>
       <p class="mt-6 text-lg text-gray-600 leading-8">
-        我们在寻找 <br>
-        <span>对世界充满好奇心的你，</span><br>
+        我们正在寻找 <br>
+        <span>对世界充满好奇心的你</span><br>
         一起分享新奇的发现和有深度的思考
       </p>
-      <div class="flex mt-10 gap-x-6 items-center justify-center">
+      <div class="flex flex-col mt-10 gap-x-6 items-center justify-center">
         <a href="https://zh-docs.web3hacker.world/web3hackernews" class="font-semibold text-sm  text-gray-900 leading-6" target="_blank">了解更多 <span aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -24,8 +24,8 @@
       <p class="mt-6 text-lg text-gray-600 leading-8">
         有价值的信息不会被埋没<br> 铸造在 Web3 里成为永恒
       </p>
-      <div class="flex mt-10 gap-x-6 items-center justify-center">
-        <a href="https://zh-docs.web3hacker.world/web3hackernews" class="font-semibold text-sm  text-gray-900 leading-6" target="_blank">了解更多 <span aria-hidden="true">→</span></a>
+      <div class="flex flex-col mt-10 gap-x-6 items-center justify-center">
+        <a href="https://zh-docs.web3hacker.world/web3hackernews/features" class="font-semibold text-sm  text-gray-900 leading-6" target="_blank">了解更多 <span aria-hidden="true">→</span></a>
       </div>
     </div>
     <div class="bg-white border-t border-t-zinc-2 py-24 px-10 sm:py-32">
@@ -84,9 +84,9 @@
         </div>
       </div>
     </div>
-    <!-- <HnProgress />
-    <HnRoadmap /> -->
-    <div flex justify-between py-10 border-t border-t-zinc-2 px-5 text-gray-500>
+    <HnProgress />
+    <HnRoadmap />
+    <div flex justify-between py-10 border-t border-t-zinc-2 px-10 text-gray-500>
       <div>
         ©2023 <a href="https://Web3Hacker.World" hover:text-green-500 target="_blank">Web3Hacker.World</a>
       </div>

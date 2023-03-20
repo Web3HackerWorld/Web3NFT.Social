@@ -51,7 +51,7 @@ const timeline = [
 <template>
   <div class="border-t border-t-zinc-2 py-20 px-10 flow-root sm:py-26">
     <h2 class="text-center mb-20 text-2xl text-gray-900 leading-8">
-      路线图
+      Roadmap
     </h2>
     <ul role="list">
       <li v-for="(event, eventIdx) in timeline" :key="event.id">
