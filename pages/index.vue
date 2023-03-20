@@ -84,8 +84,8 @@
         </div>
       </div>
     </div>
-    <HnProgress />
-    <HnRoadmap />
+    <!-- <HnProgress />
+    <HnRoadmap /> -->
     <div flex justify-between py-10 border-t border-t-zinc-2 px-5 text-gray-500>
       <div>
         ©2023 <a href="https://Web3Hacker.World" hover:text-green-500 target="_blank">Web3Hacker.World</a>
