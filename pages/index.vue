@@ -110,7 +110,7 @@ const enter = $ref({
         </div>
       </div>
     </div>
-    <div flex flex-col items-center lg="flex-row-reverse justify-between px-8" py-10 border-t border-t-zinc-2 px-2 text-gray-400>
+    <div flex flex-col items-center lg="flex-row-reverse justify-between px-8" py-10 border-t border-t-zinc-2 px-2 text-zinc-4 text-sm>
       <div flex space-x-4 mb-4 lg:mb-0>
         <a href="/img/WeChatOffice.jpg" hover:text-green-500 target="_blank">公众号</a>
         <a href="https://twitter.com/Web3HackerWorld" hover:text-green-500 target="_blank">Twitter</a>
