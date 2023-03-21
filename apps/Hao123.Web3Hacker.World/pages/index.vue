@@ -110,6 +110,7 @@
       </div>
       <div>
         ©2023 <a href="https://Web3Hacker.World" hover:text-green-500 target="_blank">Web3Hacker.World</a>
+        <a href="https://zh-docs.Web3Hacker.World" hover:text-green-500 ml-4 target="_blank">文档中心</a>
       </div>
     </div>
   </div>
