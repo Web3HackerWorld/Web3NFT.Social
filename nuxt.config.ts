@@ -1,15 +1,26 @@
 import { pwa } from './nuxtConfig/pwa'
 import { modules } from './nuxtConfig/modules'
 import { app } from './nuxtConfig/app'
-import { components } from './nuxtConfig/components'
 import { imports } from './nuxtConfig/imports'
 
+const { APP_NAME } = process.env
 export default defineNuxtConfig({
+  dir: {
+    layouts: `./apps/${APP_NAME}/layouts`,
+    pages: `./apps/${APP_NAME}/pages`,
+    public: `./apps/${APP_NAME}/public`,
+  },
   imports,
-  components,
-  extends: [
-    // '../bs-craft',
-  ],
+  components: {
+    dirs: [
+      `./apps/${APP_NAME}/components`,
+      {
+        path: '~/components',
+        extensions: ['vue'],
+        prefix: 'Bs',
+      },
+    ],
+  },
   modules,
   experimental: {
     // when using generate, payload js assets included in sw precache manifest

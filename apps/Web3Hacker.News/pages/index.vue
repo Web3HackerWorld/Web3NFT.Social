@@ -1,14 +1,5 @@
 <script setup lang="ts">
-const initial = $ref({
-  y: -400,
-  opacity: 0,
-  rotate: 90,
-})
-const enter = $ref({
-  y: 0,
-  opacity: 1,
-  rotate: 0,
-})
+
 </script>
 
 <template>
