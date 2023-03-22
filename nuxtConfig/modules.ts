@@ -34,12 +34,9 @@ const maybeUseModules = () => {
   const modules = []
   const { GTAG_ID } = process.env
   if (GTAG_ID) {
-    modules.push([
-      'nuxt-gtag',
-      {
-        id: GTAG_ID,
-      },
-    ])
+    modules.push(['nuxt-gtag', {
+      id: GTAG_ID,
+    }])
   }
 
   return modules
