@@ -4,7 +4,7 @@ const author = {
   role: 'Founder / Web3Hacker',
   href: '/user/bruce',
   imageUrl:
-    '/apple-touch-icon.png',
+    '/img/bruce.jpg',
 }
 </script>
 

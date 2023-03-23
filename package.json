@@ -36,6 +36,7 @@
     "nuxt-gtag": "^0.3.0",
     "nuxt-lodash": "^2.4.1",
     "pinia": "^2.0.30",
+    "stylus": "^0.59.0",
     "typescript": "^4.9.5"
   },
   "dependencies": {

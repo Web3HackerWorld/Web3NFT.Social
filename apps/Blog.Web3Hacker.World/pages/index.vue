@@ -18,14 +18,14 @@ Bruce 在 2022 年 5 月辞职 All in Web3 后的起点是集中参加了各种 
       role: 'Founder / Web3Hacker',
       href: '/user/bruce',
       imageUrl:
-        '/apple-touch-icon.png',
+        '/img/bruce.jpg',
     },
   },
 ]
 </script>
 
 <template>
-  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl">
     <div class="mx-auto max-w-3xl py-12 sm:py-16">
       <h2 class="font-bold tracking-tight text-3xl text-gray-900 sm:text-4xl">
         Web3Hacker.World

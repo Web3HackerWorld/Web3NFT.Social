@@ -14,7 +14,7 @@ const { doLogin, isLoading, error, isShowLoginModal } = $(web3AuthStore())
       <div class="mt-8 sm:mx-auto sm:w-full">
         <div class="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
           <form class="space-y-6" action="#" method="POST">
-            <BsAlertError v-show="error" w-sm>
+            <BsAlertError v-show="error" w-full>
               {{ error }}
             </BsAlertError>
             <div>

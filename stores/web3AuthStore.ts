@@ -80,11 +80,11 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
 
     accounts = newAccounts
     setLsItem('accounts', newAccounts)
-
+    console.log('====> accounts :', accounts, newAccounts)
     // means user click on logout btn
     if (newAccounts.length === 0) {
       addSuccess('Logout Success!')
-      isShowLoginModal = true
+      // isShowLoginModal = true
       error = ''
     }
     else {

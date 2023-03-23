@@ -40,16 +40,17 @@ export const notificationStore = defineStore('notificationStore', () => {
       type: 'warning',
     })
   }
-  // const itemsMock = [
-  //   { title: 'msg1', timeout: 3, type: 'error' },
-  //   { title: 'msg2', timeout: 4, type: 'success' },
-  //   { title: 'msg3', timeout: 5, type: 'warning' },
-  // ]
-  // itemsMock.forEach(item => addItem(item))
+  const addError = (title) => {
+    addItem({
+      title,
+      type: 'error',
+    })
+  }
 
   return $$({
     addSuccess,
     addWarning,
+    addError,
     addItem,
     removeItem,
     items,

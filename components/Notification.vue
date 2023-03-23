@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { CheckCircleIcon } from '@heroicons/vue/24/outline'
-import { XMarkIcon } from '@heroicons/vue/24/solid'
 const { items, removeItem } = $(notificationStore())
 </script>
 
@@ -13,9 +11,9 @@ const { items, removeItem } = $(notificationStore())
             <div class="p-4">
               <div class="flex items-start">
                 <div class="flex-shrink-0">
-                  <codicon:error v-if="item.type === 'error'" class="h-6 text-red-400 w-6" aria-hidden="true" />
-                  <bx-error-circle v-if="item.type === 'warning'" class="h-6 text-orange-400 w-6" aria-hidden="true" />
-                  <CheckCircleIcon v-if="item.type === 'success'" class="h-6 text-green-400 w-6" aria-hidden="true" />
+                  <div v-if="item.type === 'error'" i-heroicons-outline-x-circle class="h-6 text-red-400 w-6" aria-hidden="true" />
+                  <div v-if="item.type === 'warning'" i-heroicons-outline-exclamation-circle class="h-6 text-orange-400 w-6" aria-hidden="true" />
+                  <div v-if="item.type === 'success'" class="h-6 text-green-400 w-6 i-heroicons-outline-check-circle" aria-hidden="true" />
                 </div>
                 <div class="flex-1 ml-3 pt-0.5 w-0">
                   <p class="font-medium text-sm text-gray-900">
@@ -25,7 +23,7 @@ const { items, removeItem } = $(notificationStore())
                 <div class="flex flex-shrink-0 ml-4">
                   <button type="button" class="bg-white rounded-md text-gray-400 inline-flex hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="removeItem(item)">
                     <span class="sr-only">Close</span>
-                    <XMarkIcon class="h-5 w-5" aria-hidden="true" />
+                    <i i-heroicons-outline-x class="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -52,5 +50,4 @@ const { items, removeItem } = $(notificationStore())
 .list-leave-active {
   position: absolute;
 }
-
 </style>

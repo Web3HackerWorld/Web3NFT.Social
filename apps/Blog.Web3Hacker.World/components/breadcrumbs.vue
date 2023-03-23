@@ -22,7 +22,7 @@ Bruce 在 2022 年 5 月辞职 All in Web3 后的起点是集中参加了各种 
       role: 'Founder / CGO',
       href: '/user/bruce',
       imageUrl:
-      '/apple-touch-icon.png',
+      '/img/bruce.jpg',
     },
   }
 </script>
