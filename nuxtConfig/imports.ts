@@ -1,7 +1,10 @@
+const dirs = [
+  'stores',
+  'constants',
+]
+
 export const imports = {
-  dirs: [
-    'stores',
-  ],
+  dirs,
   presets: [
     {
       from: '@headlessui/vue',

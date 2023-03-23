@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { appName } from '~/constants'
+const { initWeb3, removeWeb3EventListener } = $(web3AuthStore())
+onMounted(initWeb3)
+onUnmounted(removeWeb3EventListener)
 
+// TODO: move config into .env
 useSeoMeta({
   titleTemplate: 'Web3 HN | %s',
   description: 'HackerNews clone by Web3Hacker.World.',

@@ -1,0 +1,172 @@
+{
+  "0x116e9": {
+    "blockExplorerUrls": [
+      "https://v1.testnet.gwscan.com/"
+    ],
+    "chainId": "0x116e9",
+    "chainName": "Godwoken Testnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "Godwoken Testnet",
+      "symbol": "CKB"
+    },
+    "rpcUrls": [
+      "https://godwoken-testnet-v1.ckbapp.dev"
+    ]
+  },
+  "0x13881": {
+    "blockExplorerUrls": [
+      "https://mumbai.polygonscan.com/"
+    ],
+    "chainId": "0x13881",
+    "chainName": "Polygon Testnet Mumbai",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "MATIC",
+      "symbol": "MATIC"
+    },
+    "rpcUrls": [
+      "https://matic-mumbai.chainstacklabs.com",
+      "https://rpc-mumbai.maticvigil.com",
+      "https://matic-testnet-archive-rpc.bwarelabs.com",
+      "https://shy-summer-energy.matic-testnet.discover.quiknode.pro/c5c377733db25dcc0b80de18d1c18a92e293f522/"
+    ]
+  },
+  "0x5": {
+    "blockExplorerUrls": [
+      "https://goerli.etherscan.io/"
+    ],
+    "chainId": "0x5",
+    "chainName": "Goerli Test Network",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "GeorliETH",
+      "symbol": "gETH"
+    },
+    "rpcUrls": [
+      "https://goerli.infura.io/v3/"
+    ]
+  },
+  "0x507": {
+    "blockExplorerUrls": [
+      "https://moonbase.moonscan.io/"
+    ],
+    "chainId": "0x507",
+    "chainName": "Moonbase Alpha",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "DEV",
+      "symbol": "DEV"
+    },
+    "rpcUrls": [
+      "https://rpc.api.moonbase.moonbeam.network"
+    ]
+  },
+  "0x66eeb": {
+    "blockExplorerUrls": [
+      "https://testnet.arbiscan.io/"
+    ],
+    "chainId": "0x66eeb",
+    "chainName": "Arbitrum Testnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "Arbitrum Testnet",
+      "symbol": "ETH"
+    },
+    "rpcUrls": [
+      "https://rinkeby.arbitrum.io/rpc"
+    ]
+  },
+  "0x7a69": {
+    "blockExplorerUrls": [
+      "http://127.0.0.1:8545/"
+    ],
+    "chainId": "0x7a69",
+    "chainName": "Hardhat",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "hEther",
+      "symbol": "ETH"
+    },
+    "rpcUrls": [
+      "http://127.0.0.1:8545/"
+    ]
+  },
+  "0x89": {
+    "blockExplorerUrls": [
+      "https://polygonscan.com/"
+    ],
+    "chainId": "0x89",
+    "chainName": "Polygon Mainnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "MATIC",
+      "symbol": "MATIC"
+    },
+    "rpcUrls": [
+      "https://polygon-rpc.com/",
+      "https://rpc-mainnet.maticvigil.com/"
+    ]
+  },
+  "0xc45": {
+    "blockExplorerUrls": [
+      "https://hyperspace.filfox.info/en"
+    ],
+    "chainId": "0xc45",
+    "chainName": "Filecoin - hyperspace testnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "tFIL",
+      "symbol": "tFIL"
+    },
+    "rpcUrls": [
+      "https://api.hyperspace.node.glif.io/rpc/v1",
+      "https://rpc.ankr.com/filecoin_testnet"
+    ]
+  },
+  "0x1389": {
+    "blockExplorerUrls": [
+      "https://explorer.testnet.mantle.xyz"
+    ],
+    "chainId": "0x1389",
+    "chainName": "Mantle Testnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "BIT",
+      "symbol": "BIT"
+    },
+    "rpcUrls": [
+      "https://rpc.testnet.mantle.xyz"
+    ]
+  },
+  "0x61": {
+    "blockExplorerUrls": [
+      "https://testnet.bscscan.com/"
+    ],
+    "chainId": "0x61",
+    "chainName": "BSC testnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "tBNB",
+      "symbol": "tBNB"
+    },
+    "rpcUrls": [
+      "https://data-seed-prebsc-1-s1.binance.org:8545/"
+    ]
+  },
+  "0xaef3": {
+    "blockExplorerUrls": [
+      "https://alfajores-blockscout.celo-testnet.org/"
+    ],
+    "chainId": "0xaef3",
+    "chainName": "Alfajores Testnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "Alfajores Celo",
+      "symbol": "A-CELO"
+    },
+    "rpcUrls": [
+      "https://alfajores-forno.celo-testnet.org"
+    ]
+  }
+}

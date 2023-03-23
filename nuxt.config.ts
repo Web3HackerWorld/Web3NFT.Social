@@ -1,19 +1,19 @@
+import { appFolder } from './nuxtConfig/0.dotenv'
 import { pwa } from './nuxtConfig/pwa'
 import { modules } from './nuxtConfig/modules'
 import { app } from './nuxtConfig/app'
 import { imports } from './nuxtConfig/imports'
 
-const { APP_NAME } = process.env
 export default defineNuxtConfig({
   dir: {
-    layouts: `./apps/${APP_NAME}/layouts`,
-    pages: `./apps/${APP_NAME}/pages`,
-    public: `./apps/${APP_NAME}/public`,
+    layouts: appFolder('layouts'),
+    pages: appFolder('pages'),
+    public: appFolder('public'),
   },
   imports,
   components: {
     dirs: [
-      `./apps/${APP_NAME}/components`,
+      appFolder('components'),
       {
         path: '~/components',
         extensions: ['vue'],
@@ -22,13 +22,13 @@ export default defineNuxtConfig({
     ],
   },
   modules,
-  experimental: {
-    // when using generate, payload js assets included in sw precache manifest
-    // but missing on offline, disabling extraction it until fixed
-    payloadExtraction: false,
-    reactivityTransform: true,
-    inlineSSRStyles: false,
-  },
+  // experimental: {
+  //   // when using generate, payload js assets included in sw precache manifest
+  //   // but missing on offline, disabling extraction it until fixed
+  //   payloadExtraction: false,
+  //   reactivityTransform: true,
+  //   inlineSSRStyles: false,
+  // },
   css: [
     '@unocss/reset/tailwind.css',
   ],

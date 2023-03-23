@@ -30,12 +30,22 @@ const unocss = [
   },
 ]
 
+const pinia = [
+  '@pinia/nuxt',
+  {
+    autoImports: [
+      'defineStore',
+      'acceptHMRUpdate',
+    ],
+  },
+]
+
 const maybeUseModules = () => {
   const modules = []
-  const { GTAG_ID } = process.env
-  if (GTAG_ID) {
+  const { NUXT_PUBLIC_GTAG_ID } = process.env
+  if (NUXT_PUBLIC_GTAG_ID) {
     modules.push(['nuxt-gtag', {
-      id: GTAG_ID,
+      id: NUXT_PUBLIC_GTAG_ID,
     }])
   }
 
@@ -43,13 +53,15 @@ const maybeUseModules = () => {
 }
 
 export const modules = [
+  '@vue-macros/nuxt',
   ...maybeUseModules(),
   i18n,
   unocss,
+  pinia,
+  '@nuxtjs/supabase',
   '@vueuse/motion/nuxt',
   'nuxt-lodash',
   '@vueuse/nuxt',
-  '@pinia/nuxt',
   '@nuxtjs/color-mode',
   '@vite-pwa/nuxt',
 ]

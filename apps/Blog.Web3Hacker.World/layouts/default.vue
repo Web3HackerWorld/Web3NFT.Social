@@ -7,5 +7,6 @@
       <slot />
     </div>
     <TheFooter />
+    <BsLogin />
   </div>
 </template>
