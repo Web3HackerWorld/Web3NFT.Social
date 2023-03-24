@@ -187,6 +187,14 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     return rz
   }
 
+  const doShowLogin = () => {
+    if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
+      isShowOnboardModal = true
+      return
+    }
+
+    isShowLoginModal = true
+  }
   const initWeb3 = async () => {
     onboarding = new MetaMaskOnboarding()
     if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
@@ -311,6 +319,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     doOnboard,
     chainId,
     doLogin,
+    doShowLogin,
     doLogout,
     isShowOnboardModal,
     isShowChainSwitchModal,

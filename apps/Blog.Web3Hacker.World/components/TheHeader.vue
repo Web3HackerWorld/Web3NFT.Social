@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isShowLoginModal, walletAddress } = $(web3AuthStore())
+const { doShowLogin, walletAddress } = $(web3AuthStore())
 </script>
 
 <template>
@@ -20,17 +20,21 @@ const { isShowLoginModal, walletAddress } = $(web3AuthStore())
         </div>
       </div>
     </div>
-    <div flex items-center space-x-4>
+    <div flex items-center space-x-2 lg:space-x-8>
       <NuxtLink to="/search" i-heroicons-outline-magnifying-glass w-7 h-7 text-zinc-4 lg:hidden>
         Search
       </NuxtLink>
       <template v-if="walletAddress">
-        <NuxtLink to="/notifications" i-mdi-bell-outline w-7 h-7 text-zinc-4>
+        <NuxtLink to="/new-creation" text-zinc-4 items-center lg:flex hidden>
+          <div i-heroicons-outline-pencil-square w-7 h-7 mr-1 />
+          Create
+        </NuxtLink>
+        <NuxtLink to="/notifications" i-mdi-bell-outline w-7 h-7 text-zinc-4 hidden>
           Notifications
         </NuxtLink>
         <UserMenu />
       </template>
-      <BsBtnBlack v-else @click="isShowLoginModal = true">
+      <BsBtnBlack v-else @click="doShowLogin">
         Login
       </BsBtnBlack>
     </div>

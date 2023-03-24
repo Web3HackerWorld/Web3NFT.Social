@@ -10,5 +10,7 @@
     <TheFooter />
     <BsLogin />
     <BsNotification />
+    <BsOnboardModal />
+    <BsChainSwitchModal />
   </div>
 </template>
