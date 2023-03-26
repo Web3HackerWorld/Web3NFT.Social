@@ -1,9 +1,6 @@
-import * as LitJsSdk from '@lit-protocol/lit-node-client'
-// import LitJsSdk from 'lit-js-sdk'
-
-export const litHelper = async({ chain, litNodeClient }) => {
-  const doEncryptedString = async(content, accessControlConditions) => {
-    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain })
+export const litHelper = async ({ chain, litNodeClient }) => {
+  const doEncryptedString = async (content, accessControlConditions) => {
+    const authSig = await litNodeClient.checkAndSignAuthMessage({ chain })
     const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(
       content,
     )
@@ -19,7 +16,7 @@ export const litHelper = async({ chain, litNodeClient }) => {
     function blobToDataURL(blob) {
       return new Promise((resolve) => {
         const a = new FileReader()
-        a.onload = function(e) { resolve(e.target.result) }
+        a.onload = function (e) { resolve(e.target.result) }
         a.readAsDataURL(blob)
       })
     }
@@ -29,7 +26,7 @@ export const litHelper = async({ chain, litNodeClient }) => {
     }
   }
 
-  const doDecryptString = async(encryptedSymmetricKey, encryptedString, accessControlConditions) => {
+  const doDecryptString = async (encryptedSymmetricKey, encryptedString, accessControlConditions) => {
     const toDecrypt = encryptedSymmetricKey
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain })
     try {

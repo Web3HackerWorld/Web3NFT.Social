@@ -1,6 +1,6 @@
 <script setup>
 const pages = [
-  { name: 'Web3HackerWorld', href: '/category/web3hackerworld', current: true },
+  { name: 'Uncategory', href: '#', current: true },
 ]
 
 const post
@@ -48,6 +48,6 @@ Bruce 在 2022 年 5 月辞职 All in Web3 后的起点是集中参加了各种 
         </div>
       </li>
     </ol>
-    <time :datetime="post.datetime" class="text-sm text-gray-400">{{ post.date }}</time>
+    <!-- <time :datetime="post.datetime" class="text-sm text-gray-400">{{ post.date }}</time> -->
   </nav>
 </template>

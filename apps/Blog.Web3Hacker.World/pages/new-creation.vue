@@ -1,11 +1,6 @@
 <script setup>
-const author = {
-  name: 'Bruce',
-  role: 'Founder / Web3Hacker',
-  href: '/user/bruce',
-  imageUrl:
-    '/img/bruce.jpg',
-}
+const client = useSupabaseClient()
+const user = $(useSupabaseUser())
 
 const title = $ref('Content Creation as NFT')
 const excerpt = $ref('We create a platform that help users to make any content into NFT with token gating features as Web3 payment without any coding skill')
@@ -31,12 +26,18 @@ const enableOneTimePayment = $ref(false)
 const oneTimePaymentAmount = $ref(1)
 
 let status = $ref('Create a new SBT for your creation')
+
+const wait = async (sec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => console.log(sec), 1000 * sec)
+  })
+}
 const doSubmit = async () => {
+  // store data into database
+  const { data } = await client.from('web3Creation').upsert({ title, user_id: user.id, excerpt, content, category, requireNFTPass, requiredNFTCount, enableOneTimePayment, oneTimePaymentAmount }).select().single()
+  console.log('====> data :', data)
   status = 'Create a new SBT for your creation'
-  console.log('====> category :', category)
-  await new Promise(resolve => setTimeout(() => {
-    resolve()
-  }, 10000))
+  // await wait(3)
 }
 </script>
 

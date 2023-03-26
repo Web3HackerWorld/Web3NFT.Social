@@ -7,6 +7,19 @@ if (process.env.NUXT_PUBLIC_LOGROCKET_ID && process.env.NODE_ENV !== 'developmen
   logRocketScript.push({ innerHTML: `window.LogRocket && window.LogRocket.init("${process.env.NUXT_PUBLIC_LOGROCKET_ID}");`, type: 'text/javascript', charset: 'utf-8' })
 }
 
+const litScript = [
+  { src: 'https://cdn.jsdelivr.net/npm/@lit-protocol/lit-node-client-vanilla/lit-node-client.js' },
+  {
+    innerHTML: `
+function litJsSdkLoaded() {
+  var litNodeClient = new LitJsSdk_litNodeClient();
+  litNodeClient.connect();
+  window.litNodeClient = litNodeClient;
+}`,
+    type: 'text/javascript',
+    charset: 'utf-8',
+  },
+]
 export const app = {
   head: {
     viewport: 'width=device-width,initial-scale=1',
@@ -21,6 +34,7 @@ export const app = {
     ],
     script: [
       ...logRocketScript,
+      ...litScript,
     ],
   },
 }

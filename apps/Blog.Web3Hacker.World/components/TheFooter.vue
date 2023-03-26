@@ -83,7 +83,7 @@ const navigation = [
       </div>
       <div class="mt-4 md:order-1 md:mt-0">
         <p class="text-center text-xs text-gray-500 leading-5">
-          Powered By <a href="https://CAN.Web3Hacker.World" hover:text-gray-400 target="_blank" title="Content / Creation as NFT">CCAN</a>
+          Powered By <a href="https://CCAN.Web3Hacker.World" hover:text-gray-400 target="_blank" title="Content Creation as NFT">CCAN</a>
         </p>
       </div>
     </div>
