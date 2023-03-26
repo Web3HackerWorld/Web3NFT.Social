@@ -26,7 +26,7 @@ const chainNameMap = {
 
 export const CHAIN_ID = import.meta.env.VITE_CHAIN_ID
 export const CHAIN_MAP = chainMap
-console.log('====> CHAIN_ID :', CHAIN_ID)
+
 const BuidlerProtocol = [
   ...ERC1155,
   ...Token,

@@ -40,10 +40,14 @@ const doSubmit = async () => {
     </template>
     <template v-else>
       <div class="divide-y space-y-8 divide-gray-200  sm:space-y-5">
-        <BsLoading v-if="isLoading" class="h-60" :text="props.status" />
+        <BsLoading v-if="isLoading" class="h-60" :is-loading="isLoading">
+          <div>
+            {{ status }}
+          </div>
+        </BsLoading>
         <slot v-else />
       </div>
-      <div class="pt-5">
+      <div v-if="!isLoading" class="pt-5">
         <div class="flex gap-x-3 justify-end">
           <slot v-if="$slots.bottom" name="bottom" />
           <template v-else>

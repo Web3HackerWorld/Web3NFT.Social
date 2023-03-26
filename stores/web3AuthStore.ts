@@ -2,9 +2,8 @@ import { ethers } from 'ethers'
 import MetaMaskOnboarding from '@metamask/onboarding'
 import detectEthereumProvider from '@metamask/detect-provider'
 
-const chainId = CHAIN_ID
+const chainId = import.meta.env.VITE_CHAIN_ID
 const chainMap = CHAIN_MAP
-
 let onboarding: MetaMaskOnboarding = null
 
 export const web3AuthStore = defineStore('web3AuthStore', () => {
@@ -23,7 +22,12 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
   let accounts = $ref([])
   let userBalanceRaw = $ref(0)
   const userBalance = $computed(() => formatUnits(userBalanceRaw))
-  const walletAddress = $computed(() => accounts[0])
+  const walletAddress = $computed(() => {
+    if (accounts[0]) 
+      return ethers.utils.getAddress(accounts[0])
+    
+    return ''
+  })
   let userData = $ref(getLsItem('userData', {}))
   let isShowLoginModal = $ref(false)
   let isShowChainSwitchModal = $ref(false)
@@ -88,7 +92,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
       error = ''
     }
     else {
-      isShowLoginModal = false
+      // isShowLoginModal = false
     }
   }
 
@@ -100,16 +104,16 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     }
     catch (err) {
       error = err.message
+      console.log('====> err :', err)
       return false
     }
 
     web3Provider = new ethers.providers.Web3Provider(provider)
     signer = web3Provider.getSigner()
-
     return provider
   }
 
-  const doLogin = async () => {
+  const doConnect = async () => {
     if (isLoading)
       return
     isLoading = true
@@ -148,7 +152,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     if (!walletAddress) {
       await initWeb3()
       return
-      // const rz = await doLogin();
+      // const rz = await doConnect();
       // if (!rz) return;
     }
 
@@ -283,7 +287,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     if (accounts.length > 0) {
       //  process.env.NODE_ENV !== 'development' &&
       doIdentify(`id_${accounts[0]}`)
-      onboarding.stopOnboarding()
+      onboarding?.stopOnboarding()
     }
   })
 
@@ -318,7 +322,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     isLoading,
     doOnboard,
     chainId,
-    doLogin,
+    doConnect,
     doShowLogin,
     doLogout,
     isShowOnboardModal,
