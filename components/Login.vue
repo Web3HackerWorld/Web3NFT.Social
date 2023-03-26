@@ -10,10 +10,11 @@ const name = $computed(() => user?.user_metadata.full_name)
 let binded = $ref(false)
 
 watchEffect(async () => {
+  if (!user)
+    return
   const { data } = await client.from('web3Wallet').select().eq('user_id', user.id).single()
-  if (data.address) 
+  if (data.address)
     binded = true
-  
 })
 const doBind = async () => {
   let nonce = ''
