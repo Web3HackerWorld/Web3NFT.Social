@@ -3,7 +3,7 @@ const user = $(useSupabaseUser())
 const client = useSupabaseClient()
 
 const { data: posts } = $(await useAsyncData('restaurant', async () => {
-  const { data } = await client.from('web3Creation').select()
+  const { data } = await client.from('web3Creation').select().order('created_at', 'desc')
   return $$(data)
 }))
 

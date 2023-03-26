@@ -1,6 +1,7 @@
 <script setup>
 const client = useSupabaseClient()
 const user = $(useSupabaseUser())
+const router = useRouter()
 
 const title = $ref('Content Creation as NFT')
 const excerpt = $ref('We create a platform that help users to make any content into NFT with token gating features as Web3 payment without any coding skill')
@@ -37,7 +38,8 @@ const doSubmit = async () => {
   const { data } = await client.from('web3Creation').upsert({ title, user_id: user.id, excerpt, content, category, requireNFTPass, requiredNFTCount, enableOneTimePayment, oneTimePaymentAmount }).select().single()
   console.log('====> data :', data)
   status = 'Create a new SBT for your creation'
-  // await wait(3)
+  await wait(3)
+  router.push('/')
 }
 </script>
 
