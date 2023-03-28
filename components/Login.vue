@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { SiweMessage, generateNonce } from 'siwe'
+import {web3AuthStore} from '~/stores/web3AuthStore'
 
 const { doConnect, walletAddress, web3Provider, isLoading, error, isShowLoginModal } = $(web3AuthStore())
 const user = $(useSupabaseUser())

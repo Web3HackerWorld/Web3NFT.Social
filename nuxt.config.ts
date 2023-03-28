@@ -5,6 +5,9 @@ import { app } from './nuxtConfig/app'
 import { imports } from './nuxtConfig/imports'
 
 export default defineNuxtConfig({
+  alias: {
+    '@app': appFolder('.'),
+  },
   dir: {
     layouts: appFolder('layouts'),
     pages: appFolder('pages'),

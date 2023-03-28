@@ -12,10 +12,11 @@ const litScript = [
   {
     innerHTML: `
 function litJsSdkLoaded() {
-  var litNodeClient = new LitJsSdk_litNodeClient();
+  var litNodeClient = new LitJsSdk_litNodeClient.LitNodeClient
+();
   litNodeClient.connect();
   window.litNodeClient = litNodeClient;
-}`,
+}; litJsSdkLoaded()`,
     type: 'text/javascript',
     charset: 'utf-8',
   },

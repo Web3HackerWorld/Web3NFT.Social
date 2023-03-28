@@ -7,7 +7,7 @@ const props = defineProps<{
 <template>
   <div>
     <div v-if="isLoading" w-full h-full flex-c py-10>
-      <div text-green-500 i-svg-spinners-eclipse mr-2 />
+      <div text-green-500 i-svg-spinners-eclipse mr-2 font-bold text-lg />
       <slot />
     </div>
   </div>

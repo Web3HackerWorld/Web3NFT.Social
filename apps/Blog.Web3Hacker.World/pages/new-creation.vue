@@ -1,4 +1,6 @@
-<script setup>
+<script setup lang="ts">
+const { initContract, userData, getContractAddress, walletAddress } = $(web3AuthStore())
+const { storeJson } = $(useNFTStorage())
 const client = useSupabaseClient()
 const user = $(useSupabaseUser())
 const router = useRouter()
@@ -17,6 +19,7 @@ const categoryList = $ref([
   'Uncategory',
 ])
 
+const image = $ref('')
 const theType = $ref('Text')
 const typeList = $ref(['Text', 'Music', 'Video'])
 
@@ -25,20 +28,77 @@ const requiredNFTCount = $ref(1)
 
 const enableOneTimePayment = $ref(false)
 const oneTimePaymentAmount = $ref(1)
-
 let status = $ref('Create a new SBT for your creation')
-
 const wait = async (sec) => {
   return new Promise((resolve) => {
-    setTimeout(() => console.log(sec), 1000 * sec)
+    setTimeout(() => resolve(true), 1000 * sec)
   })
 }
+
+const tokenId = '13' // current project/app id
+
 const doSubmit = async () => {
-  // store data into database
-  const { data } = await client.from('web3Creation').upsert({ title, user_id: user.id, excerpt, content, category, requireNFTPass, requiredNFTCount, enableOneTimePayment, oneTimePaymentAmount }).select().single()
-  console.log('====> data :', data)
-  status = 'Create a new SBT for your creation'
-  await wait(3)
+  const value = parseEther('0.0001')
+  status = '1. Creating One Time Payment SBT token'
+  // const cid = await storeJson({
+  //   userData,
+  //   title,
+  //   image,
+  //   excerpt,
+  // })
+  // const contractWriterCCANSBT = await initContract('CCANSBT', true)
+  // const txSBT = await contractWriterCCANSBT.upsertBlog([
+  //   title,
+  //   excerpt,
+  //   image,
+  //   cid,
+  // ], { value })
+  // const rcSBT = await txSBT.wait()
+  // const event = rcSBT.events.find(event => event.event === 'UpsertBlog')
+  // // one time payment sbt token Id
+  // const otpSbtTokenId = event.args[0].toString()
+  const otpSbtTokenId = '3'
+  console.log('====>success 1. otpSbtTokenId  :', otpSbtTokenId)
+
+  status = '2. Encrypt your content via LIT'
+  const { doEncryptedString, generateCondition } = litHelper({ chain: CHAIN_NAME })
+
+  const nftPassCondition = generateCondition({ contractAddress: getContractAddress('BuidlerProtocol'), walletAddress, tokenId, unlockAmount: requiredNFTCount })
+  const sbtCondition = generateCondition({ contractAddress: getContractAddress('CCANSBT'), walletAddress, tokenId: otpSbtTokenId, unlockAmount: oneTimePaymentAmount })
+  const condition = [
+    ...nftPassCondition,
+    // {
+    //   operator: 'or',
+    // },
+    // sbtCondition[2],
+  ]
+  const { encryptedString, encryptedSymmetricKey } = await doEncryptedString(content, condition)
+  console.log('====>success 2. LIT: encryptedString, encryptedSymmetricKey :', encryptedString, encryptedSymmetricKey)
+  const itemType = 'Blog'
+
+  status = '3. upload the encrypt article information onto IPFS'
+  const cidArticle = await storeJson({
+    userData,
+    title,
+    image,
+    excerpt,
+    content: {
+      encryptedString,
+      encryptedSymmetricKey,
+      condition,
+    },
+    otpSbtTokenId,
+    requiredNFTCount,
+    oneTimePaymentAmount,
+  })
+  console.log('====>success 3. upload to ipfs :', cidArticle)
+  const contractWriterBP = await initContract('BuidlerProtocol', true)
+  const tx = await contractWriterBP.addItem(itemType, tokenId, cidArticle)
+  const rc = await tx.wait()
+  console.log('====> rc :', rc)
+  // // store data into database
+  status = 'store data into database for cache only'
+  const { data } = await client.from('web3Creation').upsert({ title, user_id: user.id, excerpt, content: encryptedString, category, requireNFTPass, requiredNFTCount, enableOneTimePayment, oneTimePaymentAmount, encryptedSymmetricKey, otpSbtTokenId, condition }).select().single()
   router.push('/')
 }
 </script>

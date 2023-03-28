@@ -2,6 +2,8 @@ import chainMap from './chainMap.json'
 import chainConfigMap from './chainConfigMap.json'
 import BuidlerStableToken from './abis/BuidlerStableToken.json'
 
+import CCANSBT from './abis/CCANSBT.json'
+
 // BuidlerProtocol
 import ERC1155 from './abis/ERC1155.json'
 import Token from './abis/Token.json'
@@ -26,6 +28,7 @@ const chainNameMap = {
 
 export const CHAIN_ID = import.meta.env.VITE_CHAIN_ID
 export const CHAIN_MAP = chainMap
+export const CHAIN_NAME = chainNameMap[CHAIN_ID]
 
 const BuidlerProtocol = [
   ...ERC1155,
@@ -41,4 +44,5 @@ const BuidlerProtocol = [
 export const CHAIN_CONTRACT_ABI_MAP = {
   BuidlerProtocol,
   BuidlerStableToken,
+  CCANSBT,
 }

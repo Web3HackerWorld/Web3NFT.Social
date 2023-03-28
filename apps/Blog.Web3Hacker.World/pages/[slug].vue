@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const user = $(useSupabaseUser())
 const client = useSupabaseClient()
 
@@ -19,6 +19,17 @@ const { data: post } = $(await useAsyncData(`web3Creation-${id}`, async () => {
   const { data } = await client.from('web3Creation').select().eq('id', id).single()
   return $$(data)
 }))
+
+let isUnlocking = $ref(false)
+const doUnlock = async () => {
+  isUnlocking = true
+  const { doDecryptString } = litHelper({ chain: CHAIN_NAME })
+  const { decryptedString } = await doDecryptString({ encryptedSymmetricKey: post.encryptedSymmetricKey, encryptedString: post.content, accessControlConditions: post.condition })
+
+  post.content = decryptedString
+  isUnlocking = false
+  console.log('====> unlock success :', decryptedString)
+}
 </script>
 
 <template>
@@ -29,6 +40,14 @@ const { data: post } = $(await useAsyncData(`web3Creation-${id}`, async () => {
         {{ post.title }}
       </h1>
       <div>
+        <p>{{ post.excerpt }}</p>
+        <div my-10 items-center flex>
+          <BsBtnBlack>Mint NFT</BsBtnBlack>
+          <BsBtnBlack>Mint One Time Payment SBT NFT</BsBtnBlack>
+          <BsBtnBlack :is-loading="isUnlocking" @click="doUnlock">
+            Unlock content
+          </BsBtnBlack>
+        </div>
         <v-md-preview :text="post.content" />
       </div>
     </div>

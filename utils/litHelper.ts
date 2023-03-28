@@ -1,7 +1,7 @@
-export const litHelper = async ({ chain, litNodeClient }) => {
+export const litHelper = ({ chain }) => {
   const doEncryptedString = async (content, accessControlConditions) => {
-    const authSig = await litNodeClient.checkAndSignAuthMessage({ chain })
-    const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(
+    const authSig = await LitJsSdk_litNodeClient.checkAndSignAuthMessage({ chain })
+    const { encryptedString, symmetricKey } = await LitJsSdk_litNodeClient.encryptString(
       content,
     )
     const encryptedSymmetricKey = await litNodeClient.saveEncryptionKey({
@@ -22,13 +22,16 @@ export const litHelper = async ({ chain, litNodeClient }) => {
     }
     return {
       encryptedString: await blobToDataURL(encryptedString),
-      encryptedSymmetricKey: LitJsSdk.uint8arrayToString(encryptedSymmetricKey, 'base16'),
+      encryptedSymmetricKey: LitJsSdk_litNodeClient.uint8arrayToString(encryptedSymmetricKey, 'base16'),
     }
   }
 
-  const doDecryptString = async (encryptedSymmetricKey, encryptedString, accessControlConditions) => {
+  const doDecryptString = async ({ encryptedSymmetricKey, encryptedString, accessControlConditions }) => {
     const toDecrypt = encryptedSymmetricKey
-    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain })
+    accessControlConditions = JSON.stringify(accessControlConditions)
+    accessControlConditions = JSON.parse(accessControlConditions)
+    console.log('====> accessControlConditions :', accessControlConditions)
+    const authSig = await LitJsSdk_litNodeClient.checkAndSignAuthMessage({ chain })
     try {
       const symmetricKey = await litNodeClient.getEncryptionKey({
         accessControlConditions,
@@ -48,8 +51,7 @@ export const litHelper = async ({ chain, litNodeClient }) => {
       }
 
       encryptedString = dataURLtoBlob(encryptedString)
-
-      const decryptedString = await LitJsSdk.decryptString(
+      const decryptedString = await LitJsSdk_litNodeClient.decryptString(
         encryptedString,
         symmetricKey,
       )
@@ -88,7 +90,7 @@ export const litHelper = async ({ chain, litNodeClient }) => {
       ],
       returnValueTest: {
         comparator: '>=',
-        value: unlockAmount,
+        value: `${unlockAmount}`,
       },
     }
 
