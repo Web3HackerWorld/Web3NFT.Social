@@ -45,11 +45,11 @@ const author = {
   <div class="mx-auto max-w-7xl">
     <div class="mx-auto max-w-3xl py-12 sm:py-16">
       <h2 class="font-bold tracking-tight text-3xl text-gray-900 sm:text-4xl">
-        Web3Hacker.World
+        CCAN
       </h2>
       <p class="mt-2 text-lg text-gray-600 leading-8">
-        解锁 Web3 的无限可能 <br>
-        万物皆可 Web3，我们重新定义 NFT，为 Buidlers 的 NFT 生态系统建立新的革命
+        Unleash the boundary of Web3 <br>
+        We redefine what the NFT should be, To build a New Revolution for Buidlers' NFT Ecosystem
       </p>
       <div class="border-t space-y-16 border-gray-200 mt-10 pt-10 sm:mt-16 sm:pt-16">
         <article v-for="post in posts" :key="post.id" class="flex flex-col max-w-xl items-start justify-between">

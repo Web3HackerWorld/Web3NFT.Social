@@ -1,3 +1,11 @@
+## CCAN: Content Creation as NFT
+
+An open source version of mirror
+
+Deploy on Scroll Testnet: https://blockscout.scroll.io/address/0xf495dD8D8B4e38bdcF811B39A19eb2b1f9E24686
+
+Demo: https://blog.web3hacker.world/
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/11247099/140462375-7b7ac4db-35b7-453c-8a05-13d8d20282c4.png" width="600"/>
 </p>

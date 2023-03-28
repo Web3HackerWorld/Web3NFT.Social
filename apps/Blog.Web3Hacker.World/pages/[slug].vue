@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { addSuccess } = $(notificationStore())
 const user = $(useSupabaseUser())
 const client = useSupabaseClient()
 
@@ -9,7 +10,11 @@ const author = {
   imageUrl:
     '/img/bruce.jpg',
 }
-
+const wait = async (sec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(true), 1000 * sec)
+  })
+}
 const route = useRoute()
 const slug = $computed(() => route.params.slug)
 const id = $computed(() => {
@@ -20,14 +25,32 @@ const { data: post } = $(await useAsyncData(`web3Creation-${id}`, async () => {
   return $$(data)
 }))
 
-let isUnlocking = $ref(false)
+let isLoading = $ref(false)
+let status = $ref('')
+const doMintNFT = async () => {
+  isLoading = true
+  status = 'mint nft'
+  await wait(3)
+  addSuccess('Mint NFT success')
+  isLoading = false
+}
+const doMintSBT = async () => {
+  isLoading = true
+  status = 'mint sbt'
+  await wait(3)
+  addSuccess('Mint SBT success')
+  isLoading = false
+}
+
 const doUnlock = async () => {
-  isUnlocking = true
+  status = 'unlocking'
+  isLoading = true
   const { doDecryptString } = litHelper({ chain: CHAIN_NAME })
   const { decryptedString } = await doDecryptString({ encryptedSymmetricKey: post.encryptedSymmetricKey, encryptedString: post.content, accessControlConditions: post.condition })
 
   post.content = decryptedString
-  isUnlocking = false
+  isLoading = false
+  addSuccess('Unlock content success')
   console.log('====> unlock success :', decryptedString)
 }
 </script>
@@ -41,10 +64,19 @@ const doUnlock = async () => {
       </h1>
       <div>
         <p>{{ post.excerpt }}</p>
-        <div my-10 items-center flex>
-          <BsBtnBlack>Mint NFT</BsBtnBlack>
-          <BsBtnBlack>Mint One Time Payment SBT NFT</BsBtnBlack>
-          <BsBtnBlack :is-loading="isUnlocking" @click="doUnlock">
+        <BsLoading v-if="isLoading" class="h-60" :is-loading="isLoading">
+          <div>
+            {{ status }}
+          </div>
+        </BsLoading>
+        <div v-else my-10 items-center flex>
+          <BsBtnBlack @click="doMintNFT">
+            Mint NFT
+          </BsBtnBlack>
+          <BsBtnBlack @click="doMintSBT">
+            Mint One Time Payment SBT NFT
+          </BsBtnBlack>
+          <BsBtnBlack @click="doUnlock">
             Unlock content
           </BsBtnBlack>
         </div>
