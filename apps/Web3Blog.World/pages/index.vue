@@ -9,29 +9,6 @@ const { data: posts } = $(await useAsyncData('restaurant', async () => {
 
 const categoryLink = cat => `/category/${cat}`
 const postLink = post => `${post.id}-${useKebabCase(post.title)}`
-// const posts = [
-//   {
-//     id: 1,
-//     title: '解锁 Web3 的无限可能',
-//     href: '/unleash-the-boundary-of-web3',
-//     description:
-//       `万物皆可 Web3，我们重新定义 NFT，为 Buidlers 的 NFT 生态系统建立新的革命。Web3Hacker.World 是由 Bruce 创立的，意在创建一个以技术产品开发为基础的 Web3 的去中心化的 Web3 产业联盟组织。
-// 组织的核心开发成员都必须是全栈 Web3 开发，有产品sences、有市场黑客运营思路、一个人可以自己产生点子到落地开发及黑客增长运营的一帮 Web3 黑客。
-// Bruce 在 2022 年 5 月辞职 All in Web3 后的起点是集中参加了各种 Web3 的黑客松比赛，并有幸获得了 10 多个赛道奖。
-// 不过参与过程中想到了可以更加规模化产业化的运作的逻辑思路。于是逐渐产生了组建 Web3HackerDAO 的想法。
-// 在 2023 年，我们改名为 Web3Hacker.World，不再叫 DAO。`,
-//     date: 'Mar 21, 2023',
-//     datetime: '2023-03-21',
-//     category: { title: 'Web3HackerWorld', href: '/category/web3hackerworld' },
-//     author: {
-//       name: 'Bruce',
-//       role: 'Founder / Web3Hacker',
-//       href: '/user/bruce',
-//       imageUrl:
-//         '/img/bruce.jpg',
-//     },
-//   },
-// ]
 
 const author = {
   name: 'Bruce',
@@ -45,11 +22,11 @@ const author = {
   <div class="mx-auto max-w-7xl">
     <div class="mx-auto max-w-3xl py-12 sm:py-16">
       <h2 class="font-bold tracking-tight text-3xl text-gray-900 sm:text-4xl">
-        CCAN
+        Web3Blog.World
       </h2>
       <p class="mt-2 text-lg text-gray-600 leading-8">
-        Unleash the boundary of Web3 <br>
-        We redefine what the NFT should be, To build a New Revolution for Buidlers' NFT Ecosystem
+        Your Web3 Blogging platform <br>
+        With Web3 and Web2 features
       </p>
       <div class="border-t space-y-16 border-gray-200 mt-10 pt-10 sm:mt-16 sm:pt-16">
         <article v-for="post in posts" :key="post.id" class="flex flex-col max-w-xl items-start justify-between">

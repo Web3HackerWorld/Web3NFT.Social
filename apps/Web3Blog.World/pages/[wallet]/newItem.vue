@@ -9,5 +9,5 @@ interface Props {
 </script>
 
 <template>
-  category page
+  new item
 </template>
