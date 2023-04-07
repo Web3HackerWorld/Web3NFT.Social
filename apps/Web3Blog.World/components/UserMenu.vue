@@ -14,8 +14,8 @@ const logout = async () => {
 }
 const userNavigation = $computed(() => {
   return [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
+    { name: 'Your Profile', href: `/${walletAddress}` },
+    { name: 'Settings', href: `/${walletAddress}/settings` },
     { name: 'Sign out', onClick: logout },
   ]
 })

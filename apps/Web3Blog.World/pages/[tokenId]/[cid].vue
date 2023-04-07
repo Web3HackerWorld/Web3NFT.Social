@@ -16,7 +16,7 @@ const wait = async (sec) => {
   })
 }
 const route = useRoute()
-const slug = $computed(() => route.params.slug)
+const slug = $computed(() => route.params.cid)
 const id = $computed(() => {
   return slug.split('-')[0]
 })

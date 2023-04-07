@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { defineComponent, h } from 'vue'
 const navigation = [
   {
@@ -74,7 +74,7 @@ const navigation = [
 
 <template>
   <footer class="px-6 lg:px-8">
-    <div class="border-t mx-auto border-gray-200 max-w-2xl py-6 md:flex md:items-center md:justify-between">
+    <div class="border-t mx-auto  border-gray-200 max-w-3xl py-6 md:flex md:items-center md:justify-between">
       <div class="flex space-x-6 justify-center md:order-2">
         <a v-for="item in navigation" :key="item.name" :href="item.href" class="text-gray-400 hover:text-gray-500">
           <span class="sr-only">{{ item.name }}</span>
@@ -83,7 +83,7 @@ const navigation = [
       </div>
       <div class="mt-4 md:order-1 md:mt-0">
         <p class="text-center text-xs text-gray-500 leading-5">
-          Powered By <a href="https://CCAN.Web3Hacker.World" hover:text-gray-400 target="_blank" title="Content Creation as NFT">CCAN</a>
+          Powered By <a href="https://Web3Blog.World" hover:text-gray-400 target="_blank" title="Web3 Blog World">Web3Blog.World</a>
         </p>
       </div>
     </div>
