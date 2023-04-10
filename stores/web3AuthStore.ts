@@ -5,7 +5,7 @@ import detectEthereumProvider from '@metamask/detect-provider'
 const chainId = import.meta.env.VITE_CHAIN_ID
 const chainMap = CHAIN_MAP
 let onboarding: MetaMaskOnboarding = null
-
+console.log('====> chainMap :', chainMap)
 export const web3AuthStore = defineStore('web3AuthStore', () => {
   const { addSuccess, addWarning, addLoading } = $(notificationStore())
   const { getJson, storeJson } = $(useNFTStorage())
@@ -55,21 +55,26 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
       return true
     }
     catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        try {
-          await rawProvider.request({
-            method: 'wallet_addEthereumChain',
-            params: [chainMap[chainId]],
-          })
-          return true
-        }
-        catch (err) {
-          error = err.message
-          return false
-        }
+      switch (switchError.code.toString()) {
+        case '4902':
+          try {
+            await rawProvider.request({
+              method: 'wallet_addEthereumChain',
+              params: [chainMap[chainId]],
+            })
+            return true
+          }
+          catch (err) {
+            error = err.message
+            return false
+          }
+        case '-32603':
+          // Metamask bug: https://github.com/MetaMask/metamask-extension/issues/18509
+          error = 'MetaMask Bug, please manually delete the target chain in metamask then come back to switch chain, see more https://github.com/MetaMask/metamask-extension/issues/18509'
+          break
+        default:
+          error = switchError.message
       }
-      error = switchError.message
     }
 
     isLoading = false
