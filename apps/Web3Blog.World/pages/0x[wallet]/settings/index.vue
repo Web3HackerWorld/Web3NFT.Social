@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const user = $(useSupabaseUser())
-const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl } = $(web3AuthStore())
-
+const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, walletAddress } = $(web3AuthStore())
+const router = useRouter()
 let isLoading = $ref(true)
 
 const tabs = [
@@ -65,7 +65,7 @@ const saveToContract = async (data) => {
   const cid = await storeJson(data)
   addSuccess('Save to IPFS successed!', loadingItem1)
 
-  const loadingItem2 = addLoading('Saving to BuidlerProtocol on Chain')
+  const loadingItem2 = addLoading(`Saving to BuidlerProtocol on Chain ${CHAIN_NAME} ${CHAIN_ID}`)
   const tx = await contractWriter.updateBuidler(inviter, cid)
   const rc = await tx.wait()
   const txLink = getTxUrl(rc.transactionHash)
@@ -87,8 +87,11 @@ const doSubmit = async () => {
     alertError(error)
   }
 
-  alertSuccess('Update profile success')
-  isLoading = false
+  alertSuccess('Update profile success', async () => {
+    isLoading = false
+    // go to profile page
+    router.push(`/${walletAddress}`)
+  })
 }
 </script>
 

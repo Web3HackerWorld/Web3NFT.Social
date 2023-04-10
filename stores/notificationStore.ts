@@ -6,6 +6,7 @@ export const notificationStore = defineStore('notificationStore', () => {
   let error = $ref(false)
   let success = $ref(false)
   let alertType = $ref(false)
+  let alertCB = $ref(false)
   const addItem = (item: item) => {
     if (!item._id)
       item._id = parseInt(`${Date.now()}${Math.floor(Math.random() * 10000)}`, 10)
@@ -76,9 +77,18 @@ export const notificationStore = defineStore('notificationStore', () => {
     error = err
   }
 
-  const alertSuccess = (title) => {
+  const alertSuccess = (title, _alertCB = false) => {
     alertType = 'success'
     success = title
+    alertCB = _alertCB
+  }
+
+  const doCloseAlert = async () => {
+    if (alertCB)
+      await alertCB()
+
+    alertType = false
+    alertCB = false
   }
 
   return $$({
@@ -90,6 +100,7 @@ export const notificationStore = defineStore('notificationStore', () => {
     addError,
     addItem,
     removeItem,
+    doCloseAlert,
     items,
     error,
     success,

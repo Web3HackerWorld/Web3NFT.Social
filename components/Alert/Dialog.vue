@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const { error, success, alertType } = $(notificationStore())
+const { error, success, alertType, doCloseAlert } = $(notificationStore())
 </script>
 
 <template>
-  <BsDialogDefault :show="alertType !== false" @close="alertType = false">
+  <BsDialogDefault :show="alertType !== false" @close="doCloseAlert">
     <div min-w-sm>
       <BsAlertError v-if="alertType === 'error'" :title="error.title">
         {{ error }}
