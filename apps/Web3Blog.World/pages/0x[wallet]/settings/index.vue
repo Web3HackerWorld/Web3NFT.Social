@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const user = $(useSupabaseUser())
-const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter } = $(web3AuthStore())
+const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl } = $(web3AuthStore())
 
 let isLoading = $ref(true)
 
@@ -60,7 +60,6 @@ const saveToSupabase = async () => {
 }
 const saveToContract = async (data) => {
   const contractWriter = await initContract('BuidlerProtocol', true)
-  console.log('====> contractWriter :', contractWriter)
 
   const loadingItem1 = addLoading('Saving public meta data on to IPFS')
   const cid = await storeJson(data)
@@ -69,7 +68,8 @@ const saveToContract = async (data) => {
   const loadingItem2 = addLoading('Saving to BuidlerProtocol on Chain')
   const tx = await contractWriter.updateBuidler(inviter, cid)
   const rc = await tx.wait()
-  addSuccess('Save to BuidlerProtocol on Chain successed!', loadingItem2)
+  const txLink = getTxUrl(rc.transactionHash)
+  addSuccess(`Save to BuidlerProtocol on Chain successed! tx link: ${txLink}`, loadingItem2, 10)
 }
 
 const canSubmit = $computed(() => !useSome(profile, val => val === ''))

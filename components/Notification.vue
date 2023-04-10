@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const { items, removeItem } = $(notificationStore())
+const renderBody = (item) => {
+  const exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i
+  return item.title.replace(exp, '<a href=\'$1\' target="_blank">$1</a>')
+}
 </script>
 
 <template>
@@ -17,9 +21,7 @@ const { items, removeItem } = $(notificationStore())
                   <div v-if="item.type === 'loading'" class="h-6 text-blue-400 w-6 i-eos-icons-loading" aria-hidden="true" />
                 </div>
                 <div class="flex-1 ml-3 pt-0.5 w-0">
-                  <p class="font-medium text-sm text-gray-900">
-                    {{ item.title }}
-                  </p>
+                  <p class="font-medium text-sm text-gray-900 break-words notify-body" v-html="renderBody(item)" />
                 </div>
                 <div class="flex flex-shrink-0 ml-4">
                   <button type="button" class="bg-white rounded-md text-gray-400 inline-flex hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="removeItem(item)">
@@ -37,6 +39,10 @@ const { items, removeItem } = $(notificationStore())
 </template>
 
 <style lang="stylus">
+.notify-body a{
+  text-decoration: underline;
+  opacity: 0.7;
+}
 .list-move,
 .list-enter-active,
 .list-leave-active {

@@ -40,13 +40,14 @@ export const notificationStore = defineStore('notificationStore', () => {
     })
   }
 
-  const addSuccess = (title, loadingItem = false) => {
+  const addSuccess = (title, loadingItem = false, timeout = 3) => {
     if (loadingItem)
       removeItem(loadingItem)
 
     addItem({
       title,
       type: 'success',
+      timeout,
     })
   }
 
