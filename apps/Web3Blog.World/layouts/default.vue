@@ -14,5 +14,6 @@
     <BsNotification />
     <BsOnboardModal />
     <BsChainSwitchModal />
+    <BsAlertDialog />
   </div>
 </template>

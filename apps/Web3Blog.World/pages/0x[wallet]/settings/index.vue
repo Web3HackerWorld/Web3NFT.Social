@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const user = $(useSupabaseUser())
+const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter } = $(web3AuthStore())
+
 let isLoading = $ref(true)
 
 const tabs = [
@@ -27,9 +29,11 @@ const keysStr = useKeys(defaultVal).join(',')
 const { data } = await supabase
   .from('profiles')
   .select(keysStr)
-  .eq('id', user.id)
+  .eq('id', user?.id)
   .single()
+
 isLoading = false
+
 if (data) {
   defaultVal = {
     ...defaultVal,
@@ -40,6 +44,7 @@ if (data) {
 const profile = $ref(defaultVal)
 
 const saveToSupabase = async () => {
+  const loadingItem = addLoading('Start Saving to cache layer')
   const data = {
     id: user.id,
     updated_at: new Date(),
@@ -49,12 +54,25 @@ const saveToSupabase = async () => {
   const { error } = await supabase.from('profiles').upsert(data, { returning: 'minimal' })
   if (error)
     throw error
+
+  addSuccess('Save to cache layer successed!', loadingItem)
+  return data
 }
-const saveToContract = async () => {
-  //
+const saveToContract = async (data) => {
+  const contractWriter = await initContract('BuidlerProtocol', true)
+  console.log('====> contractWriter :', contractWriter)
+
+  const loadingItem1 = addLoading('Saving public meta data on to IPFS')
+  const cid = await storeJson(data)
+  addSuccess('Save to IPFS successed!', loadingItem1)
+
+  const loadingItem2 = addLoading('Saving to BuidlerProtocol on Chain')
+  const tx = await contractWriter.updateBuidler(inviter, cid)
+  const rc = await tx.wait()
+  addSuccess('Save to BuidlerProtocol on Chain successed!', loadingItem2)
 }
 
-const canSubmit = $computed(() => useSome(profile, val => !isEmpty(val)))
+const canSubmit = $computed(() => !useSome(profile, val => val === ''))
 
 const doSubmit = async () => {
   if (isLoading)
@@ -62,13 +80,14 @@ const doSubmit = async () => {
 
   isLoading = true
   try {
-    await saveToSupabase()
-    await saveToContract()
+    const userProfileData = await saveToSupabase()
+    await saveToContract(userProfileData)
   }
   catch (error) {
-    alert(error.message)
+    alertError(error)
   }
 
+  alertSuccess('Update profile success')
   isLoading = false
 }
 </script>

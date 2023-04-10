@@ -3,6 +3,9 @@ interface MessageItem { title: string; timeout?: number; type?: string; _id?: nu
 const timerMap = {}
 export const notificationStore = defineStore('notificationStore', () => {
   const items = $ref<[MessageItem]>([])
+  let error = $ref(false)
+  let success = $ref(false)
+  let alertType = $ref(false)
   const addItem = (item: item) => {
     if (!item._id)
       item._id = parseInt(`${Date.now()}${Math.floor(Math.random() * 10000)}`, 10)
@@ -13,6 +16,8 @@ export const notificationStore = defineStore('notificationStore', () => {
     timerMap[item._id] = setTimeout(() => {
       removeItem(item)
     }, timeout * 1000)
+
+    return item
   }
 
   const removeItem = (item: MessageItem) => {
@@ -27,33 +32,67 @@ export const notificationStore = defineStore('notificationStore', () => {
     }
   }
 
-  const addSuccess = (title) => {
+  const addLoading = (title) => {
+    return addItem({
+      title,
+      type: 'loading',
+      timeout: 10000,
+    })
+  }
+
+  const addSuccess = (title, loadingItem = false) => {
+    if (loadingItem)
+      removeItem(loadingItem)
+
     addItem({
       title,
       type: 'success',
     })
   }
 
-  const addWarning = (title) => {
+  const addWarning = (title, loadingItem = false) => {
+    if (loadingItem)
+      removeItem(loadingItem)
+
     addItem({
       title,
       type: 'warning',
     })
   }
-  const addError = (title) => {
+
+  const addError = (title, loadingItem = false) => {
+    if (loadingItem)
+      removeItem(loadingItem)
+
     addItem({
       title,
       type: 'error',
     })
   }
 
+  const alertError = (err) => {
+    alertType = 'error'
+    error = err
+  }
+
+  const alertSuccess = (title) => {
+    alertType = 'success'
+    success = title
+  }
+
   return $$({
+    alertError,
+    alertSuccess,
+    addLoading,
     addSuccess,
     addWarning,
     addError,
     addItem,
     removeItem,
     items,
+    error,
+    success,
+    alertType,
   })
 })
 

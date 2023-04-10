@@ -14,6 +14,7 @@ const { items, removeItem } = $(notificationStore())
                   <div v-if="item.type === 'error'" i-heroicons-outline-x-circle class="h-6 text-red-400 w-6" aria-hidden="true" />
                   <div v-if="item.type === 'warning'" i-heroicons-outline-exclamation-circle class="h-6 text-orange-400 w-6" aria-hidden="true" />
                   <div v-if="item.type === 'success'" class="h-6 text-green-400 w-6 i-heroicons-outline-check-circle" aria-hidden="true" />
+                  <div v-if="item.type === 'loading'" class="h-6 text-blue-400 w-6 i-eos-icons-loading" aria-hidden="true" />
                 </div>
                 <div class="flex-1 ml-3 pt-0.5 w-0">
                   <p class="font-medium text-sm text-gray-900">

@@ -5,12 +5,12 @@ import detectEthereumProvider from '@metamask/detect-provider'
 const chainId = import.meta.env.VITE_CHAIN_ID
 const chainMap = CHAIN_MAP
 let onboarding: MetaMaskOnboarding = null
-console.log('====> chainMap :', chainMap)
+
 export const web3AuthStore = defineStore('web3AuthStore', () => {
-  const { addSuccess, addWarning, addLoading } = $(notificationStore())
+  const { addSuccess, addWarning, addLoading, alertError, alertSuccess } = $(notificationStore())
   const { getJson, storeJson } = $(useNFTStorage())
   const { doIdentify } = $(useLogRocket())
-  const inviter = ''
+  const inviter = '0xC6E58fb4aFFB6aB8A392b7CC23CD3feF74517F6C'
 
   let error = $ref('')
   let isLoading = $ref(false)
@@ -319,6 +319,8 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     addLoading,
     addSuccess,
     addWarning,
+    alertError,
+    alertSuccess,
     contractRead,
     isMyWalletAddress,
     contractReadWithAddress,
