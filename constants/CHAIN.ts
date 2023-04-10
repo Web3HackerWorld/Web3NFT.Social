@@ -1,5 +1,5 @@
 import chainMap from './chainMap.json'
-import chainConfigMap from './chainConfigMap.json'
+import contractAddressMap from './contractAddressMap.json'
 import BuidlerStableToken from './abis/BuidlerStableToken.json'
 
 import CCANSBT from './abis/CCANSBT.json'
@@ -14,7 +14,7 @@ import App from './abis/App.json'
 import Market from './abis/Market.json'
 import DataDAO from './abis/DataDAO.json'
 
-export const CHAIN_CONTRACT_MAP = chainConfigMap
+export const CONTRACT_ADDRESS_MAP = contractAddressMap
 
 const chainNameMap = {
   '0x5': 'goerli',

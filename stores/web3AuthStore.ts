@@ -7,9 +7,10 @@ const chainMap = CHAIN_MAP
 let onboarding: MetaMaskOnboarding = null
 
 export const web3AuthStore = defineStore('web3AuthStore', () => {
-  const { addSuccess, addWarning } = $(notificationStore())
+  const { addSuccess, addWarning, addLoading } = $(notificationStore())
   const { getJson, storeJson } = $(useNFTStorage())
   const { doIdentify } = $(useLogRocket())
+  const inviter = ''
 
   let error = $ref('')
   let isLoading = $ref(false)
@@ -126,7 +127,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     handleAccountsChanged([])
   }
 
-  const getContractAddress = contractName => useGet(CHAIN_CONTRACT_MAP, `${contractName}.${CHAIN_ID}`)
+  const getContractAddress = contractName => useGet(CONTRACT_ADDRESS_MAP, `${contractName}.${CHAIN_ID}`)
   const initContract = async (contractName, isWrite = false, contractAddress = '') => {
     if (!contractAddress)
       contractAddress = getContractAddress(contractName)
@@ -310,6 +311,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     queryProfile,
     getJson,
     storeJson,
+    addLoading,
     addSuccess,
     addWarning,
     contractRead,
@@ -317,6 +319,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     contractReadWithAddress,
     error,
     rawProvider,
+    inviter,
     userData,
     userBalance,
     isLoading,
