@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const { doShowLogin, walletAddress } = $(web3AuthStore())
-
-
 </script>
 
 <template>

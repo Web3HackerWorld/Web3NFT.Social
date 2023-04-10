@@ -1,5 +1,16 @@
 <script setup lang="ts">
 const { walletAddress } = $(web3AuthStore())
+const supabase = useSupabaseClient()
+
+const { data: currentPageUser } = await supabase
+  .from('web3Wallet')
+  .select('user_id')
+  .eq('address', walletAddress)
+  .single()
+
+const { data } = await supabase.from('profiles').select('*').eq('id', currentPageUser.user_id).single()
+
+console.log('====> currentPageUser :', currentPageUser, data)
 
 const newBookLink = $computed(() => `/${walletAddress}/new`)
 const profile = {

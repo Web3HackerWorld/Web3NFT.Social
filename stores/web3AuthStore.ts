@@ -132,6 +132,55 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     handleAccountsChanged([])
   }
 
+  const initWeb3 = async (isForce = false) => {
+    onboarding = new MetaMaskOnboarding()
+    if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
+      if (isForce)
+        isShowOnboardModal = true
+
+      return
+    }
+
+    let provider = ''
+    try {
+      provider = await detectEthereumProvider()
+      if (!provider)
+        return false
+      web3Provider = new ethers.providers.Web3Provider(provider)
+      signer = web3Provider.getSigner()
+      provider.on('message', (msg) => {
+        console.log('====> msg :', msg)
+      })
+      provider.on('accountsChanged', handleAccountsChanged)
+      provider.on('chainChanged', () => {
+        isLoading = false
+        if (provider.chainId !== chainId) {
+          isShowLoginModal = false
+          // isShowChainSwitchModal = true
+        }
+        else {
+          isShowChainSwitchModal = false
+          isShowLoginModal = true
+        }
+      })
+    }
+    catch (err) {
+      console.log('====> err :', err)
+      return false
+    }
+
+    if (provider.chainId !== chainId) {
+      if (isForce)
+        isShowChainSwitchModal = true
+
+      return
+    }
+
+    accounts = getLsItem('accounts', [])
+    if (accounts.length === 0)
+      isShowLoginModal = true
+  }
+
   const getContractAddress = contractName => useGet(CONTRACT_ADDRESS_MAP, `${contractName}.${CHAIN_ID}`)
   const initContract = async (contractName, isWrite = false, contractAddress = '') => {
     if (!contractAddress)
@@ -156,7 +205,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
       return new ethers.Contract(contractAddress, contractAbi, provider)
 
     if (!walletAddress) {
-      await initWeb3()
+      await initWeb3(true)
       return
       // const rz = await doConnect();
       // if (!rz) return;
@@ -205,50 +254,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
 
     isShowLoginModal = true
   }
-  const initWeb3 = async () => {
-    onboarding = new MetaMaskOnboarding()
-    if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
-      isShowOnboardModal = true
-      return
-    }
 
-    let provider = ''
-    try {
-      provider = await detectEthereumProvider()
-      if (!provider)
-        return false
-      web3Provider = new ethers.providers.Web3Provider(provider)
-      signer = web3Provider.getSigner()
-      provider.on('message', (msg) => {
-        console.log('====> msg :', msg)
-      })
-      provider.on('accountsChanged', handleAccountsChanged)
-      provider.on('chainChanged', () => {
-        isLoading = false
-        if (provider.chainId !== chainId) {
-          isShowLoginModal = false
-          isShowChainSwitchModal = true
-        }
-        else {
-          isShowChainSwitchModal = false
-          isShowLoginModal = true
-        }
-      })
-    }
-    catch (err) {
-      console.log('====> err :', err)
-      return false
-    }
-
-    if (provider.chainId !== chainId) {
-      isShowChainSwitchModal = true
-      return
-    }
-
-    accounts = getLsItem('accounts', [])
-    if (accounts.length === 0)
-      isShowLoginModal = true
-  }
   const removeWeb3EventListener = async () => {
     const provider = await detectEthereumProvider()
     if (!provider)
