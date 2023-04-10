@@ -1,14 +1,7 @@
 <script setup lang="ts">
 const { doShowLogin, walletAddress } = $(web3AuthStore())
 
-const route = useRoute()
-const tokenId = $computed(() => route.params.tokenId)
-const writeLink = $computed(() => `/${tokenId}/new`)
-const canWrite = $computed(() => {
-  if (!tokenId)
-    return false
-  return true
-})
+
 </script>
 
 <template>
@@ -34,10 +27,6 @@ const canWrite = $computed(() => {
         Search
       </NuxtLink>
       <template v-if="walletAddress">
-        <NuxtLink v-if="canWrite" :to="writeLink" text-zinc-4 items-center lg:flex hidden>
-          <div i-heroicons-outline-pencil-square w-7 h-7 mr-1 />
-          Write
-        </NuxtLink>
         <NuxtLink to="/notifications" i-mdi-bell-outline w-7 h-7 text-zinc-4 hidden>
           Notifications
         </NuxtLink>

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const supabase = useSupabaseClient()
+const user = $(useSupabaseUser())
+let isLoading = $ref(true)
+
 const tabs = [
   { name: 'General', href: '#', current: true },
   // { name: 'Password', href: '#', current: false },
@@ -8,10 +12,65 @@ const tabs = [
   // { name: 'Team Members', href: '#', current: false },
 ]
 
-const profile = $ref({
+let defaultVal = {
+  avatar: '',
+  cover: '',
+  firstname: '',
+  lastname: '',
+  bio: '',
   twitter: '',
   github: '',
-})
+}
+
+const keysStr = useKeys(defaultVal).join(',')
+
+const { data } = await supabase
+  .from('profiles')
+  .select(keysStr)
+  .eq('id', user.id)
+  .single()
+isLoading = false
+if (data) {
+  defaultVal = {
+    ...defaultVal,
+    ...data,
+  }
+}
+
+const profile = $ref(defaultVal)
+
+const saveToSupabase = async () => {
+  const data = {
+    id: user.id,
+    updated_at: new Date(),
+    ...profile,
+  }
+
+  const { error } = await supabase.from('profiles').upsert(data, { returning: 'minimal' })
+  if (error)
+    throw error
+}
+const saveToContract = async () => {
+  //
+}
+
+const canSubmit = $computed(() => useSome(profile, val => !isEmpty(val)))
+
+const doSubmit = async () => {
+  if (isLoading)
+    return
+
+  isLoading = true
+  try {
+    await saveToSupabase()
+    await saveToContract()
+  }
+  catch (error) {
+    alert(error.message)
+  }
+
+  isLoading = false
+}
 </script>
 
 <template>
@@ -49,58 +108,29 @@ const profile = $ref({
               </p>
             </div>
 
-            <div class="sm:col-span-6">
-              <label for="photo" class="font-medium text-sm text-slate-900 leading-6 block">Photo</label>
-              <div class="flex mt-2 items-center">
-                <img class="rounded-full h-12 w-12 inline-block" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80" alt="">
-                <div class="ml-4 relative">
-                  <input id="user-photo" name="user-photo" type="file" class="rounded-md h-full w-full opacity-0 inset-0 peer absolute">
-                  <label for="user-photo" class="bg-white rounded-md font-semibold shadow-sm ring-inset text-sm py-2 px-3 ring-1 ring-slate-300 text-slate-900 pointer-events-none block peer-hover:bg-slate-50 peer-focus:ring-2 peer-focus:ring-blue-600">
-                    <span>Change</span>
-                    <span class="sr-only"> user photo</span>
-                  </label>
-                </div>
-                <button type="button" class="font-medium text-sm ml-6 text-slate-900 leading-6">
-                  Remove
-                </button>
-              </div>
-            </div>
+            <div sm:(col-span-6 flex justify-between)>
+              <BsBoxAvatar $="profile.avatar" size="small" title="Avatar" mr-15 />
 
-            <div class="col-span-full">
-              <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover photo</label>
-              <div class="border border-dashed rounded-lg flex border-gray-900/25 mt-2 py-10 px-6 justify-center">
-                <div class="text-center">
-                  <div i-material-symbols-imagesmode class="mx-auto h-12 text-gray-300 w-12" aria-hidden="true" />
-                  <div class="flex mt-4 text-sm text-gray-600 leading-6">
-                    <label for="file-upload" class="bg-white rounded-md cursor-pointer font-semibold text-indigo-600 relative hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2">
-                      <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" class="sr-only">
-                    </label>
-                    <p class="pl-1">
-                      or drag and drop
-                    </p>
-                  </div>
-                  <p class="text-xs text-gray-600 leading-5">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
+              <div mt-6 sm:mt-0 flex-1>
+                <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover photo</label>
+                <BsBoxBanner $="profile.cover" title="Cover Photo" class="mt-2 aspect-4/1" />
               </div>
             </div>
 
             <div class="sm:col-span-3">
               <label for="first-name" class="font-medium text-sm text-slate-900 leading-6 block">First name</label>
-              <input id="first-name" type="text" name="first-name" autocomplete="given-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+              <input id="first-name" $="profile.firstname" type="text" name="first-name" autocomplete="first-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="sm:col-span-3">
               <label for="last-name" class="font-medium text-sm text-slate-900 leading-6 block">Last name</label>
-              <input id="last-name" type="text" name="last-name" autocomplete="family-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+              <input id="last-name" $="profile.lastname" type="text" name="last-name" autocomplete="last-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="sm:col-span-6">
               <label for="description" class="font-medium text-sm text-slate-900 leading-6 block">BIO</label>
               <div class="mt-2">
-                <textarea id="description" name="description" rows="4" class="rounded-md border-0 shadow-sm ring-inset w-full ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:py-1.5 sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500" />
+                <textarea id="description" $="profile.bio" name="description" rows="4" class="rounded-md border-0 shadow-sm ring-inset w-full p-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:py-1.5 sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500" />
               </div>
               <p class="mt-3 text-sm text-slate-500">
                 Brief description for your profile. Simple markdown support.
@@ -110,25 +140,22 @@ const profile = $ref({
             <div class="sm:col-span-6">
               <label for="twitter" class="font-medium text-sm text-slate-900 leading-6 block">Twitter</label>
               <div class="rounded-md flex shadow-sm mt-2">
-                <input id="twitter" type="text" name="twitter" placeholder="https://twitter.com/xxxx" autocomplete="twitter" $="profile.twitter" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+                <input id="twitter" type="text" $="profile.twitter" name="twitter" placeholder="https://twitter.com/xxxx" autocomplete="twitter" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
               </div>
             </div>
 
             <div class="sm:col-span-6">
               <label for="github" class="font-medium text-sm text-slate-900 leading-6 block">GitHub</label>
               <div class="rounded-md flex shadow-sm mt-2">
-                <input id="github" type="text" name="github" placeholder="https://github.com/xxxx" autocomplete="github" $="profile.github" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+                <input id="github" type="text" $="profile.github" name="github" placeholder="https://github.com/xxxx" autocomplete="github" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
               </div>
             </div>
           </div>
 
           <div class="flex pt-8 gap-x-3 justify-end">
-            <button type="button" class="bg-white rounded-md font-semibold shadow-sm ring-inset text-sm py-2 px-3 ring-1 ring-slate-300 text-slate-900 hover:bg-slate-50">
-              Cancel
-            </button>
-            <button type="submit" class="rounded-md font-semibold bg-blue-600 shadow-sm text-sm text-white py-2 px-3 inline-flex justify-center hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <BsBtnBlack :is-loading="isLoading" :disabled="!canSubmit" @click="doSubmit">
               Save
-            </button>
+            </BsBtnBlack>
           </div>
         </form>
       </div>
