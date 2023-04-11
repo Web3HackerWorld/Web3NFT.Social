@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { doShowLogin, walletAddress } = $(web3AuthStore())
+const { initWeb3, walletAddress } = $(web3AuthStore())
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const { doShowLogin, walletAddress } = $(web3AuthStore())
         </NuxtLink>
         <UserMenu />
       </template>
-      <BsBtnBlack v-else @click="doShowLogin">
+      <BsBtnBlack v-else @click="() => initWeb3(true)">
         Login
       </BsBtnBlack>
     </div>

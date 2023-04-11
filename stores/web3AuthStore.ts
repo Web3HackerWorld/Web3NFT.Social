@@ -86,14 +86,14 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     // console.log('====> oldAccounts, newAccounts :', oldAccounts, newAccounts)
     // means user do not login yet, should notify user about login success
     if (oldAccounts.length === 0)
-      addSuccess('Login Success!')
+      addSuccess('Connect Success!')
 
     accounts = newAccounts
     setLsItem('accounts', newAccounts)
     console.log('====> accounts :', accounts, newAccounts)
     // means user click on logout btn
     if (newAccounts.length === 0) {
-      addSuccess('Logout Success!')
+      addSuccess('Disconnect Success!')
       // isShowLoginModal = true
       error = ''
     }
@@ -146,6 +146,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
       provider = await detectEthereumProvider()
       if (!provider)
         return false
+
       web3Provider = new ethers.providers.Web3Provider(provider)
       signer = web3Provider.getSigner()
       provider.on('message', (msg) => {
@@ -177,7 +178,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     }
 
     accounts = getLsItem('accounts', [])
-    if (accounts.length === 0)
+    if (accounts.length === 0 && isForce)
       isShowLoginModal = true
   }
 
@@ -207,8 +208,6 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     if (!walletAddress) {
       await initWeb3(true)
       return
-      // const rz = await doConnect();
-      // if (!rz) return;
     }
 
     if (!walletAddress)
@@ -244,15 +243,6 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
       rz = await contract[methodName]()
 
     return rz
-  }
-
-  const doShowLogin = () => {
-    if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
-      isShowOnboardModal = true
-      return
-    }
-
-    isShowLoginModal = true
   }
 
   const removeWeb3EventListener = async () => {
@@ -339,7 +329,6 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     doOnboard,
     chainId,
     doConnect,
-    doShowLogin,
     doLogout,
     isShowOnboardModal,
     isShowChainSwitchModal,
