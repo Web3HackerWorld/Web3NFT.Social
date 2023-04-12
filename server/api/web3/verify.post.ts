@@ -5,7 +5,6 @@ import { serverSupabaseServiceRole } from '#supabase/server'
 export default eventHandler(async (event) => {
   const { message, signature } = await readBody(event)
   const adminClient = serverSupabaseServiceRole(event)
-  const authAdmin = serverSupabaseServiceRole(event).auth.admin
 
   try {
     const siweMessage = new SiweMessage(message)
@@ -52,11 +51,9 @@ export default eventHandler(async (event) => {
       },
       process.env.SUPABASE_JWT,
     )
-    console.log('====> process.env.SUPABASE_JWT :', process.env.SUPABASE_JWT)
     return { user, token }
   }
   catch (error) {
-    console.log('====> error :', error)
     return { error }
   }
 })

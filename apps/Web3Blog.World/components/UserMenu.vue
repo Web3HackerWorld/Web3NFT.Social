@@ -1,22 +1,13 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-const { doLogout, walletAddress } = $(web3AuthStore())
+const { doDisconnect, walletAddress } = $(web3AuthStore())
+const { doSignOut, metadata } = $(supabaseStore())
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    '/img/bruce.jpg',
-}
-
-const logout = async () => {
-  await doLogout()
-}
 const userNavigation = $computed(() => {
   return [
     { name: 'Your Profile', href: `/${walletAddress}` },
     { name: 'Settings', href: `/${walletAddress}/settings` },
-    { name: 'Sign out', onClick: logout },
+    { name: 'Sign out', onClick: doSignOut },
   ]
 })
 </script>
@@ -26,7 +17,8 @@ const userNavigation = $computed(() => {
     <div>
       <MenuButton class="bg-white rounded-full flex items-center  focus:outline-none">
         <span class="sr-only">Open user menu</span>
-        <img class="rounded-full h-8 w-8" :src="user.imageUrl" alt="">
+        <img v-if="metadata.avatar" class="rounded-full h-8 w-8" :src="metadata.avatar" alt="">
+        <div v-else i-heroicons-outline-user-circle class="rounded-full h-8 w-8" />
         <i i-heroicons-outline-chevron-down ml-2 text-zinc-4 w-4 h-4 />
       </MenuButton>
     </div>

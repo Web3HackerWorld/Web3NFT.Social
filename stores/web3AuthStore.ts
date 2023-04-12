@@ -128,7 +128,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     return true
   }
 
-  const doLogout = async () => {
+  const doDisconnect = async () => {
     handleAccountsChanged([])
   }
 
@@ -329,7 +329,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     doOnboard,
     chainId,
     doConnect,
-    doLogout,
+    doDisconnect,
     isShowOnboardModal,
     isShowChainSwitchModal,
     isShowLoginModal,

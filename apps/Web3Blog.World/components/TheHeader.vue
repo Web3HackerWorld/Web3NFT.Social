@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { initWeb3, walletAddress } = $(web3AuthStore())
+const { initWeb3, walletAddress, isShowLoginModal } = $(web3AuthStore())
+const { token } = $(supabaseStore())
 </script>
 
 <template>
@@ -24,15 +25,20 @@ const { initWeb3, walletAddress } = $(web3AuthStore())
       <NuxtLink to="/search" i-heroicons-outline-magnifying-glass w-7 h-7 text-zinc-4 lg:hidden>
         Search
       </NuxtLink>
-      <template v-if="walletAddress">
+      <template v-if="token">
         <NuxtLink to="/notifications" i-mdi-bell-outline w-7 h-7 text-zinc-4 hidden>
           Notifications
         </NuxtLink>
         <UserMenu />
       </template>
-      <BsBtnBlack v-else @click="() => initWeb3(true)">
-        Login
-      </BsBtnBlack>
+      <template v-else>
+        <BsBtnBlack v-if="!walletAddress" @click="() => initWeb3(true)">
+          Login
+        </BsBtnBlack>
+        <BsBtnBlack v-else @click="isShowLoginModal = true">
+          Login
+        </BsBtnBlack>
+      </template>
     </div>
   </div>
 </template>
