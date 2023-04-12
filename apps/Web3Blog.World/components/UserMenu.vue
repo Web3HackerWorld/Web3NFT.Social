@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-const { doDisconnect, walletAddress } = $(web3AuthStore())
+const { walletAddress, chain } = $(web3AuthStore())
 const { doSignOut, metadata } = $(supabaseStore())
 
 const userNavigation = $computed(() => {
   return [
-    { name: 'Your Profile', href: `/${walletAddress}` },
-    { name: 'Settings', href: `/${walletAddress}/settings` },
+    { name: 'Your Profile', href: `/${chain}/${walletAddress}` },
+    { name: 'Settings', href: `/${chain}/${walletAddress}/settings` },
     { name: 'Sign out', onClick: doSignOut },
   ]
 })

@@ -11,7 +11,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
   const { getJson, storeJson } = $(useNFTStorage())
   const { doIdentify } = $(useLogRocket())
   const inviter = '0xC6E58fb4aFFB6aB8A392b7CC23CD3feF74517F6C'
-
+  const chain = $computed(() => Number(chainId))
   let error = $ref('')
   let isLoading = $ref(false)
 
@@ -328,6 +328,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     isLoading,
     doOnboard,
     chainId,
+    chain,
     doConnect,
     doDisconnect,
     isShowOnboardModal,

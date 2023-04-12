@@ -6,15 +6,12 @@ await $fetch('/api/web3/test', {
   },
 })
 
-const user = $(useSupabaseUser())
 const client = useSupabaseClient()
 
 const { data: posts } = $(await useAsyncData('restaurant', async () => {
   const { data } = await client.from('web3Creation').select().order('created_at', { ascending: false })
   return $$(data)
 }))
-
-// posts = [posts[0]]
 
 const categoryLink = cat => `/category/${cat}`
 const postLink = post => `${post.id}-${useKebabCase(post.title)}`

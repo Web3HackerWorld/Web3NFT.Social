@@ -9,7 +9,6 @@ export default eventHandler(async (event) => {
   try {
     const siweMessage = new SiweMessage(message)
     const { nonce, address, chainId: chain } = await siweMessage.validate(signature)
-
     const { data, error } = await adminClient.from('nonce').select()
       .eq('address', address)
       .eq('chain', chain)
@@ -29,7 +28,7 @@ export default eventHandler(async (event) => {
       .eq('address', address)
       .eq('chain', chain)
       .single()
-
+    console.log('====> user :', user)
     if (!user) {
       const { data, error } = await adminClient.from('profile').insert({
         address,
@@ -54,6 +53,7 @@ export default eventHandler(async (event) => {
     return { user, token }
   }
   catch (error) {
+    console.log('====> error :', error)
     return { error }
   }
 })

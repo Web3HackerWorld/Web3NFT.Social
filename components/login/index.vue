@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { SiweMessage } from 'siwe'
 import { web3AuthStore } from '~/stores/web3AuthStore'
-let { doConnect, doDisconnect, walletAddress, web3Provider, isLoading, error, isShowLoginModal, addSuccess } = $(web3AuthStore())
+let { doConnect, chain, walletAddress, web3Provider, isLoading, error, isShowLoginModal, addSuccess } = $(web3AuthStore())
 
-const { updateUser, token, user, doSignOut } = $(supabaseStore())
+const { updateUser, token, doSignOut } = $(supabaseStore())
 
 let status = $ref('')
 const signInWithWeb3 = async () => {
@@ -11,7 +11,6 @@ const signInWithWeb3 = async () => {
     return
   status = 'getNonce'
   const address = walletAddress
-  const chain = Number(CHAIN_ID)
   const { nonce, error: nonceError } = await $fetch('/api/web3/nonce', {
     method: 'POST',
     body: {
@@ -36,19 +35,30 @@ const signInWithWeb3 = async () => {
     chainId: chain,
     nonce,
   })
-  const signer = web3Provider.getSigner()
-  const signature = await signer.signMessage(message.prepareMessage())
-  status = 'verifySignature'
-  const rz = await $fetch('/api/web3/verify', {
-    method: 'POST',
-    body: { message, signature },
-  })
-  if (rz.error) { error = rz.error }
-  else {
-    error = ''
-    addSuccess('Sign In Successed!')
-    updateUser(rz)
-    isShowLoginModal = false
+  try {
+    const signer = web3Provider.getSigner()
+    const signature = await signer.signMessage(message.prepareMessage())
+    status = 'verifySignature'
+    const rz = await $fetch('/api/web3/verify', {
+      method: 'POST',
+      body: { message, signature },
+    })
+    if (rz.error) { error = rz.error }
+    else {
+      error = ''
+      addSuccess('Sign In Successed!')
+      updateUser(rz)
+      isShowLoginModal = false
+    }
+  }
+  catch (err) {
+    if (err.code === 4001) {
+      error = 'You deny to sign the message'
+    }
+    else {
+      error = err.message
+      console.log('====> err :', err)
+    }
   }
 
   status = ''
