@@ -1,8 +1,13 @@
 <script setup lang="ts">
-const supabase = useSupabaseClient()
-const user = $(useSupabaseUser())
-const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, walletAddress } = $(web3AuthStore())
 const router = useRouter()
+
+const route = useRoute()
+const address = $computed(() => `0x${route.params.wallet}`)
+const chain = $computed(() => route.params.chain)
+
+const { supabase, updateUser, token } = $(supabaseStore())
+
+const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, walletAddress } = $(web3AuthStore())
 let isLoading = $ref(true)
 
 const tabs = [
@@ -14,7 +19,7 @@ const tabs = [
   // { name: 'Team Members', href: '#', current: false },
 ]
 
-let defaultVal = {
+let profile = $ref({
   avatar: '',
   cover: '',
   firstname: '',
@@ -22,42 +27,54 @@ let defaultVal = {
   bio: '',
   twitter: '',
   github: '',
-}
-
-const keysStr = useKeys(defaultVal).join(',')
-
-const { data } = await supabase
-  .from('profiles')
-  .select(keysStr)
-  .eq('id', user?.id)
+})
+// profile = {
+//   avatar: 'ipfs://bafkreiah3vy3ul2hv3xn3pnl425rqk3skaqz2pmphgzjidphvhqpvaompa',
+//   bio: 'Web3Hacker',
+//   cover: 'ipfs://bafybeibuw3alqp53mzio22g7teqwbazwwvllmjctzsedytc2bqoiozvobq',
+//   firstname: 'Bruce',
+//   github: 'https://github.com/Web3HackerWorld',
+//   lastname: 'Wayne',
+//   twitter: 'https://twitter.com/Web3HackerWorld',
+// }
+const { data: userData } = await supabase.from('profile')
+  .select()
+  .eq('chain', chain)
+  .eq('address', address)
   .single()
 
 isLoading = false
 
-if (data) {
-  defaultVal = {
-    ...defaultVal,
-    ...data,
+if (userData.metadata) {
+  profile = {
+    ...profile,
+    ...userData.metadata,
   }
 }
-
-const profile = $ref(defaultVal)
 
 const saveToSupabase = async () => {
   const loadingItem = addLoading('Start Saving to cache layer')
   const data = {
-    id: user.id,
+    id: userData.id,
     updated_at: new Date(),
-    ...profile,
+    metadata: profile,
   }
 
-  const { error } = await supabase.from('profiles').upsert(data, { returning: 'minimal' })
+  const { error, data: newUserData } = await supabase.from('profile').update(data)
+    .eq('chain', chain)
+    .eq('address', address)
+    .select().single()
   if (error)
     throw error
 
   addSuccess('Save to cache layer successed!', loadingItem)
-  return data
+  updateUser({
+    user: newUserData,
+    token,
+  })
+  return newUserData
 }
+
 const saveToContract = async (data) => {
   const contractWriter = await initContract('BuidlerProtocol', true)
 
@@ -90,7 +107,7 @@ const doSubmit = async () => {
   alertSuccess('Update profile success', async () => {
     isLoading = false
     // go to profile page
-    router.push(`/${walletAddress}`)
+    router.push(`/${chain}/${address}`)
   })
 }
 </script>

@@ -8,7 +8,7 @@ export const supabaseStore = defineStore('supabaseStore', () => {
   let user = $ref(getLsItem(userCacheKey, {}))
   let token = $ref(getLsItem(tokenCacheKey, ''))
   let supabase = $ref('')
-  const metadata = $computed(() => user.metadata || {})
+  const metadata = $computed(() => user?.metadata || {})
 
   const updateUser = (data) => {
     user = data.user

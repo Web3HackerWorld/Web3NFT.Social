@@ -17,7 +17,7 @@ const userNavigation = $computed(() => {
     <div>
       <MenuButton class="bg-white rounded-full flex items-center  focus:outline-none">
         <span class="sr-only">Open user menu</span>
-        <img v-if="metadata.avatar" class="rounded-full h-8 w-8" :src="metadata.avatar" alt="">
+        <BsBoxImg v-if="metadata.avatar" class="rounded-full h-8 w-8" :src="metadata.avatar" alt="" />
         <div v-else i-heroicons-outline-user-circle class="rounded-full h-8 w-8" />
         <i i-heroicons-outline-chevron-down ml-2 text-zinc-4 w-4 h-4 />
       </MenuButton>
