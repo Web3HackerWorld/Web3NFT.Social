@@ -1,53 +1,52 @@
 <script setup lang="ts">
-import { SiweMessage, generateNonce } from 'siwe'
+import { SiweMessage } from 'siwe'
 import { web3AuthStore } from '~/stores/web3AuthStore'
-
 const { doConnect, walletAddress, web3Provider, isLoading, error, isShowLoginModal } = $(web3AuthStore())
-const user = $(useSupabaseUser())
-const client = useSupabaseClient()
 const { auth } = $(useSupabaseAuthClient())
-let binded = $ref(false)
+const binded = $ref(false)
 
-watchEffect(async () => {
-  if (!user)
+// watchEffect(async () => {
+//   if (!user)
+//     return
+//   const { data } = await client.from('web3Wallet').select().eq('user_id', user.id).single()
+//   if (data.address)
+//     binded = true
+// })
+
+const signInWithWeb3 = async () => {
+  const address = walletAddress
+  const chain = Number(CHAIN_ID)
+  const { nonce, error: nonceError } = await $fetch('/api/web3/nonce', {
+    method: 'POST',
+    body: {
+      address,
+      chain,
+    },
+  })
+
+  if (nonceError) {
+    // show nonceError
+    console.log('====> nonceError :', nonceError)
     return
-  const { data } = await client.from('web3Wallet').select().eq('user_id', user.id).single()
-  if (data.address)
-    binded = true
-})
-const doBind = async () => {
-  let nonce = ''
-  // request nonce
-  const { data } = await client.from('web3Nonce').select().eq('user_id', user.id).single()
-  if (!data) {
-    nonce = generateNonce()
-    const { data } = await client.from('web3Nonce').upsert({ nonce, user_id: user.id }).select().single()
-    console.log('====> data :', data)
-  }
-  else {
-    console.log('====> exist :', data)
-    nonce = data.nonce
   }
 
-  // call sign
   const message = new SiweMessage({
     domain: window.location.host,
-    address: unref(walletAddress),
-    statement: 'Sign in with Ethereum to the app.',
+    address,
+    statement: 'Sign in with Web3 to the app.',
     uri: window.location.origin,
     version: '1',
-    chainId: Number(CHAIN_ID),
+    chainId: chain,
     nonce,
   })
   const signer = web3Provider.getSigner()
   const signature = await signer.signMessage(message.prepareMessage())
-  // // Verify signature
   const rz = await $fetch('/api/web3/verify', {
     method: 'POST',
     body: { message, signature },
   })
-
-  if (rz.address === walletAddress) {
+  console.log('====> rz :', rz)
+  if (rz.address === address) {
     // bind success
   }
   else {
@@ -75,7 +74,7 @@ const doBind = async () => {
         </span>
       </div>
       <div v-if="walletAddress">
-        <BsBtnBlack v-if="!binded" :is-loading="isLoading" class="w-full" @click="doBind">
+        <BsBtnBlack v-if="!binded" :is-loading="isLoading" class="w-full" @click="signInWithWeb3">
           {{ isLoading ? 'Waiting for action in your MetaMask' : 'Sign in with Web3' }}
         </BsBtnBlack>
       </div>

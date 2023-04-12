@@ -1,4 +1,11 @@
 <script setup>
+await $fetch('/api/web3/test', {
+  method: 'POST',
+  body: {
+
+  },
+})
+
 const user = $(useSupabaseUser())
 const client = useSupabaseClient()
 

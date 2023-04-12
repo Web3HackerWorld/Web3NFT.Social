@@ -1,32 +1,62 @@
 import { SiweMessage } from 'siwe'
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
+import jwt from 'jsonwebtoken'
+import { serverSupabaseServiceRole } from '#supabase/server'
 
 export default eventHandler(async (event) => {
   const { message, signature } = await readBody(event)
-  const client = serverSupabaseClient(event)
-  const user = await serverSupabaseUser(event)
-
-  const { data } = await client.from('web3Nonce').select().eq('user_id', user.id).single()
-
-  if (!data.nonce)
-    return { err: 'Please generate nonce first' }
+  const adminClient = serverSupabaseServiceRole(event)
+  const authAdmin = serverSupabaseServiceRole(event).auth.admin
 
   try {
     const siweMessage = new SiweMessage(message)
-    const fields = await siweMessage.validate(signature)
+    const { nonce, address, chainId: chain } = await siweMessage.validate(signature)
 
-    if (fields.nonce !== data.nonce)
-      return { err: 'Invalid nonce.' }
+    const { data, error } = await adminClient.from('nonce').select()
+      .eq('address', address)
+      .eq('chain', chain)
+      .single()
 
-    // bind address to this account
-    await client.from('web3Wallet').upsert({
-      user_id: user.id,
-      address: fields.address,
-    })
-    await client.from('web3Nonce').delete().eq('user_id', user.id)
-    return fields
+    if (error)
+      throw error
+
+    if (nonce !== data.nonce)
+      throw new Error('Invalid nonce.')
+
+    await adminClient.from('nonce')
+      .delete()
+      .eq('nonce', nonce)
+
+    let { data: user } = await adminClient.from('profile').select()
+      .eq('address', address)
+      .eq('chain', chain)
+      .single()
+
+    if (!user) {
+      const { data, error } = await adminClient.from('profile').insert({
+        address,
+        chain,
+      }).select().single()
+
+      if (error)
+        throw error
+
+      user = data
+    }
+
+    const token = jwt.sign(
+      {
+        ...user,
+        aud: 'authenticated',
+        role: 'authenticated',
+        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+      },
+      process.env.SUPABASE_JWT,
+    )
+    console.log('====> process.env.SUPABASE_JWT :', process.env.SUPABASE_JWT)
+    return { user, token }
   }
   catch (error) {
-    return error
+    console.log('====> error :', error)
+    return { error }
   }
 })
