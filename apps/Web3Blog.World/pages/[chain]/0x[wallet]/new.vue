@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const { initContract, userData, getContractAddress, walletAddress } = $(web3AuthStore())
+const { initContract, userData, getContractAddress, walletAddress, initWeb3Force } = $(web3AuthStore())
+
+onMounted(initWeb3Force)
+
 const { storeJson } = $(useNFTStorage())
 const client = useSupabaseClient()
 const user = $(useSupabaseUser())

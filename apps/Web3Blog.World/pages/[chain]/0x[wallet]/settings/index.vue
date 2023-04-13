@@ -7,7 +7,9 @@ const chain = $computed(() => route.params.chain)
 
 const { supabase, updateUser, token } = $(supabaseStore())
 
-const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, walletAddress } = $(web3AuthStore())
+const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, initWeb3Force } = $(web3AuthStore())
+
+onMounted(initWeb3Force)
 let isLoading = $ref(true)
 
 const tabs = [

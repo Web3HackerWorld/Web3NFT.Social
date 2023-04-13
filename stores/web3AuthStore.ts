@@ -52,6 +52,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
       })
       isShowChainSwitchModal = false
       isLoading = false
+      addSuccess('Switch Chain Successed!')
       return true
     }
     catch (switchError) {
@@ -174,12 +175,17 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
       if (isForce)
         isShowChainSwitchModal = true
 
-      return
+      // return
     }
 
     accounts = getLsItem('accounts', [])
+    console.log('====> accounts :', accounts)
     if (accounts.length === 0 && isForce)
       isShowLoginModal = true
+  }
+
+  const initWeb3Force = async () => {
+    return initWeb3(true)
   }
 
   const getContractAddress = contractName => useGet(CONTRACT_ADDRESS_MAP, `${contractName}.${CHAIN_ID}`)
@@ -296,14 +302,15 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
   watchEffect(async () => {
     if (!walletAddress)
       return
-    await queryProfile()
-    await queryBalance()
+    // await queryProfile()
+    // await queryBalance()
   })
 
   return $$({
     parseEther,
     formatUnits,
     initWeb3,
+    initWeb3Force,
     getContractAddress,
     removeWeb3EventListener,
     doSwitchChain,
