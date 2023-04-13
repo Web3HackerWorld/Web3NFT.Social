@@ -14,7 +14,7 @@ const { data: posts } = $(await useAsyncData('restaurant', async () => {
 }))
 
 const categoryLink = cat => `/category/${cat}`
-const postLink = post => `${post.id}-${useKebabCase(post.title)}`
+const postLink = post => `/chain/${post.tokenId}/${post.id}-${useKebabCase(post.title)}`
 
 const author = {
   name: 'Bruce',

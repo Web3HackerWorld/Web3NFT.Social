@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-let { modelValue, list, hasAddNew } = $defineModel<{
+let { modelValue, list, hasAddNew = false } = $defineModel<{
   modelValue: string
   list: Array<string>
-  hasAddNew: boolean
+  hasAddNew?: boolean
 }>()
 
 const value = $computed({
@@ -53,7 +53,7 @@ const addNewOption = () => {
     </div>
     <BsDialogDefault :show="showAddModal" @close="showAddModal = false">
       <h3 mb-2 font-bold>
-        Create a new select option
+        Create a new option
       </h3>
       <div w-sm flex>
         <input v-model="newOptionName" type="text" class="rounded-md max-w-lg border-0 shadow-sm ring-inset w-full py-1.5 px-2 ring-1 ring-gray-300 text-gray-900 block placeholder:text-gray-400  sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2" placeholder="input your new select option name">

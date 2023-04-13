@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { addSuccess } = $(notificationStore())
-const user = $(useSupabaseUser())
 const client = useSupabaseClient()
 
 const author = {
