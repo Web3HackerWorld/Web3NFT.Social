@@ -115,7 +115,7 @@ const doSubmit = async () => {
             />
           </div>
         </div>
-        <div class="flex mt-5">
+        <div class="flex mt-5 pb-10">
           <div flex-1 pr-5>
             <div>
               <label for="category" class="font-medium text-sm mb-2 text-gray-900 leading-6 block">Category</label>
@@ -150,23 +150,7 @@ const doSubmit = async () => {
           </div>
           <div class="w-1/2">
             <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover photo</label>
-            <div class="border border-dashed rounded-lg flex border-gray-900/25 mt-2 items-center justify-center aspect-4/5">
-              <div class="text-center">
-                <div i-material-symbols-imagesmode class="mx-auto h-12 text-gray-300 w-12" aria-hidden="true" />
-                <div class="flex mt-4 text-sm text-gray-600 leading-6">
-                  <label for="file-upload" class="bg-white rounded-md cursor-pointer font-semibold text-indigo-600 relative hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2">
-                    <span>Upload a file</span>
-                    <input id="file-upload" name="file-upload" type="file" class="sr-only">
-                  </label>
-                  <p class="pl-1">
-                    or drag and drop
-                  </p>
-                </div>
-                <p class="text-xs text-gray-600 leading-5">
-                  PNG, JPG, GIF up to 10MB
-                </p>
-              </div>
-            </div>
+            <BsBoxBanner $="image" title="Cover Photo" class="h-full mt-2" />
           </div>
         </div>
       </div>

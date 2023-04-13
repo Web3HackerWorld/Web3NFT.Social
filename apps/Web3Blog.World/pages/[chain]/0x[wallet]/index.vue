@@ -25,10 +25,10 @@ const metadata = $computed(() => {
 })
 
 const profileName = $computed(() => {
-  if (!metadata.firstName && !metadata.lastName)
-    return shortAddress(data.address)
+  if (metadata.firstname && metadata.lastname)
+    return `${metadata.firstname} ${metadata.lastname}`
 
-  return `${metadata.firstName} ${metadata.lastName}`
+  return shortAddress(data.address)
 })
 
 const items = [
