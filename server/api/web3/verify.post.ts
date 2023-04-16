@@ -28,7 +28,7 @@ export default eventHandler(async (event) => {
       .eq('address', address)
       .eq('chain', chain)
       .single()
-    console.log('====> user :', user)
+
     if (!user) {
       const { data, error } = await adminClient.from('profile').insert({
         address,

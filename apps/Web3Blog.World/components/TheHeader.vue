@@ -26,9 +26,9 @@ const { token } = $(supabaseStore())
         Search
       </NuxtLink>
       <template v-if="token">
-        <NuxtLink to="/notifications" i-mdi-bell-outline w-7 h-7 text-zinc-4 hidden>
+        <!-- <NuxtLink to="/notifications" i-mdi-bell-outline w-7 h-7 text-zinc-4 hidden>
           Notifications
-        </NuxtLink>
+        </NuxtLink> -->
         <UserMenu />
       </template>
       <template v-else>

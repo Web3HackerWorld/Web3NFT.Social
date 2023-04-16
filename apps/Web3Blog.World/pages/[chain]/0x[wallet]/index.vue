@@ -28,40 +28,39 @@ const profileName = $computed(() => {
   if (metadata.firstname && metadata.lastname)
     return `${metadata.firstname} ${metadata.lastname}`
 
-  return shortAddress(data.address)
+  return shortAddress(address)
 })
 
-const items = [
-  {
-    id: 1,
-    name: 'Earthen Bottle',
-    price: '48 $BST',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-    imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-  },
-  {
-    id: 2,
-    name: 'Nomad Tumbler',
-    price: '35 $BST',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-    imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-  },
-  {
-    id: 3,
-    name: 'Focus Paper Refill',
-    price: '89 $BST',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-    imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-  },
-]
+// const items = [
+//   {
+//     id: 1,
+//     name: 'Earthen Bottle',
+//     price: '48 $BST',
+//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
+//     imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
+//   },
+//   {
+//     id: 2,
+//     name: 'Nomad Tumbler',
+//     price: '35 $BST',
+//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
+//     imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
+//   },
+//   {
+//     id: 3,
+//     name: 'Focus Paper Refill',
+//     price: '89 $BST',
+//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
+//     imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
+//   },
+// ]
 
-const { data: creationData } = await supabase.from('token').select()
+const { data: items } = await supabase.from('token').select()
   .eq('address', address)
   .eq('chain', chain)
-  .eq('tokenType', 'Web3Blog')
-  .single()
+  .eq('tokentype', 'Web3Blog')
 
-const tokenLink = item => `/${chain}/${item.tokenId}`
+const tokenLink = item => `/${chain}/${item.tokenid}`
 </script>
 
 <template>
@@ -96,13 +95,13 @@ const tokenLink = item => `/${chain}/${item.tokenId}`
     <div class="grid gap-x-6 gap-y-10 grid-cols-1 sm:grid-cols-2">
       <NuxtLink v-for="item in items" :key="item.id" :to="tokenLink(item)" class="group">
         <div class="rounded-lg bg-gray-200 w-full overflow-hidden aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
-          <img :src="item.imageSrc" :alt="item.imageAlt" class="h-full object-cover object-center w-full group-hover:opacity-75">
+          <BsBoxImg :src="useGet(item, 'metadata.image')" :alt="useGet(item, 'metadata.name')" class="h-full object-cover object-center w-full group-hover:opacity-75" />
         </div>
         <h3 class="mt-4 text-sm text-gray-700">
-          {{ item.name }}
+          {{ useGet(item, 'metadata.name') }}
         </h3>
         <p class="font-medium mt-1 text-lg text-gray-900">
-          {{ item.price }}
+          {{ useGet(item, 'metadata.properties.basicPrice') }} $BST
         </p>
       </NuxtLink>
       <NuxtLink :to="`/${chain}/${address}/new`" class="group">

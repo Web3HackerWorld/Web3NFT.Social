@@ -30,15 +30,15 @@ let profile = $ref({
   twitter: '',
   github: '',
 })
-// profile = {
-//   avatar: 'ipfs://bafkreiah3vy3ul2hv3xn3pnl425rqk3skaqz2pmphgzjidphvhqpvaompa',
-//   bio: 'Web3Hacker',
-//   cover: 'ipfs://bafybeibuw3alqp53mzio22g7teqwbazwwvllmjctzsedytc2bqoiozvobq',
-//   firstname: 'Bruce',
-//   github: 'https://github.com/Web3HackerWorld',
-//   lastname: 'Wayne',
-//   twitter: 'https://twitter.com/Web3HackerWorld',
-// }
+profile = {
+  avatar: 'ipfs://bafkreiah3vy3ul2hv3xn3pnl425rqk3skaqz2pmphgzjidphvhqpvaompa',
+  bio: 'Web3Hacker',
+  cover: 'ipfs://bafybeibuw3alqp53mzio22g7teqwbazwwvllmjctzsedytc2bqoiozvobq',
+  firstname: 'Bruce',
+  github: 'https://github.com/Web3HackerWorld',
+  lastname: 'Wayne',
+  twitter: 'https://twitter.com/Web3HackerWorld',
+}
 const { data: userData } = await supabase.from('profile')
   .select()
   .eq('chain', chain)
@@ -47,7 +47,7 @@ const { data: userData } = await supabase.from('profile')
 
 isLoading = false
 
-if (userData.metadata) {
+if (userData?.metadata) {
   profile = {
     ...profile,
     ...userData.metadata,
@@ -105,6 +105,7 @@ const doSubmit = async () => {
   }
   catch (error) {
     alertError(error)
+    return
   }
 
   alertSuccess('Update profile success', async () => {

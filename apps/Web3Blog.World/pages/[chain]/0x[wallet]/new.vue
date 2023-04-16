@@ -17,10 +17,11 @@ const router = useRouter()
 
 onMounted(initWeb3Force)
 
+let error = $ref('')
 const name = $ref('皮囊与灵魂写的故事')
 let description = $ref('')
 description = '好看的皮囊和有趣的灵魂在 Web3 里面写了一部关于一个半吊子程序员意外获得 超级 NFT 灵石助力后修仙打怪练级，最后统一了多元宇宙的瞎扯淡的故事'
-const image = $ref('22')
+const image = $ref('ipfs://bafybeidhf5bw7xx3pq3pxzcgazxy7qdf5a2zlumqubg6vpdehxekyr3jwq')
 const vendor = 'Web3Blog.World'
 const tokenType = 'Web3Blog' // only this type be display on Web3Blog.World
 const category = $ref('Uncategory')
@@ -58,18 +59,21 @@ const doSubmit = async () => {
           await doSubmit()
       },
     })
+    return
   }
 
   if (isLoading)
     return
   isLoading = true
-
   const loadingItem1 = addLoading('Start packing metadata on to IPFS')
   const properties = {
     category,
     tags: parseTags(tags),
     tokenType,
     vendor,
+    basicPrice,
+    maxSupply,
+    inviteCommission,
   }
   const external_url = '' // This is the URL that will appear below the asset's image on OpenSea and will allow users to leave OpenSea and view the item on your site.
   const metadata = {
@@ -82,23 +86,31 @@ const doSubmit = async () => {
   const cid = await storeJson(metadata)
   addSuccess('Pack metadata on to IPFS successed!', loadingItem1)
 
-  const loadingItem2 = addLoading('Start submitting to the blockchain')
-  const contractWriterBP = await initContract('BuidlerProtocol', true)
-  const tx = await contractWriterBP.addToken(tokenType, parseEther(basicPrice), inviteCommission * 100, maxSupply, cid, payTokenAddress)
-  addSuccess('Submit to the blockchain successed!', loadingItem2)
+  try {
+    const loadingItem2 = addLoading('Start submitting to the blockchain')
+    const contractWriterBP = await initContract('BuidlerProtocol', true)
+    const tx = await contractWriterBP.addToken(tokenType, parseEther(basicPrice), inviteCommission * 100, maxSupply, cid, payTokenAddress)
+    addSuccess('Submit to the blockchain successed!', loadingItem2)
 
-  const loadingItem3 = addLoading('Waiting for the blockchain to excute the action')
-  const rc = await tx.wait()
-  const event = rc.events.find(event => event.event === 'AddToken')
-  const tokenid = event.args.tokenId.toString()
-  addSuccess('Excute the action on blockchain successed!', loadingItem3)
+    const loadingItem3 = addLoading('Waiting for the blockchain to excute the action')
+    const rc = await tx.wait()
+    const event = rc.events.find(event => event.event === 'AddToken')
+    const tokenid = event.args.tokenId.toString()
+    addSuccess('Excute the action on blockchain successed!', loadingItem3)
 
-  const loadingItem4 = addLoading('Start storing data into database for cache')
-  const rz = await supabase.from('token').insert({ metadata, chain, address, tokenid })
-  console.log('====> rz :', rz)
-  addSuccess('Store data into database successed!', loadingItem4)
-  router.push(`/${chain}/${tokenid}`)
-  description = ''
+    const loadingItem4 = addLoading('Start storing data into database for cache')
+    const { data, error: dbError } = await supabase.from('token').insert({ metadata, chain, address, tokenid, tokentype: tokenType })
+    if (dbError)
+      throw dbError
+
+    addSuccess('Store data into database successed!', loadingItem4)
+    router.push(`/${chain}/${tokenid}`)
+    description = ''
+  }
+  catch (err) {
+    error = err
+  }
+  isLoading = false
 }
 
 const canSubmit = $computed(() => {
@@ -172,7 +184,7 @@ const canSubmit = $computed(() => {
         </div>
       </div>
       <div mt-5 border-t border-gray-200 pt-5 flex justify="between" items-center>
-        <label class="font-bold text-sm mr-5 text-slate-900 leading-6 block">Create Token Cost</label>
+        <label class="font-bold text-sm mr-5 text-slate-900 leading-6 block">Create Book Cost</label>
         <div>
           <div flex justify="end" items-center>
             <span text-xl mr-5>{{ formatEther(addTokenCost) }}</span>
@@ -183,6 +195,9 @@ const canSubmit = $computed(() => {
           </div>
         </div>
       </div>
+      <BsAlertError v-if="error" my-5>
+        {{ error.message }}
+      </BsAlertError>
       <div class="flex pt-8 gap-x-3 justify-end" mt-5 border-t border-gray-200>
         <BsBtnBlack :is-loading="isLoading" :disabled="!canSubmit" @click="doSubmit">
           Save

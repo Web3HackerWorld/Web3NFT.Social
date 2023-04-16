@@ -13,12 +13,12 @@ export const appStore = defineStore('appStore', () => {
   const payTokenName = $computed(() => payBy.replace('$', ''))
   const tokenDataMap = $ref({
     $BSTSwap: {
-      address: '',
+      address: getContractAddress('BSTSwap'),
       balance: '0',
       allowance: '0',
     },
     $BSTEntropy: {
-      address: '',
+      address: getContractAddress('BSTEntropy'),
       balance: '0',
       allowance: '0',
     },
@@ -59,15 +59,9 @@ export const appStore = defineStore('appStore', () => {
   let platformCommission = $ref('')
 
   const getAppConfig = async () => {
-    try {
-      const rz = await contractRead('BuidlerProtocol', 'getAppConfig')
-      addTokenCost = rz.addTokenCost
-      platformCommission = rz.platformCommission
-      // console.log('====> addTokenCost :', addTokenCost, rz)
-    }
-    catch (err) {
-      console.log('====> err :', err)
-    }
+    const rz = await contractRead('BuidlerProtocol', 'getAppConfig')
+    addTokenCost = rz.addTokenCost
+    platformCommission = rz.platformCommission
   }
 
   watchEffect(async () => {
