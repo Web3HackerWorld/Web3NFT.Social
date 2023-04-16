@@ -1,18 +1,12 @@
 import chainMap from './chainMap.json'
 import contractAddressMap from './contractAddressMap.json'
-import BuidlerStableToken from './abis/BuidlerStableToken.json'
 
-import CCANSBT from './abis/CCANSBT.json'
-
-// BuidlerProtocol
-import ERC1155 from './abis/ERC1155.json'
-import Token from './abis/Token.json'
-import Item from './abis/Item.json'
-import Meta from './abis/Meta.json'
-import Buidler from './abis/Buidler.json'
-import App from './abis/App.json'
-import Market from './abis/Market.json'
-import DataDAO from './abis/DataDAO.json'
+const allABIJsons = import.meta.globEager('./abis/*.json')
+const allABIs = {}
+useMap(allABIJsons, (val, key) => {
+  key = key.replace('./abis/', '').replace('.json', '')
+  allABIs[key] = val.default
+})
 
 export const CONTRACT_ADDRESS_MAP = contractAddressMap
 
@@ -31,18 +25,17 @@ export const CHAIN_MAP = chainMap
 export const CHAIN_NAME = chainNameMap[CHAIN_ID]
 
 const BuidlerProtocol = [
-  ...ERC1155,
-  ...Token,
-  ...Item,
-  ...Meta,
-  ...Buidler,
-  ...App,
-  ...Market,
-  ...DataDAO,
+  ...allABIs.ERC1155,
+  ...allABIs.Token,
+  ...allABIs.Item,
+  ...allABIs.Meta,
+  ...allABIs.Buidler,
+  ...allABIs.App,
+  ...allABIs.Market,
+  ...allABIs.DataDAO,
 ]
 
 export const CHAIN_CONTRACT_ABI_MAP = {
+  ...allABIs,
   BuidlerProtocol,
-  BuidlerStableToken,
-  CCANSBT,
 }

@@ -1,12 +1,20 @@
 <script setup lang="ts">
 const { initContract, addLoading, addSuccess, walletAddress: address, chain, initWeb3Force, storeJson } = $(web3AuthStore())
+
+const {
+  balanceBSTSwap,
+  balanceBSTEntropy,
+} = $(appStore())
 const { supabase } = $(supabaseStore())
 const router = useRouter()
 
 onMounted(initWeb3Force)
+watchEffect(() => {
 
+})
 const name = $ref('皮囊与灵魂写的故事')
-const description = $ref('好看的皮囊和有趣的灵魂在 Web3 里面写了一部关于一个半吊子程序员意外获得 超级 NFT 灵石助力后修仙打怪练级，最后统一了多元宇宙的瞎扯淡的故事')
+let description = $ref('')
+description = '好看的皮囊和有趣的灵魂在 Web3 里面写了一部关于一个半吊子程序员意外获得 超级 NFT 灵石助力后修仙打怪练级，最后统一了多元宇宙的瞎扯淡的故事'
 const image = $ref('')
 const vendor = 'Web3Blog.World'
 const tokenType = 'Web3Blog' // only this type be display on Web3Blog.World
@@ -29,8 +37,8 @@ const tags = $ref('修仙, 搞怪, 无厘头, Web3, 多元宇宙')
 const basicPrice = $ref(100) // $BST
 const maxSupply = $ref(10000)
 const inviteCommission = $ref(1)
-const payTokenList = $ref(['$BSTw', '$BSTs'])
-const payBy = $ref('$BSTw')
+const payTokenList = $ref(['$BSTSwap', '$BSTEntropy'])
+const payBy = $ref('$BSTSwap')
 const payTokenAddress = $ref('')
 
 const parseTags = tags => tags.replace('，', ',').split(',')
@@ -75,8 +83,16 @@ const doSubmit = async () => {
   console.log('====> rz :', rz)
   addSuccess('Store data into database successed!', loadingItem4)
   router.push(`/${chain}/${tokenid}`)
+  description = ''
 }
 
+const createCost = $ref(1)
+const bstBalance = $computed(() => {
+  if (payBy === '$BSTSwap')
+    return balanceBSTSwap
+
+  return balanceBSTEntropy
+})
 const canSubmit = $computed(() => {
   if (
     name === ''
@@ -86,12 +102,15 @@ const canSubmit = $computed(() => {
   )
     return false
 
+  if (bstBalance < createCost)
+    return false
+
   return true
 })
 </script>
 
 <template>
-  <div class="flex flex-col mx-auto flex-1 py-8">
+  <div class="flex flex-col mx-auto flex-1 py-8 pb-20">
     <div class="flex-1 text-base text-gray-700 leading-7">
       <input class="border-b font-bold border-gray-200 mt-6 tracking-tight w-full p-4 pl-0 text-3xl text-gray-900 sm:text-4xl focus:outline-none" $="name" placeholder="Your book name">
       <div mt-5>
@@ -106,7 +125,7 @@ const canSubmit = $computed(() => {
           />
         </div>
       </div>
-      <div class="flex mt-5 pb-10">
+      <div class="mt-5 pb-10 sm:flex">
         <div flex-1 pr-5>
           <div>
             <label for="category" class="font-medium text-sm mb-2 text-gray-900 leading-6 block">Category</label>
@@ -139,19 +158,21 @@ const canSubmit = $computed(() => {
             10% of the sales revenue will be shared with these share investors according to the corresponding proportion
           </div>
         </div>
-        <div class="w-1/2">
+        <div class="mt-5 w-full aspect-2/3 sm:(w-1/2 mt-0 aspect-auto) ">
           <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover photo</label>
           <BsBoxBanner $="image" title="Cover Photo" class="h-full mt-2" />
         </div>
       </div>
-      <div mt-5 border-t border-gray-200 pt-5>
-        <div flex justify="end" items-center>
-          <label class="font-medium text-sm mr-5 text-slate-900 leading-6 block">Create Token Cost</label>
-          <span text-xl mr-2>1</span> $BST
-        </div>
-        <div flex justify="end" items-center mt-2>
-          <label for="payBy" class="font-medium text-sm mr-5 text-slate-900 leading-6 block"> Pay By</label>
-          <BsFormSelect id="payBy" $="payBy" :list="payTokenList" />
+      <div mt-5 border-t border-gray-200 pt-5 flex justify="between" items-center>
+        <label class="font-bold text-sm mr-5 text-slate-900 leading-6 block">Create Token Cost</label>
+        <div>
+          <div flex justify="end" items-center>
+            <span text-xl mr-5>{{ createCost }}</span>
+            <BsFormSelect id="payBy" $="payBy" :list="payTokenList" />
+          </div>
+          <div mt-2>
+            <span font-bold>Your balance:</span> {{ formatEther(bstBalance) }} {{ payBy }}
+          </div>
         </div>
       </div>
       <div class="flex pt-8 gap-x-3 justify-end" mt-5 border-t border-gray-200>
