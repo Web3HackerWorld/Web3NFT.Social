@@ -4,13 +4,13 @@
     "name": "getAppConfig",
     "outputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "payTokenAddress",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "payTokenAddressArr",
+        "type": "address[]"
       },
       {
         "internalType": "uint256",
-        "name": "createTokenCost",
+        "name": "addTokenCost",
         "type": "uint256"
       },
       {
@@ -54,6 +54,30 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "userAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getUserBalance",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "balanceArr",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "baseURI",
         "type": "string"
@@ -61,6 +85,11 @@
       {
         "internalType": "uint256",
         "name": "platformCommission",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "addTokenCost",
         "type": "uint256"
       }
     ],
@@ -72,14 +101,14 @@
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "address",
         "name": "payTokenAddress",
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "createTokenCost",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "isEnabled",
+        "type": "bool"
       }
     ],
     "name": "updatePayment",

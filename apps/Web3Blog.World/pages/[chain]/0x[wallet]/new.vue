@@ -2,20 +2,25 @@
 const { initContract, addLoading, addSuccess, walletAddress: address, chain, initWeb3Force, storeJson } = $(web3AuthStore())
 
 const {
-  balanceBSTSwap,
-  balanceBSTEntropy,
+  bstBalance,
+  payTokenList,
+  payTokenAddress,
+  payBy,
+  addTokenCost,
+  currentAllowance,
+  allowanceModal,
+  queryAllowance,
+  showAllowanceModal,
 } = $(appStore())
 const { supabase } = $(supabaseStore())
 const router = useRouter()
 
 onMounted(initWeb3Force)
-watchEffect(() => {
 
-})
 const name = $ref('皮囊与灵魂写的故事')
 let description = $ref('')
 description = '好看的皮囊和有趣的灵魂在 Web3 里面写了一部关于一个半吊子程序员意外获得 超级 NFT 灵石助力后修仙打怪练级，最后统一了多元宇宙的瞎扯淡的故事'
-const image = $ref('')
+const image = $ref('22')
 const vendor = 'Web3Blog.World'
 const tokenType = 'Web3Blog' // only this type be display on Web3Blog.World
 const category = $ref('Uncategory')
@@ -37,14 +42,24 @@ const tags = $ref('修仙, 搞怪, 无厘头, Web3, 多元宇宙')
 const basicPrice = $ref(100) // $BST
 const maxSupply = $ref(10000)
 const inviteCommission = $ref(1)
-const payTokenList = $ref(['$BSTSwap', '$BSTEntropy'])
-const payBy = $ref('$BSTSwap')
-const payTokenAddress = $ref('')
 
 const parseTags = tags => tags.replace('，', ',').split(',')
 
 let isLoading = $ref(false)
+
 const doSubmit = async () => {
+  if (currentAllowance.lt(addTokenCost)) {
+    showAllowanceModal({
+      amount: addTokenCost,
+      doClose: async () => {
+        await queryAllowance()
+        allowanceModal.isShow = false
+        if (!currentAllowance.lt(addTokenCost))
+          await doSubmit()
+      },
+    })
+  }
+
   if (isLoading)
     return
   isLoading = true
@@ -86,13 +101,6 @@ const doSubmit = async () => {
   description = ''
 }
 
-const createCost = $ref(1)
-const bstBalance = $computed(() => {
-  if (payBy === '$BSTSwap')
-    return balanceBSTSwap
-
-  return balanceBSTEntropy
-})
 const canSubmit = $computed(() => {
   if (
     name === ''
@@ -102,7 +110,7 @@ const canSubmit = $computed(() => {
   )
     return false
 
-  if (bstBalance < createCost)
+  if (bstBalance < addTokenCost)
     return false
 
   return true
@@ -167,7 +175,7 @@ const canSubmit = $computed(() => {
         <label class="font-bold text-sm mr-5 text-slate-900 leading-6 block">Create Token Cost</label>
         <div>
           <div flex justify="end" items-center>
-            <span text-xl mr-5>{{ createCost }}</span>
+            <span text-xl mr-5>{{ formatEther(addTokenCost) }}</span>
             <BsFormSelect id="payBy" $="payBy" :list="payTokenList" />
           </div>
           <div mt-2>

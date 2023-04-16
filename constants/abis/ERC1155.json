@@ -175,6 +175,11 @@
         "internalType": "string",
         "name": "cid",
         "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "payTokenAddress",
+        "type": "address"
       }
     ],
     "name": "addMeta",

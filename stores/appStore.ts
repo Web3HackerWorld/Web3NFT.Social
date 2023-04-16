@@ -1,5 +1,5 @@
 export const appStore = defineStore('appStore', () => {
-  const { contractRead, walletAddress, getContractAddress, contractReadWithAddress } = $(web3AuthStore())
+  const { contractRead, walletAddress, getContractAddress } = $(web3AuthStore())
 
   const allowanceModal = $ref({
     isShow: false,
@@ -8,52 +8,74 @@ export const appStore = defineStore('appStore', () => {
     amount: '0',
     doClose: () => {},
   })
+  const payBy = $ref('$BSTSwap')
+  const payTokenList = ['$BSTSwap', '$BSTEntropy']
+  const payTokenName = $computed(() => payBy.replace('$', ''))
+  const tokenDataMap = $ref({
+    $BSTSwap: {
+      address: '',
+      balance: '0',
+      allowance: '0',
+    },
+    $BSTEntropy: {
+      address: '',
+      balance: '0',
+      allowance: '0',
+    },
+  })
+  const bstBalance = $computed(() => tokenDataMap[payBy].balance)
+  const payTokenAddress = $computed(() => tokenDataMap[payBy].address)
+  const currentAllowance = $computed(() => tokenDataMap[payBy].allowance)
+
   let addTokenCost = $ref(parseEther('0'))
-  const payTokenName = $ref('BuidlerStableToken')
-  const payTokenAddress = $ref('')
-  const appContractName = $ref('BuidlerProtocol')
-  let balanceBSTSwap = $ref(0)
-  let balanceBSTEntropy = $ref(0)
   const queryBstBalance = async () => {
     const rz = await Promise.all([
       contractRead('BSTSwap', 'balanceOf', walletAddress),
       contractRead('BSTEntropy', 'balanceOf', walletAddress),
     ])
-    balanceBSTSwap = rz[0]
-    balanceBSTEntropy = rz[1]
+    tokenDataMap.$BSTSwap.balance = rz[0] || ''
+    tokenDataMap.$BSTEntropy.balance = rz[1] || ''
   }
 
-  let currentAllowance = $ref(0)
   const queryAllowance = async () => {
-    const appContractAddress = getContractAddress(appContractName)
-    currentAllowance = await contractReadWithAddress(payTokenName, payTokenAddress, 'allowance', walletAddress, appContractAddress)
+    const appContractAddress = getContractAddress('BuidlerProtocol')
+    const rz = await Promise.all([
+      contractRead('BSTSwap', 'allowance', walletAddress, appContractAddress),
+      contractRead('BSTEntropy', 'allowance', walletAddress, appContractAddress),
+    ])
+    tokenDataMap.$BSTSwap.allowance = rz[0] || ''
+    tokenDataMap.$BSTEntropy.allowance = rz[1] || ''
   }
 
   const showAllowanceModal = (params) => {
     const { amount, doClose, tokenContractName } = params
     allowanceModal.isShow = true
     allowanceModal.tokenContractName = tokenContractName || payTokenName
-    allowanceModal.appContractName = params.appContractName || appContractName
+    allowanceModal.appContractName = params.appContractName || 'BuidlerProtocol'
     allowanceModal.amount = amount
     allowanceModal.doClose = doClose
   }
 
   let platformCommission = $ref('')
-  const mobileMenuOpen = $ref(false)
 
   const getAppConfig = async () => {
-    const rz = await contractRead('BuidlerProtocol', 'getAppConfig')
-    addTokenCost = rz.addTokenCost
-    platformCommission = rz.platformCommission
+    try {
+      const rz = await contractRead('BuidlerProtocol', 'getAppConfig')
+      addTokenCost = rz.addTokenCost
+      platformCommission = rz.platformCommission
+      // console.log('====> addTokenCost :', addTokenCost, rz)
+    }
+    catch (err) {
+      console.log('====> err :', err)
+    }
   }
 
-  onMounted(async () => {
-    await getAppConfig()
-  })
   watchEffect(async () => {
+    await getAppConfig()
+
     if (!walletAddress)
       return
-    await getAppConfig()
+
     await Promise.all([queryBstBalance(), queryAllowance()])
   })
 
@@ -63,11 +85,10 @@ export const appStore = defineStore('appStore', () => {
     addTokenCost,
     payTokenName,
     payTokenAddress,
-    appContractName,
     platformCommission,
-    balanceBSTSwap,
-    balanceBSTEntropy,
-    mobileMenuOpen,
+    bstBalance,
+    payTokenList,
+    payBy,
     queryAllowance,
     showAllowanceModal,
   })

@@ -82,6 +82,7 @@ const saveToContract = async (data) => {
 
   const loadingItem1 = addLoading('Saving public meta data on to IPFS')
   const cid = await storeJson(data)
+  console.log('====> cid :', cid)
   addSuccess('Save to IPFS successed!', loadingItem1)
 
   const loadingItem2 = addLoading(`Saving to BuidlerProtocol on Chain ${CHAIN_NAME} ${CHAIN_ID}`)

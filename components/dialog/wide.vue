@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
+
 const props = defineProps({
   show: {
     type: Boolean,
