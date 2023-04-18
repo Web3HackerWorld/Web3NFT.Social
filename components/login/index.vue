@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SiweMessage } from 'siwe'
 import { web3AuthStore } from '~/stores/web3AuthStore'
-let { doConnect, chain, walletAddress, web3Provider, isLoading, error, isShowLoginModal, addSuccess } = $(web3AuthStore())
+let { doConnect, chain, walletAddress, appAddress, web3Provider, isLoading, error, isShowLoginModal, addSuccess } = $(web3AuthStore())
 
 const { updateUser, token, doSignOut } = $(supabaseStore())
 
@@ -15,6 +15,7 @@ const signInWithWeb3 = async () => {
     method: 'POST',
     body: {
       address,
+      appAddress,
       chain,
     },
   })
@@ -41,7 +42,7 @@ const signInWithWeb3 = async () => {
     status = 'verifySignature'
     const rz = await $fetch('/api/web3/verify', {
       method: 'POST',
-      body: { message, signature },
+      body: { message, signature, appAddress },
     })
     if (rz.error) { error = rz.error }
     else {
