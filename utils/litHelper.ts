@@ -65,7 +65,7 @@ export const litHelper = ({ chain }) => {
     }
   }
 
-  const generateCondition = ({ contractAddress, walletAddress, tokenId, unlockAmount }) => {
+  const generateCondition = ({ contractAddress, ownerAddress, tokenId, unlockAmount }) => {
     const myselfCondition = {
       contractAddress: '',
       standardContractType: '',
@@ -76,7 +76,7 @@ export const litHelper = ({ chain }) => {
       ],
       returnValueTest: {
         comparator: '=',
-        value: walletAddress,
+        value: ownerAddress,
       },
     }
     const currentNFTCondition = {

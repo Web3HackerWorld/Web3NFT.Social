@@ -1,7 +1,14 @@
 <script setup>
 const user = $(useSupabaseUser())
 const client = useSupabaseClient()
-const { walletAddress } = $(web3AuthStore())
+const { walletAddress: address, chain, appAddress } = $(web3AuthStore())
+const { supabase } = $(supabaseStore())
+
+const { data: token } = await supabase.from('token').select()
+  .eq('address', address)
+  .eq('chain', chain)
+  .eq('appaddress', appAddress)
+  .single()
 
 const { data: posts } = $(await useAsyncData('restaurant', async () => {
   const { data } = await client.from('web3Creation').select().order('created_at', { ascending: false })
@@ -22,7 +29,7 @@ const author = {
 
 const route = useRoute()
 const tokenId = $computed(() => route.params.tokenId)
-const writeLink = $computed(() => `/${tokenId}/new`)
+const writeLink = $computed(() => `/${chain}/${tokenId}/new`)
 const canWrite = $computed(() => {
   if (!tokenId)
     return false

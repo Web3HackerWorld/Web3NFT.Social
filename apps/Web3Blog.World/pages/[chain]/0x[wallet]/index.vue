@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { walletAddress } = $(web3AuthStore())
+const { walletAddress, appAddress } = $(web3AuthStore())
 const { supabase } = $(supabaseStore())
 const route = useRoute()
 const address = $computed(() => `0x${route.params.wallet}`)
@@ -8,6 +8,7 @@ const chain = $computed(() => route.params.chain)
 const { data } = await supabase.from('profile').select()
   .eq('address', address)
   .eq('chain', chain)
+  .eq('appaddress', appAddress)
   .single()
 
 const metadata = $computed(() => {

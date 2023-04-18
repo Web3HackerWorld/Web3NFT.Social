@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { initContract, addLoading, addSuccess, walletAddress: address, chain, initWeb3Force, storeJson } = $(web3AuthStore())
+const { initContract, addLoading, addSuccess, walletAddress: address, appAddress, chain, initWeb3Force, storeJson } = $(web3AuthStore())
 
 const {
   bstBalance,
@@ -9,6 +9,7 @@ const {
   addTokenCost,
   currentAllowance,
   allowanceModal,
+  vendor,
   queryAllowance,
   showAllowanceModal,
 } = $(appStore())
@@ -22,7 +23,6 @@ const name = $ref('皮囊与灵魂写的故事')
 let description = $ref('')
 description = '好看的皮囊和有趣的灵魂在 Web3 里面写了一部关于一个半吊子程序员意外获得 超级 NFT 灵石助力后修仙打怪练级，最后统一了多元宇宙的瞎扯淡的故事'
 const image = $ref('ipfs://bafybeidhf5bw7xx3pq3pxzcgazxy7qdf5a2zlumqubg6vpdehxekyr3jwq')
-const vendor = 'Web3Blog.World'
 const tokenType = 'Web3Blog' // only this type be display on Web3Blog.World
 const category = $ref('Uncategory')
 const categoryList = $ref([
@@ -99,7 +99,7 @@ const doSubmit = async () => {
     addSuccess('Excute the action on blockchain successed!', loadingItem3)
 
     const loadingItem4 = addLoading('Start storing data into database for cache')
-    const { data, error: dbError } = await supabase.from('token').insert({ metadata, chain, address, tokenid, tokentype: tokenType })
+    const { error: dbError } = await supabase.from('token').insert({ metadata, chain, address, tokenid, tokentype: tokenType, appaddress: appAddress })
     if (dbError)
       throw dbError
 

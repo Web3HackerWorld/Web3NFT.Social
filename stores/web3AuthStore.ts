@@ -7,13 +7,16 @@ const chainMap = CHAIN_MAP
 let onboarding: MetaMaskOnboarding = null
 
 export const web3AuthStore = defineStore('web3AuthStore', () => {
-  const { addSuccess, addWarning, addLoading, alertError, alertSuccess } = $(notificationStore())
+  const { addSuccess, addError, addWarning, addLoading, alertError, alertSuccess } = $(notificationStore())
   const { getJson, storeJson } = $(useNFTStorage())
   const { doIdentify } = $(useLogRocket())
   const inviter = '0xC6E58fb4aFFB6aB8A392b7CC23CD3feF74517F6C'
   const chain = $computed(() => Number(chainId))
   let error = $ref('')
   let isLoading = $ref(false)
+
+  const getContractAddress = contractName => useGet(CONTRACT_ADDRESS_MAP, `${contractName}.${CHAIN_ID}`)
+  const appAddress = getContractAddress('BuidlerProtocol')
 
   const doOnboard = async () => {
     onboarding.startOnboarding()
@@ -188,7 +191,6 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     return initWeb3(true)
   }
 
-  const getContractAddress = contractName => useGet(CONTRACT_ADDRESS_MAP, `${contractName}.${CHAIN_ID}`)
   const initContract = async (contractName, isWrite = false, contractAddress = '') => {
     if (!contractAddress)
       contractAddress = getContractAddress(contractName)
@@ -226,6 +228,21 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
 
   const contractRead = async (contractName, methodName, ...params) => {
     const contract = await initContract(contractName)
+    if (!contract[methodName])
+      return []
+
+    let rz = ''
+    if (params.length > 0)
+      rz = await contract[methodName](...params)
+
+    else
+      rz = await contract[methodName]()
+
+    return rz
+  }
+
+  const contractWrite = async (contractName, methodName, ...params) => {
+    const contract = await initContract(contractName, true)
     if (!contract[methodName])
       return []
 
@@ -307,6 +324,23 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
   })
 
   return $$({
+    error,
+    rawProvider,
+    inviter,
+    userData,
+    userBalance,
+    isLoading,
+    appAddress,
+    chainId,
+    chain,
+    isShowOnboardModal,
+    isShowChainSwitchModal,
+    isShowLoginModal,
+    web3Provider,
+    signer,
+    walletAddress,
+    ethers,
+    isUserDataLoading,
     parseEther,
     formatUnits,
     initWeb3,
@@ -321,31 +355,17 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     storeJson,
     addLoading,
     addSuccess,
+    addError,
     addWarning,
     alertError,
     alertSuccess,
     contractRead,
+    contractWrite,
     isMyWalletAddress,
     contractReadWithAddress,
-    error,
-    rawProvider,
-    inviter,
-    userData,
-    userBalance,
-    isLoading,
     doOnboard,
-    chainId,
-    chain,
     doConnect,
     doDisconnect,
-    isShowOnboardModal,
-    isShowChainSwitchModal,
-    isShowLoginModal,
-    web3Provider,
-    signer,
-    walletAddress,
-    ethers,
-    isUserDataLoading,
   })
 })
 

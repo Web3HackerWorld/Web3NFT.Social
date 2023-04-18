@@ -7,7 +7,7 @@ const chain = $computed(() => route.params.chain)
 
 const { supabase, updateUser, token } = $(supabaseStore())
 
-const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, initWeb3Force } = $(web3AuthStore())
+const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, initWeb3Force, appAddress } = $(web3AuthStore())
 
 onMounted(initWeb3Force)
 let isLoading = $ref(true)
@@ -43,6 +43,7 @@ const { data: userData } = await supabase.from('profile')
   .select()
   .eq('chain', chain)
   .eq('address', address)
+  .eq('appaddress', appAddress)
   .single()
 
 isLoading = false
@@ -65,6 +66,7 @@ const saveToSupabase = async () => {
   const { error, data: newUserData } = await supabase.from('profile').update(data)
     .eq('chain', chain)
     .eq('address', address)
+    .eq('appaddress', appAddress)
     .select().single()
   if (error)
     throw error
@@ -82,7 +84,6 @@ const saveToContract = async (data) => {
 
   const loadingItem1 = addLoading('Saving public meta data on to IPFS')
   const cid = await storeJson(data)
-  console.log('====> cid :', cid)
   addSuccess('Save to IPFS successed!', loadingItem1)
 
   const loadingItem2 = addLoading(`Saving to BuidlerProtocol on Chain ${CHAIN_NAME} ${CHAIN_ID}`)

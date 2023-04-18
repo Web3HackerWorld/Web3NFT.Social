@@ -1,6 +1,8 @@
 export const appStore = defineStore('appStore', () => {
   const { contractRead, walletAddress, getContractAddress } = $(web3AuthStore())
 
+  const vendor = import.meta.env.VITE_VENDER
+
   const allowanceModal = $ref({
     isShow: false,
     tokenContractName: '',
@@ -83,6 +85,7 @@ export const appStore = defineStore('appStore', () => {
     bstBalance,
     payTokenList,
     payBy,
+    vendor,
     queryAllowance,
     showAllowanceModal,
   })
