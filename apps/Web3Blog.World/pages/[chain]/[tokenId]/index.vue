@@ -51,7 +51,7 @@ watchEffect(async () => {
 
 const maxSupply = $computed(() => useGet(token, 'metadata.properties.maxSupply'))
 const categoryLink = post => `/category/${useGet(post, 'metadata.category')}`
-const postLink = post => `${post.id}-${useKebabCase(post.title)}`
+const postLink = post => `/${post.tokenid}/${post.itemid}-${useKebabCase(useGet(post, 'metadata.title'))}`
 const authorLink = post => `/${chain}/${post.address}`
 const writeLink = $computed(() => `/${chain}/${tokenId}/new`)
 const canWrite = $computed(() => {
@@ -79,8 +79,13 @@ const canWrite = $computed(() => {
             {{ useGet(token, 'metadata.description') }}
           </p>
         </div>
-        <div flex justify="end" items-center>
-          <span mr-6>{{ totalSupply }} / {{ maxSupply }}</span>
+        <div flex items-center w-full>
+          <div flex-1 flex justify="between">
+            <span>{{ totalSupply }} / {{ maxSupply }}</span>
+            <span mr-3>
+              {{ useGet(token, 'metadata.properties.basicPrice') }} $BST
+            </span>
+          </div>
           <BsBtnBlack>Seed Support</BsBtnBlack>
         </div>
       </div>
@@ -97,7 +102,7 @@ const canWrite = $computed(() => {
         <article v-for="post in items" :key="post.id" class="flex flex-col items-start justify-between">
           <div class="flex text-xs gap-x-4 items-center">
             <time :datetime="post.created_at" class="text-gray-500"> <BsTimeAgo :time="post.created_at" /></time>
-            <NuxtLink :to="categoryLink(post)" class="rounded-full font-medium bg-gray-50 py-1.5 px-3 text-gray-600 z-10 relative hover:bg-gray-100">
+            <NuxtLink v-if="false" :to="categoryLink(post)" class="rounded-full font-medium bg-gray-50 py-1.5 px-3 text-gray-600 z-10 relative hover:bg-gray-100">
               {{ useGet(post, 'metadata.category') }}
             </NuxtLink>
           </div>
