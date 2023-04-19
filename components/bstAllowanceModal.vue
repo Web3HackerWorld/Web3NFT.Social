@@ -29,8 +29,10 @@ const doApprove = async () => {
   try {
     const loadingItem = addLoading('Approving new allowance, wait for your confirm in metamask')
     const tx = await contract.approve(appAddress, parseEther(approveAmount))
-    await tx.wait()
     addSuccess('Approve new allowance successed!', loadingItem)
+    const loadingItem2 = addLoading('Waiting for the blockchain to excute the action')
+    await tx.wait()
+    addSuccess('Block mint successed!', loadingItem2)
     currentAllowance = await contract.allowance(walletAddress, appAddress)
     await allowanceModal.doClose()
 

@@ -72,7 +72,7 @@ export const appStore = defineStore('appStore', () => {
     if (!walletAddress)
       return
 
-    await Promise.all([queryBstBalance(), queryAllowance()])
+    await Promise.all([getAppConfig(), queryBstBalance(), queryAllowance()])
   })
 
   return $$({

@@ -59,7 +59,7 @@ const doSubmit = async () => {
     return
   isLoading = true
 
-  const nextItemId = await contractRead('BuidlerProtocol', 'getItemsCount', tokenId, '')
+  const nextItemId = (await contractRead('BuidlerProtocol', 'getItemsCount', tokenId, '')).toString()
 
   let otpTokenId = ''
   if (enableOneTimePayment === true) {
