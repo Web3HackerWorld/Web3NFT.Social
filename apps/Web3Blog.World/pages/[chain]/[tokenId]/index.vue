@@ -51,7 +51,7 @@ watchEffect(async () => {
 
 const maxSupply = $computed(() => useGet(token, 'metadata.properties.maxSupply'))
 const categoryLink = post => `/category/${useGet(post, 'metadata.category')}`
-const postLink = post => `/${post.tokenid}/${post.itemid}-${useKebabCase(useGet(post, 'metadata.title'))}`
+const postLink = post => `/${chain}/${post.tokenid}/${post.itemid}-${useKebabCase(useGet(post, 'metadata.title'))}`
 const authorLink = post => `/${chain}/${post.address}`
 const writeLink = $computed(() => `/${chain}/${tokenId}/new`)
 const canWrite = $computed(() => {
