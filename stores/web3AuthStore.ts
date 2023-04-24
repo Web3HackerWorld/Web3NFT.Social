@@ -8,7 +8,7 @@ let onboarding: MetaMaskOnboarding = null
 
 export const web3AuthStore = defineStore('web3AuthStore', () => {
   const { addSuccess, addError, addWarning, addLoading, alertError, alertSuccess } = $(notificationStore())
-  const { getJson, storeJson } = $(useNFTStorage())
+  const { getJson, storeJson, storeJsonWithStatus } = $(useNFTStorage())
   const { doIdentify } = $(useLogRocket())
   const inviter = '0xC6E58fb4aFFB6aB8A392b7CC23CD3feF74517F6C'
   const chain = $computed(() => Number(chainId))
@@ -256,6 +256,14 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     return rz
   }
 
+  const bpAction = async (methodName, ...params) => {
+    const loadingItem = addLoading('Start submitting to the blockchain')
+    const tx = await contractWrite('BuidlerProtocol', methodName, ...params)
+    const rc = await tx.wait()
+    addSuccess('Submit to the blockchain successed!', loadingItem)
+    return rc
+  }
+
   const contractReadWithAddress = async (contractName, contractAddress, methodName, ...params) => {
     const contract = await initContract(contractName, false, contractAddress)
     let rz = ''
@@ -353,6 +361,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     queryProfile,
     getJson,
     storeJson,
+    storeJsonWithStatus,
     addLoading,
     addSuccess,
     addError,
@@ -361,6 +370,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     alertSuccess,
     contractRead,
     contractWrite,
+    bpAction,
     isMyWalletAddress,
     contractReadWithAddress,
     doOnboard,

@@ -11,7 +11,9 @@ import {
 
 export default defineConfig({
   shortcuts: [
-    ['flex-c', 'flex justify-center items-center'],
+    ['flex-bc', 'flex justify-between items-center'],
+    ['flex-ec', 'flex justify-end items-center'],
+    ['flex-cc', 'flex justify-center items-center'],
     ['flex-cx', 'flex justify-center'],
     ['flex-cy', 'flex items-center'],
     ['btn', 'rounded-md font-semibold bg-zinc-900 shadow-sm text-sm text-white py-2.5 px-3.5 hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'],

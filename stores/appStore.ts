@@ -1,12 +1,22 @@
 export const appStore = defineStore('appStore', () => {
   const { contractRead, walletAddress, getContractAddress } = $(web3AuthStore())
 
-  const vendor = import.meta.env.VITE_VENDER
+  const distributor = import.meta.env.VITE_DISTRIBUTOR
 
   const allowanceModal = $ref({
     isShow: false,
     tokenContractName: '',
     appContractName: '',
+    amount: '0',
+    doClose: () => {},
+  })
+
+  const tokenMintModal = $ref({
+    isShow: false,
+    tokenid: '0',
+    chain: '',
+    appaddress: '',
+    metaType: 'mint',
     amount: '0',
     doClose: () => {},
   })
@@ -16,13 +26,13 @@ export const appStore = defineStore('appStore', () => {
   const tokenDataMap = $ref({
     $BSTSwap: {
       address: getContractAddress('BSTSwap'),
-      balance: '0',
-      allowance: '0',
+      balance: parseEther('0'),
+      allowance: parseEther('0'),
     },
     $BSTEntropy: {
       address: getContractAddress('BSTEntropy'),
-      balance: '0',
-      allowance: '0',
+      balance: parseEther('0'),
+      allowance: parseEther('0'),
     },
   })
   const bstBalance = $computed(() => tokenDataMap[payBy].balance)
@@ -58,6 +68,17 @@ export const appStore = defineStore('appStore', () => {
     allowanceModal.doClose = doClose
   }
 
+  const showMintModal = (params) => {
+    const { amount, doClose, chain, appaddress, tokenid, metaType } = params
+    tokenMintModal.isShow = true
+    tokenMintModal.tokenid = tokenid
+    tokenMintModal.amount = amount
+    tokenMintModal.metaType = metaType || 'mint'
+    tokenMintModal.chain = chain
+    tokenMintModal.appaddress = appaddress
+    tokenMintModal.doClose = doClose
+  }
+
   let platformCommission = $ref('')
 
   const getAppConfig = async () => {
@@ -78,6 +99,7 @@ export const appStore = defineStore('appStore', () => {
   return $$({
     currentAllowance,
     allowanceModal,
+    tokenMintModal,
     addTokenCost,
     payTokenName,
     payTokenAddress,
@@ -85,9 +107,10 @@ export const appStore = defineStore('appStore', () => {
     bstBalance,
     payTokenList,
     payBy,
-    vendor,
+    distributor,
     queryAllowance,
     showAllowanceModal,
+    showMintModal,
   })
 })
 

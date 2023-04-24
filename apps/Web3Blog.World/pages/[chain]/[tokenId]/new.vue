@@ -2,7 +2,7 @@
 const { appAddress, contractWrite, contractRead, getContractAddress, walletAddress: address, chain, addSuccess, alertSuccess, addError, addLoading } = $(web3AuthStore())
 const { storeJson } = $(useNFTStorage())
 const { supabase } = $(supabaseStore())
-const { vendor } = $(appStore())
+const { distributor } = $(appStore())
 
 const router = useRouter()
 const route = useRoute()
@@ -72,7 +72,7 @@ const doSubmit = async () => {
       properties: {
         category,
         tokenType: 'OTP',
-        vendor,
+        distributor,
         basicPrice: oneTimePaymentBasicPrice,
         maxSupply: oneTimePaymentMaxSupply,
         tokenMetadata: token.metadata,

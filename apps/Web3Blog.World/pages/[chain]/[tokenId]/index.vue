@@ -86,7 +86,7 @@ const canWrite = $computed(() => {
               {{ useGet(token, 'metadata.properties.basicPrice') }} $BST
             </span>
           </div>
-          <BsBtnBlack>Seed Support</BsBtnBlack>
+          <BsBtnBlack>Mint</BsBtnBlack>
         </div>
       </div>
     </div>

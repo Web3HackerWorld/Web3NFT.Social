@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-let { modelValue, list, hasAddNew = false } = $defineModel<{
+let { modelValue, list, hasAddNew = false } = $defineModels<{
   modelValue: string
   list: Array<string>
   hasAddNew?: boolean

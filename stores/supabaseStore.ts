@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
 export const supabaseStore = defineStore('supabaseStore', () => {
-  const { addSuccess, doDisconnect } = $(web3AuthStore())
+  const { addSuccess, addLoading, doDisconnect } = $(web3AuthStore())
   const userCacheKey = 'supabase-user'
   const tokenCacheKey = 'supabase-user-jwt'
   const { public: { supabase: { url, key } } } = useRuntimeConfig()
@@ -25,6 +25,7 @@ export const supabaseStore = defineStore('supabaseStore', () => {
     doDisconnect()
     addSuccess('Sign Out Successed!')
   }
+
   watchEffect(() => {
     if (token) {
       supabase = createClient(url, key, {
@@ -40,7 +41,16 @@ export const supabaseStore = defineStore('supabaseStore', () => {
     }
   })
 
-  return $$({ supabase, updateUser, user, token, doSignOut, metadata })
+  const insertDataWithStatus = async (table, data) => {
+    const loadingItem = addLoading('Start storing data into database for cache')
+    const { error: dbError } = await supabase.from(table).insert(data)
+    if (dbError)
+      throw dbError
+
+    addSuccess('Store data into database successed!', loadingItem)
+  }
+
+  return $$({ supabase, insertDataWithStatus, updateUser, user, token, doSignOut, metadata })
 })
 
 if (import.meta.hot)

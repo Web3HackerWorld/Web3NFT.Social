@@ -9,7 +9,7 @@ const {
   addTokenCost,
   currentAllowance,
   allowanceModal,
-  vendor,
+  distributor,
   queryAllowance,
   showAllowanceModal,
 } = $(appStore())
@@ -70,7 +70,7 @@ const doSubmit = async () => {
     category,
     tags: parseTags(tags),
     tokenType,
-    vendor,
+    distributor,
     basicPrice,
     maxSupply,
     inviteCommission,
