@@ -15,12 +15,13 @@ const authorLink = () => `/${chain}/${tokenAuthorAddress}`
 const theContent = $computed(() => useGet(item, 'content', {}))
 
 const { data: author } = $(await useWeb3SupabaseData('profile', $$({ chain, appaddress, address: tokenAuthorAddress })))
+const { metadata: token } = $(useToken($$(tokenid)))
 </script>
 
 <template>
   <div class="flex flex-col mx-auto flex-1  pt-16">
     <div class="flex-1 text-base  text-gray-700 leading-7">
-      <Breadcrumbs />
+      <Breadcrumbs :token="token" :tokenid="tokenid" :author="author" />
       <h1 class="border-b font-bold border-gray-200 my-6 tracking-tight pb-4 text-3xl text-gray-900 sm:text-4xl ">
         {{ item.title }}
       </h1>

@@ -182,7 +182,6 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     }
 
     accounts = getLsItem('accounts', [])
-    console.log('====> accounts :', accounts)
     if (accounts.length === 0 && isForce)
       isShowLoginModal = true
   }

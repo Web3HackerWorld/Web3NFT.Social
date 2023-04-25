@@ -96,7 +96,7 @@ const tokenLink = item => `/${chain}/${item.tokenid}`
     <div class="grid gap-x-6 gap-y-10 grid-cols-1 sm:grid-cols-2">
       <NuxtLink v-for="item in items" :key="item.id" :to="tokenLink(item)" class="group">
         <div class="rounded-lg bg-gray-200 w-full overflow-hidden aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
-          <BsBoxImg :src="useGet(item, 'metadata.image')" :alt="useGet(item, 'metadata.name')" class="h-full object-cover object-center w-full group-hover:opacity-75" />
+          <BsBoxImg :src="useGet(item, 'metadata.image')" :alt="useGet(item, 'metadata.name')" class="h-full object-cover object-center h-40 w-full group-hover:opacity-75" />
         </div>
         <h3 class="mt-4 text-sm text-gray-700">
           {{ useGet(item, 'metadata.name') }}

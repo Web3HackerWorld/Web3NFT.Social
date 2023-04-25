@@ -2,8 +2,10 @@
 const route = useRoute()
 const tokenId = $computed(() => route.params.tokenId)
 
-const { walletAddress, chain, appAddress, contractRead } = $(web3AuthStore())
+const { walletAddress, chain, appAddress } = $(web3AuthStore())
 const { supabase } = $(supabaseStore())
+
+const { totalSupply, maxSupply, isLoading: isTokenLoading, doUpdate: updateToken } = $(useToken($$(tokenId)))
 
 const { data } = $(await useLazyAsyncData(async () => {
   const getTokenData = async () => {
@@ -44,12 +46,6 @@ const token = $computed(() => data?.token)
 const items = $computed(() => data?.items)
 const author = $computed(() => data?.author || {})
 
-let totalSupply = $ref(0)
-watchEffect(async () => {
-  totalSupply = await contractRead('BuidlerProtocol', 'totalSupply', tokenId)
-})
-
-const maxSupply = $computed(() => useGet(token, 'metadata.properties.maxSupply'))
 const categoryLink = post => `/category/${useGet(post, 'metadata.category')}`
 const postLink = post => `/${chain}/${post.tokenid}/${post.itemid}-${useKebabCase(useGet(post, 'metadata.title'))}`
 const authorLink = post => `/${chain}/${post.address}`
@@ -61,6 +57,20 @@ const canWrite = $computed(() => {
     return false
 
   return true
+})
+
+const { showMintModal } = $(appStore())
+
+const nftPassMintParams = $computed(() => {
+  return {
+    amount: '1',
+    tokenid: tokenId,
+    chain,
+    appaddress: appAddress,
+    doClose: async () => {
+      await updateToken(true)
+    },
+  }
 })
 </script>
 
@@ -86,7 +96,9 @@ const canWrite = $computed(() => {
               {{ useGet(token, 'metadata.properties.basicPrice') }} $BST
             </span>
           </div>
-          <BsBtnBlack>Mint</BsBtnBlack>
+          <BsBtnBlack @click="showMintModal(nftPassMintParams)">
+            Mint
+          </BsBtnBlack>
         </div>
       </div>
     </div>
