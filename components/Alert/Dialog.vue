@@ -4,13 +4,16 @@ const { error, success, alertType, doCloseAlert } = $(notificationStore())
 
 <template>
   <BsDialogDefault :show="alertType !== false" @close="doCloseAlert">
-    <div min-w-sm>
-      <BsAlertError v-if="alertType === 'error'" :title="error.title">
+    <div pt-2>
+      <BsAlertError v-if="alertType === 'error'">
         {{ error }}
       </BsAlertError>
-      <BsAlertSuccess v-if="alertType === 'success'" :title="success">
+      <BsAlertSuccess v-if="alertType === 'success'">
         {{ success }}
       </BsAlertSuccess>
+      <BsBtnBlack w-full mt-6 @click="doCloseAlert">
+        OK
+      </BsBtnBlack>
     </div>
   </BsDialogDefault>
 </template>

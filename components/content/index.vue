@@ -74,7 +74,7 @@ const doUnlock = async () => {
   const { decryptedString, err } = await doDecryptString({ encryptedSymmetricKey, encryptedString, accessControlConditions: condition })
   isUnlocking = false
   if (err)
-    return alertError({ title: 'descripted error', ...err }, loadingItem)
+    return alertError(err.toString(), false, loadingItem)
 
   textContent = decryptedString
   setLsItem(cacheKey, decryptedString)

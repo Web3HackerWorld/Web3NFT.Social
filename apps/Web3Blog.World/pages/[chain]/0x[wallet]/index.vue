@@ -1,10 +1,12 @@
 <script setup lang="ts">
+const { alertError } = $(notificationStore())
 const { appaddress, walletAddress } = $(web3AuthStore())
 const route = useRoute()
+const router = useRouter()
 const address = $computed(() => formatAddress(`0x${route.params.wallet}`))
 const chain = $computed(() => route.params.chain)
 
-const { data: author } = $(useWeb3SupabaseData('profile', $$({ address, chain, appaddress })))
+const { data: author, hasLoaded: isAuthorLoaded } = $(useWeb3SupabaseData('profile', $$({ address, chain, appaddress })))
 
 const profileName = $computed(() => {
   if (author.firstname && author.lastname)
@@ -18,6 +20,21 @@ const { data: tokens, hasLoaded, isPending } = $(useWeb3SupabaseData('token', $$
 
 const noData = $computed(() => hasLoaded && tokens.length === 0)
 const tokenLink = item => `/${chain}/${item.tokenid}`
+
+watchEffect(() => {
+  if (!isAuthorLoaded)
+    return
+
+  if (author.avatar)
+    return
+
+  if (!isSameAddress(address, walletAddress))
+    return
+
+  alertError('Please update your profile first to create your new Creation', () => {
+    router.push(`/${chain}/${walletAddress}/settings`)
+  })
+})
 </script>
 
 <template>
@@ -66,7 +83,7 @@ const tokenLink = item => `/${chain}/${item.tokenid}`
           <div class="border border-dashed rounded-lg flex border-gray-900/25 py-37 px-6 text-gray-500 justify-center">
             <div class="text-center">
               <div i-material-symbols-add class="mx-auto h-12  w-12" aria-hidden="true" />
-              New Book
+              New Creation
             </div>
           </div>
         </NuxtLink>
