@@ -1,4 +1,6 @@
 <script setup>
+import VueAutoWriter from 'vue-auto-writer'
+
 await $fetch('/api/web3/test', {
   method: 'POST',
   body: {
@@ -22,18 +24,38 @@ const author = {
   href: '/user/bruce',
   imageUrl: '/img/bruce.jpg',
 }
+
+const textArr = [
+  {
+    value: 'Get creative income with $BST',
+    style: 'display: block',
+  },
+  {
+    value: 'Permanently Store Book on Web3',
+    style: 'display: block',
+  },
+]
 </script>
 
 <template>
-  <div class="py-12 sm:py-16">
-    <h2 class="font-bold tracking-tight text-3xl text-gray-900 sm:text-4xl">
-      Web3Blog.World
-    </h2>
-    <p class="mt-2 text-lg text-gray-600 leading-8">
-      Your Web3 Blogging platform <br>
-      With Web3 and Web2 features
-    </p>
-    <div class="border-t space-y-16 border-gray-200 mt-10 pt-10 sm:mt-16 sm:pt-16">
+  <div>
+    <div class="h-[calc(100vh-3.5em)]" flex-cc flex-col>
+      <h2 v-motion-slide-top class="font-bold text-center mb-5 tracking-tight text-4xl text-gray-900 sm:text-7xl">
+        Publish Web3 Book
+      </h2>
+      <h2 v-motion-slide-bottom class="font-bold text-center text-xl mb-4 tracking-tight text-gray-900 sm:text-3xl">
+        on Web3Blog.World
+      </h2>
+      <p class="mt-2 text-center text-xl text-gray-600">
+        <VueAutoWriter base-text="" :texts="textArr" />
+      </p>
+      <div flex-cc mt-10>
+        <BsBtnBlack class="rounded-3xl! text-xl! py-3! px-8!">
+          Get Started
+        </BsBtnBlack>
+      </div>
+    </div>
+    <div class="border-t space-y-16 border-gray-200 mt-10 pt-10 hidden sm:mt-16 sm:pt-16">
       <article v-for="post in posts" :key="post.id" class="flex flex-col items-start justify-between">
         <div class="flex text-xs gap-x-4 items-center">
           <time :datetime="post.created_at" class="text-gray-500">{{ post.created_at }}</time>
