@@ -46,7 +46,7 @@ export function useNFTStorage() {
 
   const storeJsonWithStatus = async (data) => {
     const loadingItem = addLoading('Start pack metadata on to IPFS')
-    const cid = await storeJsonWithStatus(data)
+    const cid = await storeJson(data)
     addSuccess('Pack metadata on to IPFS successed!', loadingItem)
     return cid
   }

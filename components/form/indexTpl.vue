@@ -16,7 +16,7 @@ const {
           <h3 class="font-semibold text-base text-gray-900 leading-6">
             Profile
           </h3>
-          <p class="mt-1 text-sm max-w-2xl text-gray-500">
+          <p class="mt-1 text-sm text-gray-500">
             This information will be displayed publicly so be careful what you share.
           </p>
         </div>
@@ -90,7 +90,7 @@ const {
           <h3 class="font-semibold text-base text-gray-900 leading-6">
             Personal Information
           </h3>
-          <p class="mt-1 text-sm max-w-2xl text-gray-500">
+          <p class="mt-1 text-sm text-gray-500">
             Use a permanent address where you can receive mail.
           </p>
         </div>
@@ -162,7 +162,7 @@ const {
           <h3 class="font-semibold text-base text-gray-900 leading-6">
             Notifications
           </h3>
-          <p class="mt-1 text-sm max-w-2xl text-gray-500">
+          <p class="mt-1 text-sm text-gray-500">
             We'll always let you know about important changes, but you pick what else you want to hear about.
           </p>
         </div>

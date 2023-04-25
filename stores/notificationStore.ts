@@ -72,7 +72,10 @@ export const notificationStore = defineStore('notificationStore', () => {
     })
   }
 
-  const alertError = (err) => {
+  const alertError = (err, loadingItem = false) => {
+    if (loadingItem)
+      removeItem(loadingItem)
+
     alertType = 'error'
     error = err
   }

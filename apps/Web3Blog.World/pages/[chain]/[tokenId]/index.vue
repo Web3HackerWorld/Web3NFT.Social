@@ -68,7 +68,7 @@ const canWrite = $computed(() => {
   <div class="py-12 sm:py-16">
     <div sm:flex justify="around">
       <div class="rounded-lg bg-gray-200  overflow-hidden aspect-h-1  aspect-w-1 sm:(w-1/2) xl:aspect-h-8 xl:aspect-w-7 ">
-        <BsBoxImg :src="useGet(token, 'metadata.image')" class="h-full object-cover object-center w-full group-hover:opacity-75" />
+        <BsBoxImg :src="useGet(token, 'metadata.image')" class="h-full object-cover object-center min-h-80 w-full group-hover:opacity-75" />
       </div>
       <div flex flex-col mt-10 justify-center items-end class="sm:(pl-10 w-1/2) ">
         <div flex-1 flex flex-col items-center justify="center">

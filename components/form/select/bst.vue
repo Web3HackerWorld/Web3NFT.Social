@@ -33,7 +33,7 @@ watchEffect(() => {
         Your balance
       </div>
       <div>
-        {{ formatEther(bstBalance) }} {{ payBy }}
+        {{ formatUnits(bstBalance) }} {{ payBy }}
       </div>
     </div>
     <div flex-bc>
@@ -41,7 +41,7 @@ watchEffect(() => {
         <slot />
       </div>
       <div flex justify="end" items-center>
-        {{ formatEther(modelValue) }} {{ payBy }}
+        {{ formatUnits(modelValue) }} {{ payBy }}
       </div>
     </div>
   </div>

@@ -8,14 +8,9 @@ const router = useRouter()
 const route = useRoute()
 const tokenId = $computed(() => route.params.tokenId)
 
-const { data: token } = $(await useLazyAsyncData(() => {
-  return supabase.from('token').select()
-    .eq('tokenid', tokenId)
-    .eq('address', address)
-    .eq('appaddress', appAddress)
-    .eq('chain', chain)
-    .single()
-}, { watch: [$$(tokenId), $$(address)] }))
+const { metadata } = $(useToken($$(tokenId)))
+
+const tokentype = $computed(() => useGet(metadata, 'properties.tokenType', ''))
 
 const title = $ref('Content Creation as NFT')
 const excerpt = $ref('We create a platform that help users to make any content into NFT with token gating features as Web3 payment without any coding skill')
@@ -66,20 +61,22 @@ const doSubmit = async () => {
     const loadingItem1 = addLoading('Start creating One Time Payment SBT')
     const inviteCommission = 100
     const otpCid = await storeJson({
-      name: `OTP for ${nextItemId} in ${title} (${tokenId})`,
+      name: `OTP for ${title}`,
       description: excerpt,
-      image: useGet(token, 'metadata.image'),
+      image: useGet(metadata, 'image', ''),
       properties: {
         category,
         tokenType: 'OTP',
         distributor,
         basicPrice: oneTimePaymentBasicPrice,
         maxSupply: oneTimePaymentMaxSupply,
-        tokenMetadata: token.metadata,
+        tokenMetadata: metadata,
+        itemId: nextItemId,
+        tokenId,
       },
       external_url: '',
     })
-    const tx = await contractWrite('BuidlerProtocol', 'addOTP', oneTimePaymentBasicPrice, inviteCommission, oneTimePaymentMaxSupply, otpCid, tokenId, nextItemId)
+    const tx = await contractWrite('BuidlerProtocol', 'addOTP', parseEther(oneTimePaymentBasicPrice), inviteCommission, oneTimePaymentMaxSupply, otpCid, tokenId, nextItemId)
     const rc = await tx.wait()
     const event = rc.events.find(event => event.event === 'AddOTP')
     otpTokenId = event.args.tokenId.toString()
@@ -119,7 +116,7 @@ const doSubmit = async () => {
     addSuccess('Encrypt your content with NFT Gating Successed!', loadingItem2)
   }
 
-  const metadata = {
+  const sbtMetadata = {
     title,
     excerpt,
     category,
@@ -127,10 +124,10 @@ const doSubmit = async () => {
     content,
   }
   if (requireNFTPass || enableOneTimePayment)
-    metadata.content = litRz
+    sbtMetadata.content = litRz
 
   const loadingItem3 = addLoading('Start uploading the encrypt content onto IPFS')
-  const cid = await storeJson(metadata)
+  const cid = await storeJson(sbtMetadata)
   addSuccess('Upload the encrypt content onto IPFS Successed!', loadingItem3)
 
   const loadingItem4 = addLoading('Start submiting item data onto blockchain')
@@ -140,7 +137,7 @@ const doSubmit = async () => {
 
   const loadingItem5 = addLoading('Start storing data into database for cache')
 
-  const { error: dbError } = await supabase.from('item').insert({ metadata, chain, address, tokenid: tokenId, tokentype: token.tokentype, appaddress: appAddress, itemid: nextItemId, itemtype: itemType })
+  const { error: dbError } = await supabase.from('item').insert({ metadata: sbtMetadata, chain, address, tokenid: tokenId, tokentype, appaddress: appAddress, itemid: nextItemId, itemtype: itemType })
   if (dbError) {
     error = dbError
     addError('Store data into database failed!', loadingItem5)

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Switch, SwitchDescription, SwitchGroup, SwitchLabel } from '@headlessui/vue'
-let { modelValue, title } = $defineModel<{
+let { modelValue, title } = $defineModels<{
   modelValue: boolean
   title: string
 }>()

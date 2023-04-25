@@ -10,13 +10,17 @@ const {
   showAllowanceModal,
 } = $(appStore())
 
-const { chain, appaddress, tokenid, metaType, amount } = $(tokenMintModal)
+let { chain, appaddress, tokenid, metaType, amount, isShow } = $(tokenMintModal)
 const { walletAddress: address, storeJsonWithStatus, bpAction } = $(web3AuthStore())
 const { insertDataWithStatus } = $(supabaseStore())
 
-const { data: token } = $(await useWeb3SupabaseData('token', $$({ chain, tokenid, appaddress }), true))
+const { metadata, basicPrice, totalSupply, maxSupply, isLoading: isTokenLoading, doUpdate: updateToken } = $(useToken($$(tokenid)))
 
-const { basicPrice, totalSupply, maxSupply, isLoading: isTokenLoading } = $(useToken($$(tokenid)))
+watchEffect(async () => {
+  if (!isShow)
+    return
+  await updateToken(true)
+})
 
 const mintCost = $computed(() => {
   return basicPrice.mul(tokenMintModal.amount)
@@ -36,6 +40,11 @@ const canSubmit = $computed(() => {
   return true
 })
 
+const doClose = async () => {
+  await tokenMintModal.doClose()
+  isShow = false
+  isLoading = false
+}
 const doSubmit = async () => {
   if (currentAllowance.lt(mintCost)) {
     showAllowanceModal({
@@ -66,20 +75,20 @@ const doSubmit = async () => {
     rc = await bpAction('buyOTP', tokenid, amount, cid, payTokenAddress, distributor)
   else
     rc = await bpAction('addMeta', metaType, tokenid, amount, cid, payTokenAddress, distributor)
-  console.log('====> rc :', rc)
   await insertDataWithStatus('meta', { metadata, chain, tokenid, appaddress, address, metatype: metaType })
+  await doClose()
 }
 </script>
 
 <template>
-  <BsDialogWide :show="tokenMintModal.isShow" @close="tokenMintModal.doClose">
+  <BsDialogWide :show="isShow" @close="doClose">
     <div sm:w-100>
       <div class="flex items-center">
         <div class="rounded-lg bg-gray-200  h-10 mr-2 overflow-hidden aspect-1">
-          <BsBoxImg :src="useGet(token, 'image')" class="h-full object-cover object-center w-full group-hover:opacity-75" />
+          <BsBoxImg :src="useGet(metadata, 'image')" class="h-full object-cover object-center w-full group-hover:opacity-75" />
         </div>
         <h3 class="font-semibold flex-1 text-base text-gray-900 leading-6">
-          #{{ tokenid }} {{ token.name }}
+          #{{ tokenid }} {{ metadata.name }}
         </h3>
         <div>
           <BsLoadingIcon v-if="isTokenLoading" />
@@ -107,7 +116,7 @@ const doSubmit = async () => {
           Total Cost
         </BsFormSelectBst>
 
-        <BsBtnBlack w-full :disabled="!canSubmit" my-4 @click="doSubmit">
+        <BsBtnBlack w-full :disabled="!canSubmit" my-4 :is-loading="isLoading" @click="doSubmit">
           Mint
         </BsBtnBlack>
       </div>

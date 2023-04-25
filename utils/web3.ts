@@ -4,8 +4,9 @@ import { ethers } from 'ethers'
 export const parseEther = val => ethers.utils.parseEther(`${val}`)
 export const formatEther = val => ethers.utils.formatEther(`${val}`)
 
-export const formatUnits = function(val, precision = 18, fraction = 4) {
-  if (!val) return ''
+export const formatUnits = function (val, precision = 18, fraction = 4) {
+  if (!val)
+    return ''
   val = ethers.utils.formatUnits(val, precision)
   val = val.split('.')
   val = `${val[0]}.${val[1].substr(0, fraction)}`
@@ -14,14 +15,14 @@ export const formatUnits = function(val, precision = 18, fraction = 4) {
 
 // 37462 => 37.5K
 export const numberFormat = (num) => {
-  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 1, notation: 'compact', compactDisplay: 'short' }).format(num)
+  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, notation: 'compact', compactDisplay: 'short' }).format(num)
 }
 
 export const humanFormatEther = (num) => {
   return numberFormat(formatEther(num))
 }
 
-export const parseUnits = function(val, precision = 18) {
+export const parseUnits = function (val, precision = 18) {
   if (!val)
     val = 0
 
@@ -32,7 +33,8 @@ export const shortAddress = address => address ? `${address.substr(0, 6)}...${ad
 
 // export const chatLink = address => `https://chat.web3nft.social/dm/${address}`
 export const chatLink = (address) => {
-  if (!address) return ''
+  if (!address)
+    return ''
   address = ethers.utils.getAddress(address)
   return `https://chat.web3nft.social/dm/${address}`
   // return `https://chat.blockscan.com/index?a=${address}`

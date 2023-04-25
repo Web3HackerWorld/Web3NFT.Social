@@ -12,8 +12,7 @@ const litScript = [
   {
     innerHTML: `
 function litJsSdkLoaded() {
-  var litNodeClient = new LitJsSdk_litNodeClient.LitNodeClient
-();
+  var litNodeClient = new LitJsSdk_litNodeClient.LitNodeClient({debug: false, litNetwork: "serrano"});
   litNodeClient.connect();
   window.litNodeClient = litNodeClient;
 }; litJsSdkLoaded()`,
