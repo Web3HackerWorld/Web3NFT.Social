@@ -11,6 +11,20 @@ const textArr = [
     style: 'display: block',
   },
 ]
+const { chain: defaultChain, initWeb3, walletAddress } = $(web3AuthStore())
+const route = useRoute()
+const chain = $computed(() => route.params.chain || defaultChain)
+
+const router = useRouter()
+
+const goToProfile = async () => {
+  if (walletAddress) {
+    router.push(`/${chain}/${walletAddress}`)
+    return
+  }
+
+  await initWeb3(true)
+}
 </script>
 
 <template>
@@ -21,11 +35,11 @@ const textArr = [
     <h2 v-motion-slide-bottom class="font-bold text-center mb-24 tracking-tight text-2xl text-gray-900 sm:text-5xl">
       on Web3Blog.World
     </h2>
-    <p class="text-center text-xl text-gray-600">
+    <p class="text-center text-2xl text-gray-600">
       <VueAutoWriter base-text="" :texts="textArr" />
     </p>
     <div flex-cc mt-24>
-      <BsBtnBlack class="rounded-full!">
+      <BsBtnBlack class="rounded-full!" @click="goToProfile">
         Get Started
       </BsBtnBlack>
     </div>

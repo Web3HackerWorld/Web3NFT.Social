@@ -16,7 +16,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
   let isLoading = $ref(false)
 
   const getContractAddress = contractName => useGet(CONTRACT_ADDRESS_MAP, `${contractName}.${CHAIN_ID}`)
-  const appAddress = getContractAddress('BuidlerProtocol')
+  const appaddress = getContractAddress('BuidlerProtocol')
 
   const doOnboard = async () => {
     onboarding.startOnboarding()
@@ -94,7 +94,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
 
     accounts = newAccounts
     setLsItem('accounts', newAccounts)
-    console.log('====> accounts :', accounts, newAccounts)
+    // console.log('====> accounts :', accounts, newAccounts)
     // means user click on logout btn
     if (newAccounts.length === 0) {
       addSuccess('Disconnect Success!')
@@ -337,7 +337,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
     userData,
     userBalance,
     isLoading,
-    appAddress,
+    appaddress,
     chainId,
     chain,
     isShowOnboardModal,

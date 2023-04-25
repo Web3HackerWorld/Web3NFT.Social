@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const { appAddress, contractWrite, contractRead, getContractAddress, walletAddress: address, chain, addSuccess, alertSuccess, addError, addLoading } = $(web3AuthStore())
+const { appaddress, contractWrite, contractRead, getContractAddress, walletAddress: address, chain, addSuccess, alertSuccess, addError, addLoading } = $(web3AuthStore())
 const { storeJson } = $(useNFTStorage())
 const { supabase } = $(supabaseStore())
 const { distributor } = $(appStore())
 
 const router = useRouter()
 const route = useRoute()
-const tokenId = $computed(() => route.params.tokenId)
+const tokenid = $computed(() => route.params.tokenid)
 
-const { metadata } = $(useToken($$(tokenId)))
+const { metadata } = $(useToken($$(tokenid)))
 
 const tokentype = $computed(() => useGet(metadata, 'properties.tokenType', ''))
 
@@ -54,7 +54,7 @@ const doSubmit = async () => {
     return
   isLoading = true
 
-  const nextItemId = (await contractRead('BuidlerProtocol', 'getItemsCount', tokenId, '')).toString()
+  const nextItemId = (await contractRead('BuidlerProtocol', 'getItemsCount', tokenid, '')).toString()
 
   let otpTokenId = ''
   if (enableOneTimePayment === true) {
@@ -72,14 +72,14 @@ const doSubmit = async () => {
         maxSupply: oneTimePaymentMaxSupply,
         tokenMetadata: metadata,
         itemId: nextItemId,
-        tokenId,
+        tokenid,
       },
       external_url: '',
     })
-    const tx = await contractWrite('BuidlerProtocol', 'addOTP', parseEther(oneTimePaymentBasicPrice), inviteCommission, oneTimePaymentMaxSupply, otpCid, tokenId, nextItemId)
+    const tx = await contractWrite('BuidlerProtocol', 'addOTP', parseEther(oneTimePaymentBasicPrice), inviteCommission, oneTimePaymentMaxSupply, otpCid, tokenid, nextItemId)
     const rc = await tx.wait()
     const event = rc.events.find(event => event.event === 'AddOTP')
-    otpTokenId = event.args.tokenId.toString()
+    otpTokenId = event.args.tokenid.toString()
     addSuccess('Create One Time Payment SBT Successed!', loadingItem1)
   }
 
@@ -89,10 +89,10 @@ const doSubmit = async () => {
     const { doEncryptedString, generateCondition } = litHelper({ chain: CHAIN_NAME })
     const contractAddress = getContractAddress('BuidlerProtocol')
     const ownerAddress = address
-    const nftPassCondition = generateCondition({ contractAddress, ownerAddress, tokenId, unlockAmount: requiredNFTCount })
+    const nftPassCondition = generateCondition({ contractAddress, ownerAddress, tokenid, unlockAmount: requiredNFTCount })
     let condition = nftPassCondition
     if (otpTokenId) {
-      const otpCondition = generateCondition({ contractAddress, ownerAddress, tokenId: otpTokenId, unlockAmount: '1' })
+      const otpCondition = generateCondition({ contractAddress, ownerAddress, tokenid: otpTokenId, unlockAmount: '1' })
       condition = [
         ...nftPassCondition,
         {
@@ -131,13 +131,13 @@ const doSubmit = async () => {
   addSuccess('Upload the encrypt content onto IPFS Successed!', loadingItem3)
 
   const loadingItem4 = addLoading('Start submiting item data onto blockchain')
-  const tx = await contractWrite('BuidlerProtocol', 'addItem', itemType, tokenId, cid)
+  const tx = await contractWrite('BuidlerProtocol', 'addItem', itemType, tokenid, cid)
   await tx.wait()
   addSuccess('Submit item data onto blockchain Successed!', loadingItem4)
 
   const loadingItem5 = addLoading('Start storing data into database for cache')
 
-  const { error: dbError } = await supabase.from('item').insert({ metadata: sbtMetadata, chain, address, tokenid: tokenId, tokentype, appaddress: appAddress, itemid: nextItemId, itemtype: itemType })
+  const { error: dbError } = await supabase.from('item').insert({ metadata: sbtMetadata, chain, address, tokenid, tokentype, appaddress, itemid: nextItemId, itemtype: itemType })
   if (dbError) {
     error = dbError
     addError('Store data into database failed!', loadingItem5)
@@ -146,7 +146,7 @@ const doSubmit = async () => {
 
   alertSuccess('Store data into database successed!', async () => {
     isLoading = false
-    router.push(`/${chain}/${tokenId}`)
+    router.push(`/${chain}/${tokenid}`)
   }, loadingItem5)
 }
 </script>

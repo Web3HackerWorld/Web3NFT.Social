@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { initContract, addLoading, addSuccess, walletAddress: address, appAddress, chain, initWeb3Force, storeJson } = $(web3AuthStore())
+const { initContract, addLoading, addSuccess, walletAddress: address, appaddress, chain, initWeb3Force, storeJson } = $(web3AuthStore())
 
 const {
   bstBalance,
@@ -99,7 +99,7 @@ const doSubmit = async () => {
     addSuccess('Excute the action on blockchain successed!', loadingItem3)
 
     const loadingItem4 = addLoading('Start storing data into database for cache')
-    const { error: dbError } = await supabase.from('token').insert({ metadata, chain, address, tokenid, tokentype: tokenType, appaddress: appAddress })
+    const { error: dbError } = await supabase.from('token').insert({ metadata, chain, address, tokenid, tokentype: tokenType, appaddress })
     if (dbError)
       throw dbError
 

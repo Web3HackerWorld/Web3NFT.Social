@@ -2,7 +2,7 @@
 const { allowanceModal } = $(appStore())
 const { getContractAddress, initContract, walletAddress, addSuccess, addLoading } = $(web3AuthStore())
 let tokenAddress = $ref('')
-let appAddress = $ref('')
+let appaddress = $ref('')
 let approveAmount = $ref('')
 let currentAllowance = $ref(0)
 let isLoading = $ref(false)
@@ -16,9 +16,9 @@ watchEffect(async () => {
   tokenAddress = getContractAddress(allowanceModal.tokenContractName)
   const contract = await initContract(allowanceModal.tokenContractName)
 
-  appAddress = getContractAddress(allowanceModal.appContractName)
+  appaddress = getContractAddress(allowanceModal.appContractName)
 
-  currentAllowance = await contract.allowance(walletAddress, appAddress)
+  currentAllowance = await contract.allowance(walletAddress, appaddress)
 })
 
 const doApprove = async () => {
@@ -28,12 +28,12 @@ const doApprove = async () => {
   const contract = await initContract(allowanceModal.tokenContractName, true)
   try {
     const loadingItem = addLoading('Approving new allowance, wait for your confirm in metamask')
-    const tx = await contract.approve(appAddress, parseEther(approveAmount))
+    const tx = await contract.approve(appaddress, parseEther(approveAmount))
     addSuccess('Approve new allowance successed!', loadingItem)
     const loadingItem2 = addLoading('Waiting for the blockchain to excute the action')
     await tx.wait()
     addSuccess('Block mint successed!', loadingItem2)
-    currentAllowance = await contract.allowance(walletAddress, appAddress)
+    currentAllowance = await contract.allowance(walletAddress, appaddress)
     await allowanceModal.doClose()
 
     allowanceModal.tokenContractName = ''
@@ -64,7 +64,7 @@ const doApprove = async () => {
             </span>
             allowance for <br> Application
             <span font-medium>
-              {{ allowanceModal.appContractName }} {{ shortAddress(appAddress) }}
+              {{ allowanceModal.appContractName }} {{ shortAddress(appaddress) }}
             </span>
           </p>
           <h3 class="text-lg text-left pt-4">

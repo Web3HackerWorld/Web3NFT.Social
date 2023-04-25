@@ -2,13 +2,13 @@ import { generateNonce } from 'siwe'
 import { serverSupabaseServiceRole } from '#supabase/server'
 
 export default eventHandler(async (event) => {
-  const { address, chain, appAddress: appaddress } = await readBody(event)
+  const { address, chain, appaddress: appaddress } = await readBody(event)
   if (!address)
     return { err: 'walletAddress is Invalid' }
   if (!chain)
     return { err: 'chain is Invalid' }
   if (!appaddress)
-    return { err: 'appAddress is Invalid' }
+    return { err: 'appaddress is Invalid' }
 
   const nonce = generateNonce()
 

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { serverSupabaseServiceRole } from '#supabase/server'
 
 export default eventHandler(async (event) => {
-  const { message, signature, appAddress } = await readBody(event)
+  const { message, signature, appaddress } = await readBody(event)
   const adminClient = serverSupabaseServiceRole(event)
 
   try {
@@ -12,7 +12,7 @@ export default eventHandler(async (event) => {
     const { data, error } = await adminClient.from('nonce').select()
       .eq('address', address)
       .eq('chain', chain)
-      .eq('appaddress', appAddress)
+      .eq('appaddress', appaddress)
       .single()
 
     if (error)
@@ -28,13 +28,13 @@ export default eventHandler(async (event) => {
     let { data: user } = await adminClient.from('profile').select()
       .eq('address', address)
       .eq('chain', chain)
-      .eq('appaddress', appAddress)
+      .eq('appaddress', appaddress)
       .single()
 
     if (!user) {
       const { data, error } = await adminClient.from('profile').insert({
         address,
-        appaddress: appAddress,
+        appaddress: appaddress,
         chain,
       }).select().single()
 

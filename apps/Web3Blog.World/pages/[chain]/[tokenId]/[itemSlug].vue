@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const { appAddress: appaddress } = $(web3AuthStore())
+const { appaddress } = $(web3AuthStore())
 const route = useRoute()
 const chain = $computed(() => route.params.chain)
-const tokenid = $computed(() => route.params.tokenId)
+const tokenid = $computed(() => route.params.tokenid)
 const slug = $computed(() => route.params.itemSlug)
 const itemid = $computed(() => {
   return slug.split('-')[0]

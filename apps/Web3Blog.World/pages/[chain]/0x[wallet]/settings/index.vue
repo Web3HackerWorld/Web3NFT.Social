@@ -7,7 +7,7 @@ const chain = $computed(() => route.params.chain)
 
 const { supabase, updateUser, token } = $(supabaseStore())
 
-const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, initWeb3Force, appAddress } = $(web3AuthStore())
+const { storeJson, initContract, addSuccess, addLoading, alertError, alertSuccess, inviter, getTxUrl, initWeb3Force, appaddress } = $(web3AuthStore())
 
 onMounted(initWeb3Force)
 let isLoading = $ref(true)
@@ -43,7 +43,7 @@ const { data: userData } = await supabase.from('profile')
   .select()
   .eq('chain', chain)
   .eq('address', address)
-  .eq('appaddress', appAddress)
+  .eq('appaddress', appaddress)
   .single()
 
 isLoading = false
@@ -66,7 +66,7 @@ const saveToSupabase = async () => {
   const { error, data: newUserData } = await supabase.from('profile').update(data)
     .eq('chain', chain)
     .eq('address', address)
-    .eq('appaddress', appAddress)
+    .eq('appaddress', appaddress)
     .select().single()
   if (error)
     throw error

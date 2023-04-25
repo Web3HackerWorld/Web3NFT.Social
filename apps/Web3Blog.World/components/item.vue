@@ -4,7 +4,7 @@ const { item, chain } = $defineProps<{
   chain: String
 }>()
 
-const { appAddress: appaddress } = $(web3AuthStore())
+const { appaddress } = $(web3AuthStore())
 
 const categoryLink = post => `/category/${useGet(post, 'metadata.category')}`
 const postLink = post => `/${chain}/${post.tokenid}/${post.itemid}-${useKebabCase(useGet(post, 'metadata.title'))}`
