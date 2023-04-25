@@ -28,7 +28,7 @@ export const web3AuthStore = defineStore('web3AuthStore', () => {
   const userBalance = $computed(() => formatUnits(userBalanceRaw))
   const walletAddress = $computed(() => {
     if (accounts[0])
-      return ethers.utils.getAddress(accounts[0])
+      return formatAddress(accounts[0])
 
     return ''
   })
