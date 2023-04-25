@@ -1,22 +1,23 @@
-const cacheMap = {}
 export function useWeb3SupabaseData(table, query, isSingle = true) {
   const { supabase } = $(supabaseStore())
-  let key = Object.keys(query).map(_key => `${_key}${query[_key].value}`).join('-')
+  let key = Object.keys(query).sort().map(_key => `${_key}${query[_key].value}`).join('-')
   key = `${table}-${key}`
-  let pending = $ref(true)
-  let data = $ref(isSingle ? {} : [])
+  let isPending = $(useState(`pending-${key}`, () => false))
+  let data = $(useState(`data-${key}`, () => isSingle ? {} : []))
 
-  if (cacheMap[key]) {
-    pending = false
-    data = cacheMap[key]
-    return $$({
-      data,
-      pending,
-    })
-  }
+  const doUpdate = async (isForce = false) => {
+    if (isPending) {
+      // console.log('====> is isPending return:', key)
+      return
+    }
+    if (!isEmpty(data) && !isForce) {
+      // console.log('====> !isForce, has data:', data)
+      return
+    }
 
-  watchEffect(async () => {
-    let $query = supabase.from(table).select()
+    isPending = true
+
+    let $query = supabase.from(table).select().order('created_at', { ascending: false })
     Object.keys(query).forEach((key) => {
       $query = $query.eq(key, query[key].value)
     })
@@ -24,25 +25,29 @@ export function useWeb3SupabaseData(table, query, isSingle = true) {
       $query = $query.single()
 
     const rz = await $query
-    // console.log('====> key, rz :', key, rz)
+
     if (isSingle) {
-      cacheMap[key] = {
+      data = {
         ...useGet(rz, 'data.metadata', {}),
         ...query,
         address: useGet(rz, 'data.address', ''),
+        created_at: useGet(rz, 'data.created_at', ''),
       }
     }
     else {
-      cacheMap[key] = rz.data
+      data = rz.data
     }
-    data = cacheMap[key]
-    // console.log('====> key, data  :', key, data)
 
-    pending = false
+    isPending = false
+  }
+
+  watchEffect(async () => {
+    await doUpdate()
   })
 
   return $$({
-    pending,
+    isPending,
     data,
+    doUpdate,
   })
 }

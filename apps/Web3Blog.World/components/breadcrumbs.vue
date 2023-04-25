@@ -1,18 +1,25 @@
 <script setup lang="ts">
-const { token, author, tokenid } = $defineProps<{
+const { token, author, tokenid, createdAt } = $defineProps<{
   token: Object
   author: Object
   tokenid: String
+  createdAt?: String
 }>()
 
 const fullname = $computed(() => {
+  if (!author.firstname && !author.lastname)
+    return 'loading...'
+  if (!author.firstname)
+    return author.lastname
+  if (!author.lastname)
+    return author.firstname
+
   return `${author.firstname} ${author.lastname}`
 })
 const pages = $computed(() => {
-  console.log('====> token :', token)
   return [
     { name: fullname, href: `/${author.chain}/${author.address}`, current: false },
-    { name: token.name, href: `/${author.chain}/${tokenid}`, current: true },
+    { name: token.name || 'loading...', href: `/${author.chain}/${tokenid}`, current: true },
   ]
 })
 </script>
@@ -38,6 +45,6 @@ const pages = $computed(() => {
         </div>
       </li>
     </ol>
-    <!-- <time :datetime="post.datetime" class="text-sm text-gray-400">{{ post.date }}</time> -->
+    <time v-if="createdAt" :datetime="createdAt" class="text-gray-500"> <BsTimeAgo :time="createdAt" /></time>
   </nav>
 </template>

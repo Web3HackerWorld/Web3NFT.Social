@@ -28,27 +28,14 @@ const { data } = $(await useLazyAsyncData(async () => {
     return data
   }
 
-  const getProfile = async () => {
-    const { data } = await supabase.from('profile').select()
-      .eq('address', token.address)
-      .eq('appaddress', appAddress)
-      .eq('chain', chain)
-      .single()
+  const items = await getItemsData()
 
-    return data.metadata
-  }
-  const [author, items] = await Promise.all([getProfile(), getItemsData()])
-
-  return $$({ token, items, author })
+  return $$({ token, items })
 }, { watch: [$$(tokenId)] }))
 
 const token = $computed(() => data?.token)
 const items = $computed(() => data?.items)
-const author = $computed(() => data?.author || {})
 
-const categoryLink = post => `/category/${useGet(post, 'metadata.category')}`
-const postLink = post => `/${chain}/${post.tokenid}/${post.itemid}-${useKebabCase(useGet(post, 'metadata.title'))}`
-const authorLink = post => `/${chain}/${post.address}`
 const writeLink = $computed(() => `/${chain}/${tokenId}/new`)
 const canWrite = $computed(() => {
   if (!tokenId)
@@ -111,40 +98,7 @@ const nftPassMintParams = $computed(() => {
         </NuxtLink>
       </div>
       <div space-y-16>
-        <article v-for="post in items" :key="post.id" class="flex flex-col items-start justify-between">
-          <div class="flex text-xs gap-x-4 items-center">
-            <time :datetime="post.created_at" class="text-gray-500"> <BsTimeAgo :time="post.created_at" /></time>
-            <NuxtLink v-if="false" :to="categoryLink(post)" class="rounded-full font-medium bg-gray-50 py-1.5 px-3 text-gray-600 z-10 relative hover:bg-gray-100">
-              {{ useGet(post, 'metadata.category') }}
-            </NuxtLink>
-          </div>
-          <div class="group relative">
-            <h3 class="font-semibold text-lg text-gray-900 leading-6 group-hover:text-gray-600">
-              <NuxtLink :to="postLink(post)">
-                <span class="inset-0 absolute" />
-                {{ useGet(post, 'metadata.title') }}
-              </NuxtLink>
-            </h3>
-            <p class="mt-5 text-sm text-gray-600 leading-6 line-clamp-3">
-              {{ useGet(post, 'metadata.excerpt') }}
-            </p>
-          </div>
-          <div class="flex mt-4 gap-x-4 relative items-center">
-            <BsBoxImg :src="author.avatar" alt="" class="rounded-full bg-gray-50 h-10 w-10" />
-            <div class="text-sm leading-6">
-              <p class="font-semibold text-gray-900">
-                <NuxtLink :to="authorLink(post)">
-                  <span class="inset-0 absolute" />
-                  {{ author.firstname }}
-                  {{ author.lastname }}
-                </NuxtLink>
-              </p>
-              <p class="text-gray-600">
-                {{ author.bio }}
-              </p>
-            </div>
-          </div>
-        </article>
+        <Item v-for="item in items" :key="item.id" :item="item" :chain="chain" />
       </div>
     </div>
   </div>
