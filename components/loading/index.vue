@@ -6,9 +6,10 @@ const props = defineProps<{
 
 <template>
   <div>
-    <div v-if="isLoading" w-full h-full flex-ccpy-10>
-      <BsLoadingIcon mr-2 />
-      <slot />
+    <div v-if="isLoading" w-full h-full flex-cc py-20>
+      <BsLoadingIcon mr-4 />
+      Loading...
     </div>
+    <slot v-else />
   </div>
 </template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { appaddress, walletAddress } = $(web3AuthStore())
-const { supabase } = $(supabaseStore())
 const route = useRoute()
 const address = $computed(() => formatAddress(`0x${route.params.wallet}`))
 const chain = $computed(() => route.params.chain)
@@ -15,8 +14,9 @@ const profileName = $computed(() => {
 })
 
 const tokentype = $ref('Web3Blog')
-const { data: tokens } = $(useWeb3SupabaseData('token', $$({ address, chain, tokentype }), false))
+const { data: tokens, hasLoaded, isPending } = $(useWeb3SupabaseData('token', $$({ address, chain, tokentype }), false))
 
+const noData = $computed(() => hasLoaded && tokens.length === 0)
 const tokenLink = item => `/${chain}/${item.tokenid}`
 </script>
 
@@ -49,26 +49,34 @@ const tokenLink = item => `/${chain}/${item.tokenid}`
         </div>
       </div>
     </div>
-    <div class="grid gap-x-6 gap-y-10 grid-cols-1 sm:grid-cols-2">
-      <NuxtLink v-for="item in tokens" :key="item.id" :to="tokenLink(item)" class="group">
-        <div class="rounded-lg bg-gray-200 w-full overflow-hidden aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
-          <BsBoxImg :src="useGet(item, 'metadata.image')" :alt="useGet(item, 'metadata.name')" class="h-full object-cover object-center h-40 w-full group-hover:opacity-75" />
-        </div>
-        <h3 class="mt-4 text-sm text-gray-700">
-          {{ useGet(item, 'metadata.name') }}
-        </h3>
-        <p class="font-medium mt-1 text-lg text-gray-900">
-          {{ useGet(item, 'metadata.properties.basicPrice') }} $BST
-        </p>
-      </NuxtLink>
-      <NuxtLink v-if="isSameAddress(address, walletAddress)" :to="`/${chain}/${address}/new`" class="group">
-        <div class="border border-dashed rounded-lg flex border-gray-900/25 py-37 px-6 text-gray-500 justify-center">
-          <div class="text-center">
-            <div i-material-symbols-add class="mx-auto h-12  w-12" aria-hidden="true" />
-            New Book
+    <BsLoading :is-loading="isPending">
+      <div v-if="isSameAddress(address, walletAddress) || !noData" class="grid gap-x-6 gap-y-10 grid-cols-1 sm:grid-cols-2">
+        <NuxtLink v-for="item in tokens" :key="item.id" :to="tokenLink(item)" class="group">
+          <div class="rounded-lg bg-gray-200 w-full overflow-hidden aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
+            <BsBoxImg :src="useGet(item, 'metadata.image')" :alt="useGet(item, 'metadata.name')" class="h-full object-cover object-center h-40 w-full group-hover:opacity-75" />
           </div>
+          <h3 class="mt-4 text-sm text-gray-700">
+            {{ useGet(item, 'metadata.name') }}
+          </h3>
+          <p class="font-medium mt-1 text-lg text-gray-900">
+            {{ useGet(item, 'metadata.properties.basicPrice') }} $BST
+          </p>
+        </NuxtLink>
+        <NuxtLink v-if="isSameAddress(address, walletAddress)" :to="`/${chain}/${address}/new`" class="group">
+          <div class="border border-dashed rounded-lg flex border-gray-900/25 py-37 px-6 text-gray-500 justify-center">
+            <div class="text-center">
+              <div i-material-symbols-add class="mx-auto h-12  w-12" aria-hidden="true" />
+              New Book
+            </div>
+          </div>
+        </NuxtLink>
+      </div>
+      <div v-else>
+        <div class="border-dashed rounded-lg border-2 border-gray-300 text-center w-full p-12 relative block">
+          <div i-material-symbols-book class="mx-auto h-12 text-gray-400 w-12" />
+          <span class="mt-5 text-sm text-gray-900 block">This user has no books yet</span>
         </div>
-      </NuxtLink>
-    </div>
+      </div>
+    </BsLoading>
   </div>
 </template>

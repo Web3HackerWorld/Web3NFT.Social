@@ -7,7 +7,12 @@ const { data: items } = $(useWeb3SupabaseData('item', $$({ chain }), false))
 </script>
 
 <template>
-  <div class="border-t space-y-16 border-gray-200 mt-10 pt-10 sm:mt-16 sm:pt-16">
-    <Item v-for="item in items" :key="item.id" :item="item" :chain="chain" />
+  <div>
+    <h2 text-3xl font-bold>
+      Newest Publish
+    </h2>
+    <div class="border-t space-y-10 border-gray-200 mt-5 pt-5 sm:mt-8 sm:pt-8">
+      <Item v-for="item in items" :key="item.id" :item="item" :chain="chain" />
+    </div>
   </div>
 </template>
