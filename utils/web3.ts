@@ -51,6 +51,8 @@ export const isSameAddress = (a, b) => {
   return a === b
 }
 
+export const formatAddress = address => ethers.utils.getAddress(address)
+
 export const isValidateAddress = (address) => {
   try {
     return ethers.utils.getAddress(unref(address))
