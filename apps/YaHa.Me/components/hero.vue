@@ -27,11 +27,9 @@ const { chain: defaultChain, initWeb3, walletAddress } = $(web3AuthStore())
 const route = useRoute()
 const chain = $computed(() => route.params.chain || defaultChain)
 
-const router = useRouter()
-
 const goToProfile = async () => {
   if (walletAddress) {
-    router.push(`/${chain}/${walletAddress}`)
+    navigateTo(`/${chain}/${walletAddress}`)
     return
   }
 
@@ -45,7 +43,7 @@ const goToProfile = async () => {
       <div font-normal mb-20 text-6xl sm:text-8xl>
         Web3 With
       </div>
-      <VueAutoWriter base-text="" :texts="textArr" cursor-size="70" />
+      <VueAutoWriter base-text="" :texts="textArr" :cursor-size="70" />
     </h2>
     <p v-motion-slide-bottom class="text-center text-xl text-gray-400">
       Permanently Store on Web3 <br>

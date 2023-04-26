@@ -1,26 +1,7 @@
 <script setup lang="ts">
-import { appName } from '~/constants'
 const { initWeb3, removeWeb3EventListener } = $(web3AuthStore())
 onMounted(initWeb3)
 onUnmounted(removeWeb3EventListener)
-
-// TODO: move config into .env
-// useSeoMeta({
-//   titleTemplate: 'Web3 HN | %s',
-//   description: 'HackerNews clone by Web3Hacker.World.',
-//   ogImage: 'https://hn.web3hacker.world/cover.jpg',
-//   ogImageAlt: 'Web3 Hackernews',
-//   twitterImage: 'https://hn.web3hacker.world/cover.jpg',
-//   twitterSite: '@Web3HackerWorld',
-//   twitterCreator: '@Web3HackerWorld',
-//   twitterCard: 'summary_large_image',
-// })
-useHead({
-  title: appName,
-  link: [
-    { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
-  ],
-})
 </script>
 
 <template>

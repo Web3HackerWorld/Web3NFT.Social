@@ -2,7 +2,6 @@
 const { alertError } = $(notificationStore())
 const { appaddress, walletAddress } = $(web3AuthStore())
 const route = useRoute()
-const router = useRouter()
 const address = $computed(() => formatAddress(`0x${route.params.wallet}`))
 const chain = $computed(() => route.params.chain)
 
@@ -13,6 +12,10 @@ const profileName = $computed(() => {
     return `${author.firstname} ${author.lastname}`
 
   return shortAddress(address)
+})
+
+useSeoMeta({
+  title: () => `${profileName} Profile`,
 })
 
 const tokentype = $ref('Web3Blog')
@@ -32,7 +35,7 @@ watchEffect(() => {
     return
 
   alertError('Please update your profile first to create your new Creation', () => {
-    router.push(`/${chain}/${walletAddress}/settings`)
+    navigateTo(`/${chain}/${walletAddress}/settings`)
   })
 })
 </script>

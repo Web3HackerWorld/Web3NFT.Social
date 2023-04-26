@@ -1,8 +1,10 @@
 <script setup lang="ts">
-const router = useRouter()
+useSeoMeta({
+  title: 'Settings > General',
+})
 
 const route = useRoute()
-const address = $computed(() => `0x${route.params.wallet}`)
+const address = $computed(() => formatAddress(`0x${route.params.wallet}`))
 const chain = $computed(() => route.params.chain)
 
 const { supabase, updateUser, token } = $(supabaseStore())
@@ -30,15 +32,15 @@ let profile = $ref({
   twitter: '',
   github: '',
 })
-profile = {
-  avatar: 'ipfs://bafkreiah3vy3ul2hv3xn3pnl425rqk3skaqz2pmphgzjidphvhqpvaompa',
-  bio: 'Web3Hacker',
-  cover: 'ipfs://bafybeibuw3alqp53mzio22g7teqwbazwwvllmjctzsedytc2bqoiozvobq',
-  firstname: 'Bruce',
-  github: 'https://github.com/Web3HackerWorld',
-  lastname: 'Wayne',
-  twitter: 'https://twitter.com/Web3HackerWorld',
-}
+// profile = {
+//   avatar: 'ipfs://bafkreiah3vy3ul2hv3xn3pnl425rqk3skaqz2pmphgzjidphvhqpvaompa',
+//   bio: 'Web3Hacker',
+//   cover: 'ipfs://bafybeibuw3alqp53mzio22g7teqwbazwwvllmjctzsedytc2bqoiozvobq',
+//   firstname: 'Bruce',
+//   github: 'https://github.com/Web3HackerWorld',
+//   lastname: 'Wayne',
+//   twitter: 'https://twitter.com/Web3HackerWorld',
+// }
 const { data: userData } = await supabase.from('profile')
   .select()
   .eq('chain', chain)
@@ -59,7 +61,6 @@ const saveToSupabase = async () => {
   const loadingItem = addLoading('Start Saving to cache layer')
   const data = {
     id: userData.id,
-    updated_at: new Date(),
     metadata: profile,
   }
 
@@ -112,7 +113,7 @@ const doSubmit = async () => {
   alertSuccess('Update profile success', async () => {
     isLoading = false
     // go to profile page
-    router.push(`/${chain}/${address}`)
+    navigateTo(`/${chain}/${address}`)
   })
 }
 </script>

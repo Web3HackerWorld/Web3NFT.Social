@@ -1,5 +1,3 @@
-import { appDescription } from '../constants/index'
-
 const logRocketScript = []
 
 if (process.env.NUXT_PUBLIC_LOGROCKET_ID && process.env.NODE_ENV !== 'development') {
@@ -29,7 +27,7 @@ export const app = {
     ],
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'description', content: appDescription },
+      // { name: 'description', content: appDescription },
       { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
     ],
     script: [

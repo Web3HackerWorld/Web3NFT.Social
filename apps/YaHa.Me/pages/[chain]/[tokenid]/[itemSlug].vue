@@ -22,6 +22,12 @@ watchEffect(() => {
   const { data } = $(useWeb3SupabaseData('profile', $$({ address, chain, appaddress })))
   author = data
 })
+
+useSeoMeta({
+  title: () => `${item.title} | ${token.name}`,
+  titleTemplate: '%s',
+  description: () => `${item.excerpt}`,
+})
 </script>
 
 <template>

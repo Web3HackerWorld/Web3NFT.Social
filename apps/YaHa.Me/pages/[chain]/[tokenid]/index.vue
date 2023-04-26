@@ -8,6 +8,11 @@ const { totalSupply, maxSupply, isLoading: isTokenLoading, doUpdate: updateToken
 const { data: token } = $(useWeb3SupabaseData('token', $$({ chain, tokenid, appaddress })))
 const { data: items } = $(useWeb3SupabaseData('item', $$({ chain, tokenid, appaddress }), false))
 
+useSeoMeta({
+  title: () => `${token.name}`,
+  description: () => `${token.description}`,
+})
+
 const writeLink = $computed(() => `/${chain}/${tokenid}/new`)
 const canWrite = $computed(() => {
   if (!tokenid)

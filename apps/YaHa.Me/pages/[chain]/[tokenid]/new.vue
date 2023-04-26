@@ -1,10 +1,13 @@
 <script setup lang="ts">
+useSeoMeta({
+  title: () => 'New Content',
+})
+
 const { appaddress, contractWrite, contractRead, getContractAddress, walletAddress: address, chain, addSuccess, alertSuccess, addError, addLoading } = $(web3AuthStore())
 const { storeJson } = $(useNFTStorage())
 const { supabase } = $(supabaseStore())
 const { distributor } = $(appStore())
 
-const router = useRouter()
 const route = useRoute()
 const tokenid = $computed(() => route.params.tokenid)
 
@@ -12,15 +15,9 @@ const { metadata } = $(useToken($$(tokenid)))
 
 const tokentype = $computed(() => useGet(metadata, 'properties.tokenType', ''))
 
-const title = $ref('Content Creation as NFT')
-const excerpt = $ref('We create a platform that help users to make any content into NFT with token gating features as Web3 payment without any coding skill')
-const content = $ref(`## Token && NFT gating
-Creator can select NFT as gating
-
-## SBT as one time payment
-While creat the content, we also deploy an SBT for this article that only user mint one of the SBT can unlock the gated content.
-This works like a Web2 application that readers can buy some stuff directly that do not require to be a subscriber of some membership.
-`)
+const title = $ref('')
+const excerpt = $ref('')
+const content = $ref('')
 const category = $ref('Uncategory')
 const categoryList = $ref([
   'Uncategory',
@@ -146,7 +143,7 @@ const doSubmit = async () => {
 
   alertSuccess('Store data into database successed!', async () => {
     isLoading = false
-    router.push(`/${chain}/${tokenid}`)
+    navigateTo(`/${chain}/${tokenid}`)
   }, loadingItem5)
 }
 </script>

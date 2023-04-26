@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const { initContract, addLoading, addSuccess, walletAddress: address, appaddress, chain, initWeb3Force, storeJson } = $(web3AuthStore())
+useSeoMeta({
+  title: () => 'New Creation',
+})
 
 const {
   bstBalance,
@@ -14,15 +17,14 @@ const {
   showAllowanceModal,
 } = $(appStore())
 const { supabase } = $(supabaseStore())
-const router = useRouter()
 
 onMounted(initWeb3Force)
 
 let error = $ref('')
-const name = $ref('皮囊与灵魂写的故事')
+const name = $ref('')
 let description = $ref('')
-description = '好看的皮囊和有趣的灵魂在 Web3 里面写了一部关于一个半吊子程序员意外获得 超级 NFT 灵石助力后修仙打怪练级，最后统一了多元宇宙的瞎扯淡的故事'
-const image = $ref('ipfs://bafybeidhf5bw7xx3pq3pxzcgazxy7qdf5a2zlumqubg6vpdehxekyr3jwq')
+description = ''
+const image = $ref('')
 const tokenType = 'Web3Blog' // only this type be display on Web3Blog.World
 const category = $ref('Uncategory')
 const categoryList = $ref([
@@ -39,7 +41,7 @@ const categoryList = $ref([
   'Cryptocurrency',
   'Art',
 ])
-const tags = $ref('修仙, 搞怪, 无厘头, Web3, 多元宇宙')
+const tags = $ref('')
 const basicPrice = $ref(100) // $BST
 const maxSupply = $ref(10000)
 const inviteCommission = $ref(1)
@@ -104,7 +106,7 @@ const doSubmit = async () => {
       throw dbError
 
     addSuccess('Store data into database successed!', loadingItem4)
-    router.push(`/${chain}/${tokenid}`)
+    navigateTo(`/${chain}/${tokenid}`)
     description = ''
   }
   catch (err) {
@@ -132,7 +134,7 @@ const canSubmit = $computed(() => {
 <template>
   <div class="flex flex-col mx-auto flex-1 py-8 pb-20">
     <div class="flex-1 text-base text-gray-700 leading-7">
-      <input class="border-b font-bold border-gray-200 mt-6 tracking-tight w-full p-4 pl-0 text-3xl text-gray-900 sm:text-4xl focus:outline-none" $="name" placeholder="Your book name">
+      <input class="border-b font-bold border-gray-200 mt-6 tracking-tight w-full p-4 pl-0 text-3xl text-gray-900 sm:text-4xl focus:outline-none" $="name" placeholder="Your creation name">
       <div mt-5>
         <div class="rounded-md border-gray-300 border-1  p-4 pb-2 block">
           <resize-textarea
@@ -179,19 +181,19 @@ const canSubmit = $computed(() => {
           </div>
         </div>
         <div class="mt-5 w-full aspect-2/3 sm:(w-1/2 mt-0 aspect-auto) ">
-          <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover photo</label>
+          <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover Image</label>
           <BsBoxBanner $="image" title="Cover Photo" class="h-full mt-2" />
         </div>
       </div>
       <div mt-5 border-t border-gray-200 pt-5 flex justify="between" items-center>
-        <label class="font-bold text-sm mr-5 text-slate-900 leading-6 block">Create Book Cost</label>
+        <label class="font-bold text-sm mr-5 text-slate-900 leading-6 block">Create Creation Cost</label>
         <div>
           <div flex justify="end" items-center>
             <span text-xl mr-5>{{ formatEther(addTokenCost) }}</span>
             <BsFormSelect id="payBy" $="payBy" :list="payTokenList" />
           </div>
           <div mt-2>
-            <span font-bold>Your balance:</span> {{ formatEther(bstBalance) }} {{ payBy }}
+            <span font-bold>Your balance:</span> {{ formatUnits(bstBalance) }} {{ payBy }}
           </div>
         </div>
       </div>
