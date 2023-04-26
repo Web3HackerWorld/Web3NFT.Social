@@ -8,8 +8,9 @@ const { token } = $(supabaseStore())
     <div flex justify-between max-w-3xl w-full>
       <div flex items-center>
         <div>
-          <NuxtLink to="/">
-            <img src="/logo.png" w-20 h-10 object-cover rounded-md>
+          <NuxtLink to="/" flex-cc>
+            <img src="/logo.png" w-20 h-10 object-cover rounded-md mr-2>
+            <span text-3xl font-bold>Web3NFT.Social</span>
           </NuxtLink>
         </div>
         <div v-if="false" hidden lg:flex w-full sm:max-w-sm ml-4>

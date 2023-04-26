@@ -1,9 +1,9 @@
 <script setup lang="ts">
 useSeoMeta({
-  titleTemplate: '%s | YaHa.Me',
-  description: 'YaHa.Me: Web3 with your Blog/Story/Book/Photography/Music Creation.',
+  titleTemplate: '%s | Web3NFT.Social',
+  description: 'Web3NFT.Social: Web3 with your Blog/Story/Book/Photography/Music Creation.',
   ogImage: 'https://yaha.me/logo.png',
-  ogImageAlt: 'YaHa.Me: Web3 with your Blog/Story/Book/Photography/Music Creation.',
+  ogImageAlt: 'Web3NFT.Social: Web3 with your Blog/Story/Book/Photography/Music Creation.',
 })
 </script>
 
