@@ -25,13 +25,6 @@ export default defineNuxtConfig({
     ],
   },
   modules,
-  // experimental: {
-  //   // when using generate, payload js assets included in sw precache manifest
-  //   // but missing on offline, disabling extraction it until fixed
-  //   payloadExtraction: false,
-  //   reactivityTransform: true,
-  //   inlineSSRStyles: false,
-  // },
   css: [
     '@unocss/reset/tailwind.css',
   ],
@@ -49,6 +42,15 @@ export default defineNuxtConfig({
       routes: ['/'],
       ignore: ['/hi'],
     },
+  },
+  experimental: {
+    viewTransition: true,
+    payloadExtraction: false,
+    inlineSSRStyles: false,
+    renderJsonPayloads: true,
+  },
+  devtools: {
+    enabled: true,
   },
   app,
   ssr: process.env.NODE_ENV !== 'development',

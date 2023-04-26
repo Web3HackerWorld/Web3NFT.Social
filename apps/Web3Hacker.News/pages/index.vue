@@ -11,7 +11,7 @@
       class="-mt-14"
     >
       <h1
-        font-bold flex-ccflex-col tracking-tight text-5xl text-gray-900 sm:text-6xl mt-20 class="h-3/5"
+        font-bold flex-cc flex-col tracking-tight text-5xl text-gray-900 sm:text-6xl mt-20 class="h-3/5"
       >
         <span
           v-motion-slide-top
@@ -66,7 +66,7 @@
           </dd>
         </div>
       </dl>
-      <div v-motion-slide-visible-once-bottom flex-ccflex-col pt-20>
+      <div v-motion-slide-visible-once-bottom flex-cc flex-col pt-20>
         <a href="https://zh-docs.web3hacker.world/web3hackernews/early-bird" target="_blank" class="text-lg py-3 px-8 btn">立即报名</a>
         <p text-gray-400 text-sm mt-10>
           早期种子用户将进行有条件筛选，$BSTs 只会奖励给对平台有帮助的用户
@@ -74,33 +74,6 @@
       </div>
     </div>
 
-    <div class="bg-white border-t border-t-zinc-2 py-24 px-10 sm:py-32">
-      <h2 v-motion-slide-visible-once-top class="text-center mb-20 text-2xl text-gray-900 leading-8">
-        采用最极致的技术打造
-      </h2>
-      <div v-motion-slide-visible-once-left class="flex-ccfont-semibold mt-10 text-center justify-around">
-        <div>
-          <img class="object-contain object-left h-12 w-full" src="/img/vue.svg">
-          Vue3
-        </div>
-        <div>
-          <img class="object-contain object-left h-12 w-full" src="/img/vite.svg">
-          Vite3
-        </div>
-        <div>
-          <img class="object-contain object-left h-12 w-full" src="/img/nuxt.svg">
-          Nuxt3
-        </div>
-        <div>
-          <img class="object-contain object-left h-12 w-full" src="/img/supabase.png">
-          Supabase
-        </div>
-        <div>
-          <img class="object-contain object-left h-12 w-full" src="/img/pinia.svg">
-          Pinia
-        </div>
-      </div>
-    </div>
     <div flex flex-col items-center lg="flex-row-reverse justify-between px-8" py-10 border-t border-t-zinc-2 px-2 text-zinc-4 text-sm>
       <div flex space-x-4 mb-4 lg:mb-0>
         <a href="/img/WeChatOffice.jpg" hover:text-green-500 target="_blank">公众号</a>
