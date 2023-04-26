@@ -1,8 +1,5 @@
 <script setup lang="ts">
 const { initContract, addLoading, addSuccess, walletAddress: address, appaddress, chain, initWeb3Force, storeJson } = $(web3AuthStore())
-useSeoMeta({
-  title: () => 'New Creation',
-})
 
 const {
   bstBalance,
@@ -128,6 +125,10 @@ const canSubmit = $computed(() => {
     return false
 
   return true
+})
+
+useSeoMeta({
+  title: 'New Creation',
 })
 </script>
 
