@@ -5,16 +5,16 @@ onMounted(initWeb3)
 onUnmounted(removeWeb3EventListener)
 
 // TODO: move config into .env
-useSeoMeta({
-  titleTemplate: 'Web3 HN | %s',
-  description: 'HackerNews clone by Web3Hacker.World.',
-  ogImage: 'https://hn.web3hacker.world/cover.jpg',
-  ogImageAlt: 'Web3 Hackernews',
-  twitterImage: 'https://hn.web3hacker.world/cover.jpg',
-  twitterSite: '@Web3HackerWorld',
-  twitterCreator: '@Web3HackerWorld',
-  twitterCard: 'summary_large_image',
-})
+// useSeoMeta({
+//   titleTemplate: 'Web3 HN | %s',
+//   description: 'HackerNews clone by Web3Hacker.World.',
+//   ogImage: 'https://hn.web3hacker.world/cover.jpg',
+//   ogImageAlt: 'Web3 Hackernews',
+//   twitterImage: 'https://hn.web3hacker.world/cover.jpg',
+//   twitterSite: '@Web3HackerWorld',
+//   twitterCreator: '@Web3HackerWorld',
+//   twitterCard: 'summary_large_image',
+// })
 useHead({
   title: appName,
   link: [

@@ -13,7 +13,7 @@
       </div>
       <div class="mt-4 md:order-1 md:mt-0">
         <p class="text-center text-xs text-gray-500 leading-5">
-          Powered By <a href="https://Web3Blog.World" hover:text-gray-400 target="_blank" title="Web3 Blog World">Web3Blog.World</a>
+          Powered By <a href="https://YaHa.Me" hover:text-gray-400 target="_blank" title="YaHa.Me">YaHa.Me</a>
         </p>
       </div>
     </div>
