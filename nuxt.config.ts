@@ -53,4 +53,5 @@ export default defineNuxtConfig({
   app,
   ssr: process.env.NODE_ENV !== 'development',
   pwa,
+  analyze: true,
 })
