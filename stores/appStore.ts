@@ -1,7 +1,7 @@
+const distributor = '0xC6E58fb4aFFB6aB8A392b7CC23CD3feF74517F6C'
+
 export const appStore = defineStore('appStore', () => {
   const { contractRead, walletAddress, getContractAddress } = $(web3AuthStore())
-
-  const distributor = import.meta.env.VITE_DISTRIBUTOR
 
   const allowanceModal = $ref({
     isShow: false,
