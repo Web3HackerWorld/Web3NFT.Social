@@ -22,7 +22,7 @@ const name = $ref('')
 let description = $ref('')
 description = ''
 const image = $ref('')
-const tokenType = 'Web3Blog' // only this type be display on Web3Blog.World
+const tokenType = 'Web3NFT.Social' // only this type be display on Web3NFT.Social
 const category = $ref('Uncategory')
 const categoryList = $ref([
   'Uncategory',

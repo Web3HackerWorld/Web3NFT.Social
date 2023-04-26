@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import MetaMaskOnboarding from '@metamask/onboarding'
 import detectEthereumProvider from '@metamask/detect-provider'
-
+import { CHAIN_MAP } from '~/constants/CHAIN'
 const chainId = import.meta.env.VITE_CHAIN_ID
 const chainMap = CHAIN_MAP
 let onboarding: MetaMaskOnboarding = null
