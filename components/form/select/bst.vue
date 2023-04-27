@@ -25,7 +25,7 @@ watchEffect(() => {
         Pay By
       </div>
       <div flex justify="end" items-center>
-        <BsFormSelect id="payBy" $="payBy" :list="payTokenList" />
+        <BsFormSelect id="payBy" v-model="payBy" :list="payTokenList" />
       </div>
     </div>
     <div flex-bc>

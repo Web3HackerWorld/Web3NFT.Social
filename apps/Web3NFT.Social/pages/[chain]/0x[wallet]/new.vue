@@ -135,7 +135,7 @@ useSeoMeta({
 <template>
   <div class="flex flex-col mx-auto flex-1 py-8 pb-20">
     <div class="flex-1 text-base text-gray-700 leading-7">
-      <input class="border-b font-bold border-gray-200 mt-6 tracking-tight w-full p-4 pl-0 text-3xl text-gray-900 sm:text-4xl focus:outline-none" $="name" placeholder="Your creation name">
+      <input class="border-b font-bold border-gray-200 mt-6 tracking-tight w-full p-4 pl-0 text-3xl text-gray-900 sm:text-4xl focus:outline-none" v-model="name" placeholder="Your creation name">
       <div mt-5>
         <div class="rounded-md border-gray-300 border-1  p-4 pb-2 block">
           <resize-textarea
@@ -152,22 +152,22 @@ useSeoMeta({
         <div flex-1 pr-5>
           <div>
             <label for="category" class="font-medium text-sm mb-2 text-gray-900 leading-6 block">Category</label>
-            <BsFormSelect id="category" $="category" :list="categoryList" min-w-60 :has-add-new="true" />
+            <BsFormSelect id="category" v-model="category" :list="categoryList" min-w-60 :has-add-new="true" />
           </div>
           <div mt-5>
             <label for="tags" class="font-medium text-sm text-slate-900 leading-6 block">Tags</label>
-            <input id="tags" $="tags" type="text" name="tags" autocomplete="tags" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-gray-700" placeholder="Seperated by comma">
+            <input id="tags" v-model="tags" type="text" name="tags" autocomplete="tags" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-gray-700" placeholder="Seperated by comma">
           </div>
           <div mt-5>
             <label for="basicPrice" class="font-medium text-sm text-slate-900 leading-6 block">Invest share basic price</label>
             <div class="rounded-md flex shadow-sm mt-2">
-              <input id="basicPrice" type="text" $="basicPrice" name="basicPrice" autocomplete="basicPrice" class="rounded-none rounded-l-md flex-grow border-0 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-gray-300 text-gray-900 block placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-sky-500">
+              <input id="basicPrice" type="text" v-model="basicPrice" name="basicPrice" autocomplete="basicPrice" class="rounded-none rounded-l-md flex-grow border-0 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-gray-300 text-gray-900 block placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-sky-500">
               <span class="border rounded-r-md border-l-0 border-gray-300 px-3 text-gray-500 inline-flex items-center sm:text-sm">$BST</span>
             </div>
           </div>
           <div mt-5>
             <label for="maxSupply" class="font-medium text-sm text-slate-900 leading-6 block">Invest share max supply</label>
-            <input id="maxSupply" $="maxSupply" type="text" name="maxSupply" autocomplete="maxSupply" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-gray-700">
+            <input id="maxSupply" v-model="maxSupply" type="text" name="maxSupply" autocomplete="maxSupply" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-gray-700">
           </div>
           <div mt-5 flex justify="between">
             <span font-bold>
@@ -183,7 +183,7 @@ useSeoMeta({
         </div>
         <div class="mt-5 w-full aspect-2/3 sm:(w-1/2 mt-0 aspect-auto) ">
           <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover Image</label>
-          <BsBoxBanner $="image" title="Cover Photo" class="h-full mt-2" />
+          <BsBoxBanner v-model="image" title="Cover Photo" class="h-full mt-2" />
         </div>
       </div>
       <div mt-5 border-t border-gray-200 pt-5 flex justify="between" items-center>
@@ -191,7 +191,7 @@ useSeoMeta({
         <div>
           <div flex justify="end" items-center>
             <span text-xl mr-5>{{ formatEther(addTokenCost) }}</span>
-            <BsFormSelect id="payBy" $="payBy" :list="payTokenList" />
+            <BsFormSelect id="payBy" v-model="payBy" :list="payTokenList" />
           </div>
           <div mt-2>
             <span font-bold>Your balance:</span> {{ formatUnits(bstBalance) }} {{ payBy }}

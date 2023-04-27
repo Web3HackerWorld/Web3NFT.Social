@@ -79,7 +79,7 @@ const doApprove = async () => {
     <div>
       <div class="mb-6">
         <label for="amount" text-lg font-medium>New approve amount</label>
-        <input id="approveAmount" $="approveAmount" type="text" name="approveAmount" autocomplete="approveAmount" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-gray-700" placeholder="Please input new approve amount">
+        <input id="approveAmount" v-model="approveAmount" type="text" name="approveAmount" autocomplete="approveAmount" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-gray-700" placeholder="Please input new approve amount">
       </div>
       <BsAlertError v-if="error" mb-4>
         {{ error.message }}

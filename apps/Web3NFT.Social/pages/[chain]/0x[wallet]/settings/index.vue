@@ -154,28 +154,28 @@ const doSubmit = async () => {
             </div>
 
             <div sm:(col-span-6 flex justify-between)>
-              <BsBoxAvatar $="profile.avatar" size="small" title="Avatar" mr-15 />
+              <BsBoxAvatar v-model="profile.avatar" size="small" title="Avatar" mr-15 />
 
               <div mt-6 sm:mt-0 flex-1>
                 <label for="cover-photo" class="font-medium text-sm text-gray-900 leading-6 block">Cover photo</label>
-                <BsBoxBanner $="profile.cover" title="Cover Photo" class="mt-2 aspect-4/1" />
+                <BsBoxBanner v-model="profile.cover" title="Cover Photo" class="mt-2 aspect-4/1" />
               </div>
             </div>
 
             <div class="sm:col-span-3">
               <label for="first-name" class="font-medium text-sm text-slate-900 leading-6 block">First name</label>
-              <input id="first-name" $="profile.firstname" type="text" name="first-name" autocomplete="first-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+              <input id="first-name" v-model="profile.firstname" type="text" name="first-name" autocomplete="first-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="sm:col-span-3">
               <label for="last-name" class="font-medium text-sm text-slate-900 leading-6 block">Last name</label>
-              <input id="last-name" $="profile.lastname" type="text" name="last-name" autocomplete="last-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+              <input id="last-name" v-model="profile.lastname" type="text" name="last-name" autocomplete="last-name" class="rounded-md border-0 shadow-sm ring-inset mt-2 w-full py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="sm:col-span-6">
               <label for="description" class="font-medium text-sm text-slate-900 leading-6 block">BIO</label>
               <div class="mt-2">
-                <textarea id="description" $="profile.bio" name="description" rows="4" class="rounded-md border-0 shadow-sm ring-inset w-full p-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:py-1.5 sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500" />
+                <textarea id="description" v-model="profile.bio" name="description" rows="4" class="rounded-md border-0 shadow-sm ring-inset w-full p-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:py-1.5 sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500" />
               </div>
               <p class="mt-3 text-sm text-slate-500">
                 Brief description for your profile. Simple markdown support.
@@ -185,14 +185,14 @@ const doSubmit = async () => {
             <div class="sm:col-span-6">
               <label for="twitter" class="font-medium text-sm text-slate-900 leading-6 block">Twitter</label>
               <div class="rounded-md flex shadow-sm mt-2">
-                <input id="twitter" type="text" $="profile.twitter" name="twitter" placeholder="https://twitter.com/xxxx" autocomplete="twitter" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+                <input id="twitter" type="text" v-model="profile.twitter" name="twitter" placeholder="https://twitter.com/xxxx" autocomplete="twitter" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
               </div>
             </div>
 
             <div class="sm:col-span-6">
               <label for="github" class="font-medium text-sm text-slate-900 leading-6 block">GitHub</label>
               <div class="rounded-md flex shadow-sm mt-2">
-                <input id="github" type="text" $="profile.github" name="github" placeholder="https://github.com/xxxx" autocomplete="github" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
+                <input id="github" type="text" v-model="profile.github" name="github" placeholder="https://github.com/xxxx" autocomplete="github" class="rounded-md border-0 flex-1 ring-inset w-full min-w-0 py-1.5 px-2 ring-1 ring-slate-300 text-slate-900 block placeholder:text-slate-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-2 focus:ring-blue-500">
               </div>
             </div>
           </div>
