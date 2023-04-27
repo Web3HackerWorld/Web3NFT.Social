@@ -48,12 +48,20 @@ export default defineNuxtConfig({
     payloadExtraction: false,
     inlineSSRStyles: false,
     renderJsonPayloads: true,
+    reactivityTransform: true
   },
   devtools: {
     enabled: true,
   },
   app,
-  ssr: process.env.NODE_ENV !== 'development',
+  // ssr: process.env.NODE_ENV !== 'development',
+  ssr: false,
   pwa,
-  analyze: true,
+  typescript: {
+    strict: true
+  },
+  sourcemap: {
+    server: true,
+    client: true
+  }
 })

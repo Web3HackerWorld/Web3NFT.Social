@@ -35,4 +35,6 @@ export const app = {
       ...litScript,
     ],
   },
+  // https://nuxt.com/docs/getting-started/transitions
+  pageTransition: { name: 'page', mode: 'out-in' },
 }

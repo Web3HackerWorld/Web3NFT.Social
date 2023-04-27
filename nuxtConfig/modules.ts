@@ -53,7 +53,7 @@ const maybeUseModules = () => {
 }
 
 export const modules = [
-  '@vue-macros/nuxt',
+  // '@vue-macros/nuxt',
   ...maybeUseModules(),
   i18n,
   unocss,
