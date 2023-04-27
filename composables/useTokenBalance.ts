@@ -2,7 +2,7 @@ const cacheMap = {}
 export function useTokenBalance(tokenid) {
   const { walletAddress, contractRead } = $(web3AuthStore())
   let data = $ref(0)
-
+  
   const doUpdate = async (isForce = false) => {
     const key = `${walletAddress}-${tokenid.value}`
     if (cacheMap[key] && !isForce) {

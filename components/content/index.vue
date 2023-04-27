@@ -25,6 +25,15 @@ const { doDecryptString } = litHelper({ chain: CHAIN_NAME })
 const { data: nftBalance, doUpdate: updateNftBalance } = $(useTokenBalance($$(tokenid)))
 const { data: otpBalance, doUpdate: updateOtpBalance } = $(useTokenBalance($$(otpTokenId)))
 
+watchEffect(async () => {
+  if (tokenid) {
+    await updateNftBalance(true)
+  }
+
+  if (otpTokenId) {
+    await updateOtpBalance(true)
+  }
+})
 const mintNFTPassCount = $computed(() => requiredNFTCount - nftBalance)
 
 const nftPassMintParams = $computed(() => {
