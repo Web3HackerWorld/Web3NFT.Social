@@ -7,7 +7,9 @@ useSeoMeta({
 
 <template>
   <div pb-20>
-    <Hero />
+    <ClientOnly>
+      <Hero />
+    </ClientOnly>
     <NewestItem />
   </div>
 </template>
