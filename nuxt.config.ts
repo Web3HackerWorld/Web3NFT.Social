@@ -54,8 +54,8 @@ export default defineNuxtConfig({
     enabled: true,
   },
   app,
-  ssr: process.env.NODE_ENV !== 'development',
-  // ssr: false,
+  // ssr: process.env.NODE_ENV !== 'development',
+  ssr: false,
   pwa,
   // typescript: {
   //   strict: true
