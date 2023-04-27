@@ -57,7 +57,7 @@ const { showMintModal } = $(appStore())
 const canUnlock = $computed(() => {
   if (requiredNFTCount && requiredNFTCount <= nftBalance)
     return true
-  if (otpBalance > 1)
+  if (otpBalance > 0)
     return true
 
   return false

@@ -44,7 +44,7 @@ export const litHelper = ({ chain }) => {
     }
   }
 
-  const generateCondition = ({ contractAddress, ownerAddress, tokenId, unlockAmount }) => {
+  const generateCondition = ({ contractAddress, ownerAddress, tokenid, unlockAmount }) => {
     const myselfCondition = {
       contractAddress: '',
       standardContractType: '',
@@ -65,7 +65,7 @@ export const litHelper = ({ chain }) => {
       method: 'balanceOf',
       parameters: [
         ':userAddress',
-        tokenId,
+        tokenid,
       ],
       returnValueTest: {
         comparator: '>=',
