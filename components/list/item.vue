@@ -1,7 +1,10 @@
 <script setup lang="ts">
-defineProps<{
+interface Props {
   item: any
-}>()
+}
+let {
+  item
+} = defineProps<Props>()
 const isLink = (item) => {
   return item.url?.startsWith('http')
 }

@@ -1,8 +1,12 @@
 <script setup lang="ts">
-const { item, chain } = $defineProps<{
+interface Props {
   item: Object
   chain: String
-}>()
+}
+let {
+  item,
+  chain
+} = defineProps<Props>()
 
 const { appaddress } = $(web3AuthStore())
 

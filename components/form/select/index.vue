@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-let { modelValue, list, hasAddNew = false } = $defineModels<{
+
+interface Props {
   modelValue: string
   list: Array<string>
   hasAddNew?: boolean
-}>()
+}
+let {
+  modelValue,
+  list,
+  hasAddNew = false
+} = defineProps<Props>()
+const emit = defineEmits(["update:modelValue"])
 
 const value = $computed({
   get() { return modelValue },
   set(val) {
-    modelValue = val
+    emit('update:modelValue', val)
   },
 })
 
@@ -18,7 +25,7 @@ let showAddModal = $ref(false)
 let newOptionName = $ref('')
 const addNewOption = () => {
   list.push(newOptionName)
-  modelValue = newOptionName
+  emit('update:modelValue', newOptionName)
   newOptionName = ''
   showAddModal = false
 }

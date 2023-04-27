@@ -18,7 +18,7 @@ useSeoMeta({
   title: () => `${profileName} Profile`,
 })
 
-const tokentype = $ref('Web3Blog')
+const tokentype = $ref('Web3NFT.Social')
 const { data: tokens, hasLoaded, isPending } = $(useWeb3SupabaseData('token', $$({ address, chain, tokentype }), false))
 
 const noData = $computed(() => hasLoaded && tokens.length === 0)

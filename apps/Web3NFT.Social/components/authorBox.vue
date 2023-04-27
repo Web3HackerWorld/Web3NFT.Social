@@ -1,9 +1,14 @@
 <script setup lang="ts">
-const { address, chain, appaddress } = $defineProps<{
+interface Props {
   address: String
   chain: String
   appaddress: String
-}>()
+}
+const {
+  address,
+  chain,
+  appaddress
+} = defineProps<Props>()
 
 let author = $ref({})
 watchEffect(() => {

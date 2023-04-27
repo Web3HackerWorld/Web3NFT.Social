@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { condition, chain, appaddress, tokenid, otpTokenId, requiredNFTCount, encryptedSymmetricKey, encryptedString, itemid } = $defineProps<{
+interface Props {
   condition?: Object[]
   itemType?: String
   enableOneTimePayment?: Boolean
@@ -14,7 +14,10 @@ const { condition, chain, appaddress, tokenid, otpTokenId, requiredNFTCount, enc
   chain: string
   appaddress: string
   tokenid: string
-}>()
+}
+let {
+  condition, chain, appaddress, tokenid, otpTokenId, requiredNFTCount, encryptedSymmetricKey, encryptedString, itemid
+} = defineProps<Props>()
 
 const { addLoading, addSuccess, alertError } = $(notificationStore())
 const { doDecryptString } = litHelper({ chain: CHAIN_NAME })

@@ -18,7 +18,7 @@ const tokentype = $computed(() => useGet(metadata, 'properties.tokenType', ''))
 const title = $ref('')
 const excerpt = $ref('')
 const content = $ref('')
-const category = $ref('Uncategory')
+let category = $ref('Uncategory')
 const categoryList = $ref([
   'Uncategory',
   'Productivity',
@@ -76,7 +76,7 @@ const doSubmit = async () => {
     const tx = await contractWrite('BuidlerProtocol', 'addOTP', parseEther(oneTimePaymentBasicPrice), inviteCommission, oneTimePaymentMaxSupply, otpCid, tokenid, nextItemId)
     const rc = await tx.wait()
     const event = rc.events.find(event => event.event === 'AddOTP')
-    otpTokenId = event.args.tokenid.toString()
+    otpTokenId = event.args.tokenId.toString()
     addSuccess('Create One Time Payment SBT Successed!', loadingItem1)
   }
 

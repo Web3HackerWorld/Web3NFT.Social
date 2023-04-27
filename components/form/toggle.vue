@@ -1,14 +1,19 @@
 <script lang="ts" setup>
 import { Switch, SwitchDescription, SwitchGroup, SwitchLabel } from '@headlessui/vue'
-let { modelValue, title } = $defineModels<{
+interface Props {
   modelValue: boolean
   title: string
-}>()
+}
+let {
+  modelValue,
+  title
+} = defineProps<Props>()
+const emit = defineEmits(["update:modelValue"])
 
 const value = $computed({
   get() { return modelValue },
   set(val) {
-    modelValue = val
+    emit('update:modelValue', val)
   },
 })
 </script>

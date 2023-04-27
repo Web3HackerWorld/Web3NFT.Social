@@ -1,10 +1,16 @@
 <script setup lang="ts">
-const { token, author, tokenid, createdAt } = $defineProps<{
+interface Props {
   token: Object
   author: Object
   tokenid: String
   createdAt?: String
-}>()
+}
+let {
+  token,
+  author,
+  tokenid,
+  createdAt,
+} = defineProps<Props>()
 
 const fullname = $computed(() => {
   if (!author.firstname && !author.lastname)

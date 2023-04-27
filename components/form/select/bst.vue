@@ -1,8 +1,13 @@
 <script setup lang="ts">
-let { modelValue, balanceEnough } = $defineModels<{
+interface Props {
   modelValue: string | Object
   balanceEnough: boolean
-}>()
+}
+let {
+  modelValue,
+  balanceEnough
+} = defineProps<Props>()
+const emit = defineEmits(["update:modelValue", "update:balanceEnough"])
 
 const {
   payTokenList,
@@ -12,9 +17,9 @@ const {
 
 watchEffect(() => {
   if (bstBalance.lt(modelValue))
-    balanceEnough = false
+    emit('update:balanceEnough', false)
   else
-    balanceEnough = true
+    emit('update:balanceEnough', true)
 })
 </script>
 
