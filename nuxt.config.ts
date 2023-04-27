@@ -57,11 +57,11 @@ export default defineNuxtConfig({
   // ssr: process.env.NODE_ENV !== 'development',
   ssr: false,
   pwa,
-  typescript: {
-    strict: true
-  },
-  sourcemap: {
-    server: true,
-    client: true
-  }
+  // typescript: {
+  //   strict: true
+  // },
+  // sourcemap: {
+  //   server: true,
+  //   client: true
+  // }
 })
