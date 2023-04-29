@@ -16,7 +16,7 @@ interface Props {
   tokenid: string
 }
 let {
-  condition, chain, appaddress, tokenid, otpTokenId, requiredNFTCount, encryptedSymmetricKey, encryptedString, itemid
+  condition, chain, appaddress, tokenid, otpTokenId, requiredNFTCount, encryptedSymmetricKey, encryptedString, itemid,
 } = defineProps<Props>()
 
 const { addLoading, addSuccess, alertError } = $(notificationStore())
@@ -26,13 +26,13 @@ const { data: nftBalance, doUpdate: updateNftBalance } = $(useTokenBalance($$(to
 const { data: otpBalance, doUpdate: updateOtpBalance } = $(useTokenBalance($$(otpTokenId)))
 
 watchEffect(async () => {
-  if (tokenid) {
+  if (tokenid) 
     await updateNftBalance(true)
-  }
+  
 
-  if (otpTokenId) {
+  if (otpTokenId) 
     await updateOtpBalance(true)
-  }
+  
 })
 const mintNFTPassCount = $computed(() => requiredNFTCount - nftBalance)
 
@@ -66,7 +66,7 @@ const { showMintModal } = $(appStore())
 const canUnlock = $computed(() => {
   if (requiredNFTCount && requiredNFTCount <= nftBalance)
     return true
-  if (otpBalance > 0)
+  if (otpBalance > 10)
     return true
 
   return false

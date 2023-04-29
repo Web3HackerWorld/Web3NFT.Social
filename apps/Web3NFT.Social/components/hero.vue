@@ -50,9 +50,13 @@ const goToProfile = async () => {
       Get creation income with $BST
     </p>
     <div flex-cc mt-24>
-      <BsBtnBlack class="rounded-full!" @click="goToProfile">
+      <BsBtnBlack class="rounded-full! py-2! px-7!" @click="goToProfile">
         Get Started
       </BsBtnBlack>
+      <NuxtLink class="rounded-full flex-cc border-1 ml-10 p-2 px-5 text-zinc-4" to="https://web3nft.slide.web3hacker.world/" target="_blank">
+        Learn More
+        <div i-cil-external-link ml-2 />
+      </NuxtLink>
     </div>
   </div>
 </template>
