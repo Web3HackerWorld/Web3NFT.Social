@@ -1,9 +1,9 @@
 const logRocketScript = []
 
-if (process.env.NUXT_PUBLIC_LOGROCKET_ID && process.env.NODE_ENV !== 'development') {
-  logRocketScript.push({ src: 'https://cdn.lr-ingest.com/LogRocket.min.js', crossorigin: 'anonymous' })
-  logRocketScript.push({ innerHTML: `window.LogRocket && window.LogRocket.init("${process.env.NUXT_PUBLIC_LOGROCKET_ID}");`, type: 'text/javascript', charset: 'utf-8' })
-}
+// if (process.env.NUXT_PUBLIC_LOGROCKET_ID && process.env.NODE_ENV !== 'development') {
+//   logRocketScript.push({ src: 'https://cdn.lr-ingest.com/LogRocket.min.js', crossorigin: 'anonymous' })
+//   logRocketScript.push({ innerHTML: `window.LogRocket && window.LogRocket.init("${process.env.NUXT_PUBLIC_LOGROCKET_ID}");`, type: 'text/javascript', charset: 'utf-8' })
+// }
 
 const litScript = [
   { src: 'https://cdn.jsdelivr.net/npm/@lit-protocol/lit-node-client-vanilla/lit-node-client.js' },
