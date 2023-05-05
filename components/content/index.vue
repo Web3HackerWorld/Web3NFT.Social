@@ -84,8 +84,10 @@ const doUnlock = async () => {
   const loadingItem = addLoading('Start unlocking content')
   const { decryptedString, err } = await doDecryptString({ encryptedSymmetricKey, encryptedString, accessControlConditions: condition })
   isUnlocking = false
-  if (err)
+  if (err) {
+    console.log('====> err :', err)
     return alertError(err.toString(), false, loadingItem)
+  }
 
   textContent = decryptedString
   setLsItem(cacheKey, decryptedString)
