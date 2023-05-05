@@ -26,13 +26,11 @@ const { data: nftBalance, doUpdate: updateNftBalance } = $(useTokenBalance($$(to
 const { data: otpBalance, doUpdate: updateOtpBalance } = $(useTokenBalance($$(otpTokenId)))
 
 watchEffect(async () => {
-  if (tokenid) 
+  if (tokenid)
     await updateNftBalance(true)
-  
 
-  if (otpTokenId) 
+  if (otpTokenId)
     await updateOtpBalance(true)
-  
 })
 const mintNFTPassCount = $computed(() => requiredNFTCount - nftBalance)
 
@@ -64,9 +62,10 @@ const optTokenMintParams = $computed(() => {
 const { showMintModal } = $(appStore())
 
 const canUnlock = $computed(() => {
+  console.log('====> requiredNFTCount, requiredNFTCount, nftBalance, otpBalance :', requiredNFTCount, requiredNFTCount, nftBalance, otpBalance)
   if (requiredNFTCount && requiredNFTCount <= nftBalance)
     return true
-  if (otpBalance > 10)
+  if (otpBalance > 0)
     return true
 
   return false
