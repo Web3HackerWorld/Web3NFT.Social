@@ -4,7 +4,7 @@ An open source version of mirror and medium compose
 
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/11247099/140462375-7b7ac4db-35b7-453c-8a05-13d8d20282c4.png" width="600"/>
+<img src="./Web3NFT.Social.jpg" width="720"/>
 </p>
 
 <h2 align="center">
@@ -22,6 +22,14 @@ Web3 Blog Platform for Web3
 </p>
 
 ## Features
+
+- Web3 Native: All data on Blockchain and IPFS
+- Web2 UX: With cache in serverless backend provide much better experience than Frontend only DApp
+- NFT-Gating: Creator's creation gating by NFT
+- CreatorFi: Creater can get invest by sell limited project level NFT.
+- Reader friendly: User can pay by mint NFT as one-time-payment for creator
+
+## Tech
 
 - [💚 Nuxt 3](https://nuxt.com/) - SSR, ESR, File-based routing, components auto importing, modules, etc.
 
