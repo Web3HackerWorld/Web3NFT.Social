@@ -1,7 +1,6 @@
-## Web3 Blog Platform with NFT-Gating as Payment for subscribers
+## Web3 Blog Platform with NFT-Gating as Payment for Subscribers
 
-An open source version of mirror and medium compose
-
+An open-source version of Mirror and Medium compose
 
 <p align="center">
 <img src="./Web3NFT.Social.jpg" width="720"/>
@@ -26,11 +25,10 @@ Web3 Blog Platform for Web3
 ## Features
 
 - Web3 Native: All data on Blockchain and IPFS
-- Web2 UX: With cache in serverless backend provide much better experience than Frontend only DApp
+- Web2 UX: With cache in serverless backend provides a much better experience than Frontend only DApp
 - NFT-Gating: Creator's creation gating by NFT
-- CreatorFi: Creater can get invest by sell limited project level NFT.
-- Reader friendly: User can pay by mint NFT as one-time-payment for creator
-
+- CreatorFi: creator can get invest by selling limited project-level NFT.
+- Reader-friendly: User can pay by mint NFT as a one-time-payment for the creator
 ## Tech
 
 - [💚 Nuxt 3](https://nuxt.com/) - SSR, ESR, File-based routing, components auto importing, modules, etc.
