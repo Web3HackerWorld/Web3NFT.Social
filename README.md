@@ -17,7 +17,9 @@ Web3 Blog Platform for Web3
 
 <p align="center">
 <br>
-<a href="https://web3nft.social/">🖥 Online Preview</a>
+<a href="https://web3nft.social/">Online Preview</a>
+<br>
+<a href="https://www.loom.com/share/36a56fdd3efb4da9af8153d5a5309e76">Video Demo</a>
 <br><br>
 </p>
 
