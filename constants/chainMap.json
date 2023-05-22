@@ -124,6 +124,21 @@
       "https://rpc.ankr.com/filecoin_testnet"
     ]
   },
+  "0x4cb2f": {
+    "blockExplorerUrls": [
+      "https://explorer.glif.io/calibrationnet"
+    ],
+    "chainId": "0x4cb2f",
+    "chainName": "Filecoin Calibrationnet",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "tFIL",
+      "symbol": "tFIL"
+    },
+    "rpcUrls": [
+      "https://api.calibration.node.glif.io/rpc/v1"
+    ]
+  },
   "0x1389": {
     "blockExplorerUrls": [
       "https://explorer.testnet.mantle.xyz"

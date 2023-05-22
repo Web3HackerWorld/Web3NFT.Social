@@ -15,6 +15,7 @@ const chainNameMap = {
   '0x13881': 'mumbai',
   '0x7a69': 'hardhat',
   '0xc45': 'hyperspace',
+  '0x4cb2f': 'calibration',
   '0x61': 'bscTestnet',
   '0x507': 'moonbaseAlpha',
   '0x1389': 'mantleTestnet',
